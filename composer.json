@@ -1,0 +1,26 @@
+{
+  "name": "nhivo/learningphp",
+  "autoload": {
+    "psr-4": {
+      "Nhivonfq\\Unlock\\": "./src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Nhivonfq\\Tests\\": "Tests"
+    }
+  },
+  "authors": [
+    {
+      "name": "nhivo1203",
+      "email": "nhivo1604230@gmail.com"
+    }
+  ],
+  "require": {
+    "phpunit/phpunit": "^9.5"
+  }
+  ,
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
+  }
+}
