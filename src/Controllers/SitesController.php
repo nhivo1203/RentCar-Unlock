@@ -3,16 +3,35 @@
 namespace Nhivonfq\Unlock\Controllers;
 
 use Nhivonfq\Unlock\Core\Application;
+use Nhivonfq\Unlock\Core\Controller;
+use Nhivonfq\Unlock\Core\Request;
 
-class SitesController
+class SitesController extends Controller
 {
-    public function handleRentCar():string
+    public function home(): string
     {
-        return Application::$app->router->renderView('contact');
+        $params = [
+            'name' => 'Nhi Vo'
+        ];
+
+        return $this->render('home',$params);
     }
 
-    public function contact():string
+
+    public function handleRentCar(Request $request): string
     {
-        return "handling Rent Car";
+        $body = $request->getBody();
+
+        var_dump($body);
+        die();
+
+        return "Handling Submit Rent Car";
+    }
+
+    public function contact(): string
+    {
+
+
+        return $this->render('contact', []);
     }
 }
