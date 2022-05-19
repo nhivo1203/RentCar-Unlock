@@ -4,11 +4,14 @@ namespace Nhivonfq\Unlock\Models;
 
 class User
 {
+    public int $id;
     public string $firstname = '';
     public string $lastname = '';
     public string $email = '';
+    public int $status = 0;
     public string $username = '';
     public string $password = '';
+    public string $createAt;
 
     /**
      * @return string
@@ -88,5 +91,53 @@ class User
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int $status
+     */
+    public function setStatus(int $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreateAt(): string
+    {
+        return $this->createAt;
+    }
+
+    /**
+     * @param string $createAt
+     */
+    public function setCreateAt(string $createAt): void
+    {
+        $this->createAt = $createAt;
     }
 }
