@@ -1,6 +1,6 @@
 <?php
 
-namespace Nhivonfq\Unlock\Core;
+namespace Nhivonfq\Unlock\boostrap;
 
 use function is_string;
 

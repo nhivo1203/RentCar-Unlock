@@ -1,12 +1,13 @@
 <?php
 
-namespace Nhivonfq\Unlock\Core;
+namespace Nhivonfq\Unlock\boostrap;
 /**
  * Class Application
  * @package app\core
  */
 class Application
 {
+    public Database $db;
     /**
      * @var string
      */
@@ -34,11 +35,12 @@ class Application
     /**
      * @param $rootPath
      */
-    public function __construct($rootPath)
+    public function __construct($rootPath, array $config)
     {
 
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
+        $this->db = new Database($config['db']);
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request);
@@ -54,19 +56,4 @@ class Application
         echo $this->router->resolve();
     }
 
-    /**
-     * @return Controller
-     */
-    public function getController(): Controller
-    {
-        return $this->controller;
-    }
-
-    /**
-     * @param Controller $controller
-     */
-    public function setController(Controller $controller): void
-    {
-        $this->controller = $controller;
-    }
 }
