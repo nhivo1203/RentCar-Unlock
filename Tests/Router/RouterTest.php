@@ -2,8 +2,8 @@
 
 namespace app\Tests\Router;
 
-use Nhivonfq\Unlock\Core\Request;
-use Nhivonfq\Unlock\Core\Router;
+use Nhivonfq\Unlock\boostrap\Request;
+use Nhivonfq\Unlock\boostrap\Router;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase

@@ -2,9 +2,10 @@
 
 namespace Nhivonfq\Unlock\Controllers;
 
-use Nhivonfq\Unlock\Core\Controller;
-use Nhivonfq\Unlock\Core\Request;
-use Nhivonfq\Unlock\Models\RegisterModel;
+use Nhivonfq\Unlock\boostrap\Application;
+use Nhivonfq\Unlock\boostrap\Controller;
+use Nhivonfq\Unlock\boostrap\Request;
+use Nhivonfq\Unlock\Validation\RegisterValidate;
 
 class AuthController extends Controller
 {
@@ -13,7 +14,7 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $this->setLayout('main');
+        $this->setLayout('auth');
 
         return $this->render('login', []);
     }
@@ -21,27 +22,27 @@ class AuthController extends Controller
 
     /**
      * @param Request $request
-     * @return AuthController|string
+     * @return array|false|string|string[]
      */
-    public function register(Request $request): AuthController|string
+    public function register(Request $request)
     {
 
-        $registerModel = new RegisterModel();
+        $registerValidate = new RegisterValidate();
         if ($request->isPost()) {
-            $registerModel->loadData($request->getBody());
 
-            if ($registerModel->validate() && $registerModel->register()) {
-                return 'Success';
+            $registerValidate->loadData($request->getBody());
+
+            if ($registerValidate->validate() && $registerValidate->save()) {
+                Application::$app->response->redirect('/');
+                Application::$app->session->setFlash('success','Thanks for registering');
             }
 
-
-
-            return $this->render('register', ['model' => $registerModel]);
+            return $this->render('register', ['model' => $registerValidate]);
         }
 
         $this->setLayout('auth');
 
-        return $this->render('register', ['model' => $registerModel]);
+        return $this->render('register', ['model' => $registerValidate]);
 
     }
 }

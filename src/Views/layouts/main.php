@@ -1,5 +1,5 @@
 <?php
-
+use Nhivonfq\Unlock\boostrap\Application;
 ?>
 
 <!doctype html>
@@ -9,7 +9,9 @@
     <meta name="viewport"
     /**
      * @param $view
-     * @return
+     * @returnpublic function setFlash($key, $message) {
+
+    }
      */
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -46,8 +48,14 @@
     </div>
 </nav>
 <div class="container">
+    <?php if (Application::$app->session->getFlash('success')) : ?>
+    <div class="alert alert-success">
+        <?php echo Application::$app->session->getFlash('success') ?>
+    </div>
+    <?php endif; ?>
     {{content}}
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

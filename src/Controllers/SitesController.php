@@ -2,9 +2,9 @@
 
 namespace Nhivonfq\Unlock\Controllers;
 
-use Nhivonfq\Unlock\Core\Application;
-use Nhivonfq\Unlock\Core\Controller;
-use Nhivonfq\Unlock\Core\Request;
+use Nhivonfq\Unlock\boostrap\Application;
+use Nhivonfq\Unlock\boostrap\Controller;
+use Nhivonfq\Unlock\boostrap\Request;
 
 class SitesController extends Controller
 {
@@ -30,8 +30,6 @@ class SitesController extends Controller
 
     public function contact(): string
     {
-
-
         return $this->render('contact', []);
     }
 }
