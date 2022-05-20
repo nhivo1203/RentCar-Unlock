@@ -48,7 +48,7 @@ class Database
             id INT  AUTO_INCREMENT PRIMARY KEY,
             migration VARCHAR(255),
             createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );"
+            );"
         );
     }
 
