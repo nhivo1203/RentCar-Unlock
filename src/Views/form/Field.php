@@ -26,23 +26,26 @@ class Field
     /**
      * @return string
      */
+
     public function __toString()
     {
         return sprintf('
             <div class="mb-3">
                 <label>%s</label>
                 <input type="%s" name="%s" value="%s" class="form-control%s">
+                <div class="invalid-feedback">
+                    %s
+                </div>
             </div>
-            <div class="invalid-feedback">
-                %s
-            </div>
-        ', $this->attribute,
+        
+        ', $this->model->labels()[$this->attribute] ?? $this->attribute,
             $this->type,
             $this->attribute,
             $this->model->{$this->attribute},
             $this->model->hasError($this->attribute) ? ' is-invalid' : '',
             $this->model->getFirstError($this->attribute)
         );
+
     }
 
     /**

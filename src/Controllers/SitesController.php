@@ -5,6 +5,7 @@ namespace Nhivonfq\Unlock\Controllers;
 use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\boostrap\Request;
+use Nhivonfq\Unlock\boostrap\Response;
 
 class SitesController extends Controller
 {
@@ -22,14 +23,17 @@ class SitesController extends Controller
     {
         $body = $request->getBody();
 
-        var_dump($body);
-        die();
-
         return "Handling Submit Rent Car";
     }
 
     public function contact(): string
     {
         return $this->render('contact', []);
+    }
+
+    public function logout(Request $request, Response $response)
+    {
+        Application::$app->logout();
+        $response->redirect('/');
     }
 }

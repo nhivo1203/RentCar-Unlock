@@ -5,7 +5,7 @@ namespace Nhivonfq\Unlock\Validation;
 use Nhivonfq\Unlock\boostrap\DBModel;
 use Nhivonfq\Unlock\boostrap\Validate;
 
-class RegisterValidate extends DBModel
+class UserValidate extends DBModel
 {
     const STATUS_INACTIVE=0;
     const STATUS_ACTIVE=1;
@@ -25,6 +25,12 @@ class RegisterValidate extends DBModel
         return 'users';
     }
 
+
+    public function primaryKey(): string
+    {
+        return 'id';
+    }
+
     public function attributes(): array
     {
         return ['firstname', 'lastname', 'email', 'password', 'status', 'username'];
@@ -35,16 +41,17 @@ class RegisterValidate extends DBModel
         return [
             'firstname' => 'First name',
             'lastname' => 'Last name',
+            'username' => 'Username',
             'email' => 'Email',
             'password' => 'Password',
-            'passwordConfirm' => 'Password Confirm'
+            'confirmPassword' => 'Password Confirm'
         ];
     }
 
     public function register()
     {
         $this->password = password_hash($this->password,PASSWORD_DEFAULT);
-        return parent::save();
+        return $this->save();
     }
 
     public function rules(): array
@@ -53,10 +60,16 @@ class RegisterValidate extends DBModel
             'firstname' => [self::RULE_REQUIRED],
             'lastname' => [self::RULE_REQUIRED],
             'username' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 6], [self::RULE_MAX, 'max' => 50]],
-            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
+            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [
+                self::RULE_UNIQUE, 'class' => self::class
+            ]],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 6], [self::RULE_MAX, 'max' => 50]],
             'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match'=> 'password']],
         ];
     }
 
+    public function getDisplayName(): string
+    {
+        return $this->firstname. " " . $this->lastname;
+    }
 }

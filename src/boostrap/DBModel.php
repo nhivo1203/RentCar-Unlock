@@ -6,6 +6,8 @@ abstract class DBModel extends Validate
 {
     abstract public function tableName(): string;
 
+    abstract public function primaryKey(): string;
+
     abstract public function attributes(): array;
 
     public function save()
@@ -19,9 +21,24 @@ abstract class DBModel extends Validate
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
         $statement->execute();
+        return true;
     }
 
-    public function prepare($sql){
+    public function findOne($where)
+    {
+        $tableName = $this->tableName();
+        $attributes = array_keys($where);
+        $sql = implode("AND", array_map(static fn($attr) => "$attr = :$attr", $attributes));
+        $statement = $this->prepare("SELECT * FROM $tableName WHERE $sql");
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchObject(static::class);
+    }
+
+    public function prepare($sql)
+    {
         return Application::$app->db->pdo->prepare($sql);
     }
 }
