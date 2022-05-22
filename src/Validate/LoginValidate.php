@@ -5,6 +5,7 @@ namespace Nhivonfq\Unlock\Validate;
 use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\boostrap\Validate;
 use Nhivonfq\Unlock\Repository\UserRepository;
+use Nhivonfq\Unlock\Services\UserServices;
 
 class LoginValidate extends Validate
 {
@@ -32,7 +33,7 @@ class LoginValidate extends Validate
         }
 
 
-        return Application::$app->login($user);
+        return UserServices::$userServices->login($user);
     }
 
 }
