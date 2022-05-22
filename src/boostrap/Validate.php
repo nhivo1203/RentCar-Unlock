@@ -2,6 +2,8 @@
 
 namespace Nhivonfq\Unlock\boostrap;
 
+use Nhivonfq\Unlock\Database\Database;
+
 abstract class Validate
 {
     public const RULE_REQUIRED = 'required';
@@ -21,6 +23,7 @@ abstract class Validate
     }
 
     abstract public function rules(): array;
+
     public function labels(): array {
         return [];
     }
@@ -31,50 +34,55 @@ abstract class Validate
     {
         foreach ($this->rules() as $attribute => $rules) {
             $value = $this->{$attribute};
+
             foreach ($rules as $rule) {
+
                 $ruleName = $rule;
                 if (!is_string($ruleName)) {
                     $ruleName = $rule[0];
                 }
                 if ($ruleName === self::RULE_REQUIRED && !$value) {
-                    $this->addError($attribute, self::RULE_REQUIRED);
+                    $this->addErrorForRule($attribute, self::RULE_REQUIRED);
                 }
                 if ($ruleName === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    $this->addError($attribute, self::RULE_EMAIL);
+                    $this->addErrorForRule($attribute, self::RULE_EMAIL);
                 }
                 if ($ruleName === self::RULE_MIN && strlen($value) < $rule['min']) {
-                    $this->addError($attribute, self::RULE_MIN, $rule);
+                    $this->addErrorForRule($attribute, self::RULE_MIN, $rule);
                 }
                 if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
-                    $this->addError($attribute, self::RULE_MAX, $rule);
+                    $this->addErrorForRule($attribute, self::RULE_MAX, $rule);
                 }
                 if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
-                    $this->addError($attribute, self::RULE_MATCH, $rule);
+                    $this->addErrorForRule($attribute, self::RULE_MATCH, $rule);
                 }
-//                if ($ruleName === self::RULE_UNIQUE) {
-//                    $className = $rule['class'];
-//                    $uniqueAttr = $rule['attribute'] ?? $attribute;
-//                    $tableName = $className::tableName();
-//                    $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE :$uniqueAttr = :attr");
-//                    $statement->bindValue(":attr", $value);
-//                    $statement->execute();
-//                    $record = $statement->fetchObject();
-//                    if($record) {
-//                        $this->addError($attribute, self::RULE_UNIQUE, ['field' => $attribute]);
-//                    }
-//                }
+                if ($ruleName === self::RULE_UNIQUE) {
+                    $uniqueAttr = $rule['attribute'] ?? $attribute;
+                    $tableName = 'users';
+                    $statement = Database::prepare("SELECT * FROM $tableName WHERE $uniqueAttr = '$value';");
+                    $statement->execute();
+                    $record = $statement->fetchObject();
+                    if($record) {
+                        $this->addErrorForRule($attribute, self::RULE_UNIQUE, ['field' => $attribute]);
+                    }
+                }
             }
         }
 
         return empty($this->errors);
     }
 
-    public function addError(string $attribute, string $rule, $params = [])
+    private function addErrorForRule(string $attribute, string $rule, $params = [])
     {
         $message = $this->errorMessage()[$rule] ?? '';
         foreach ($params as $key => $value) {
             $message = str_replace("{{$key}}", $value, $message);
         }
+        $this->errors[$attribute][] = $message;
+    }
+
+    public function addError(string $attribute, string $message)
+    {
         $this->errors[$attribute][] = $message;
     }
 

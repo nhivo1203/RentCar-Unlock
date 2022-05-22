@@ -1,21 +1,18 @@
 <?php
 
 namespace Nhivonfq\Unlock\boostrap;
+
+use Nhivonfq\Unlock\App\View;
+use Nhivonfq\Unlock\Repository\UserRepository;
+use Nhivonfq\Unlock\Validate\SessionValidate;
+
 /**
  * Class Application
  * @package app\core
  */
 class Application
 {
-    /**
-     * @var Database
-     */
-    public Database $db;
-
-    /**
-     * @var Session
-     */
-    public Session $session;
+    public View $view;
 
     /**
      * @var string
@@ -39,23 +36,20 @@ class Application
      */
     public static Application $app;
 
-    public Controller $controller;
+    public ?Controller $controller = null;
 
     /**
      * @param $rootPath
      */
-    public function __construct($rootPath, array $config)
+    public function __construct($rootPath)
     {
-
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
-        $this->db = new Database($config['db']);
-        $this->session = new Session();
         $this->request = new Request();
         $this->response = new Response();
-        $this->router = new Router($this->request);
+        $this->router = new Router($this->request, $this->response);
+        $this->view = new View();
     }
-
 
     /**
      * @return void

@@ -2,6 +2,7 @@
 
 namespace Nhivonfq\Unlock\boostrap;
 
+use Nhivonfq\Unlock\App\View;
 use function is_string;
 
 class Router
@@ -11,14 +12,19 @@ class Router
      */
 
     public Request $request;
+    public Response $response;
+    public View $view;
+
     protected array $routes = [];
 
     /**
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Response $response)
     {
+        $this->view = new View();
         $this->request = $request;
+        $this->response = $response;
     }
 
 
@@ -54,61 +60,17 @@ class Router
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
             Application::$app->response->setStatusCode(404);
-            return $this->renderView("_404");
+            return $this->view->renderView("_404");
         }
         if (is_string($callback)) {
-            return $this->renderView($callback);
+            return $this->view->renderView($callback);
         }
         if (is_array($callback)) {
             Application::$app->controller = new $callback[0]();
             $callback[0] = Application::$app->controller;
         }
 
-        return call_user_func($callback, $this->request);
-    }
-
-    /**
-     * @param $view
-     * @return array|false|string|string[]
-     */
-    public function renderView($view, $param = [])
-    {
-
-        $layoutContent = $this->layoutContent();
-        $viewContent = $this->renderOnlyView($view, $param);
-        return str_replace('{{content}}', $viewContent, $layoutContent);
-    }
-
-    public function renderContent($viewContent)
-    {
-        $layoutContent = $this->layoutContent();
-        return str_replace('{{content}}', $viewContent, $layoutContent);
-    }
-
-
-    /**
-     * @return false|string
-     */
-    protected function layoutContent()
-    {
-        $layout = Application::$app->controller->layout;
-        ob_start();
-        include_once(Application::$ROOT_DIR . "/src/Views/layouts/$layout.php");
-        return ob_get_clean();
-    }
-
-    /**
-     * @param $view
-     * @return false|string
-     */
-    protected function renderOnlyView($view, $param = [])
-    {
-        foreach ($param as $key => $value) {
-            $$key = $value;
-        }
-        ob_start();
-        include_once(Application::$ROOT_DIR . "/src/Views/$view.php");
-        return ob_get_clean();
+        return call_user_func($callback, $this->request, $this->response);
     }
 
     /**

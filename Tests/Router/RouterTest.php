@@ -1,6 +1,6 @@
 <?php declare (strict_types=1);
 
-namespace app\Tests\Router;
+namespace Nhivonfq\Tests\Router;
 
 use Nhivonfq\Unlock\boostrap\Request;
 use Nhivonfq\Unlock\boostrap\Router;
