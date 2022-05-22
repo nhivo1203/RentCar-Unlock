@@ -2,6 +2,7 @@
 
 use Nhivonfq\Unlock\Services\UserServices;
 
+
 ?>
 
 <!doctype html>
@@ -44,6 +45,7 @@ use Nhivonfq\Unlock\Services\UserServices;
         <?php
 
         if (UserServices::isGuest()): ?>
+
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="/login">Login</a>
@@ -62,6 +64,7 @@ use Nhivonfq\Unlock\Services\UserServices;
                 <li class="nav-item active">
                     <a class="nav-link" href="/logout">
                         Logout
+
                     </a>
                 </li>
             </ul>

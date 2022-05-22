@@ -10,6 +10,7 @@ use Nhivonfq\Unlock\Database\Database;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Services\UserServices;
 
+
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -29,6 +30,7 @@ $connection = Database::getConnection($config['db']);
 $userService = new UserServices($config);
 
 $app = new Application(dirname(__DIR__));
+
 
 $app->router->get('/', [new SitesController(), 'home']);
 

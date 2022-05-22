@@ -6,6 +6,7 @@ use Nhivonfq\Unlock\App\View;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Validate\SessionValidate;
 
+
 /**
  * Class Application
  * @package app\core
@@ -13,6 +14,7 @@ use Nhivonfq\Unlock\Validate\SessionValidate;
 class Application
 {
     public View $view;
+
 
     /**
      * @var string
@@ -45,6 +47,7 @@ class Application
     {
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
+
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);

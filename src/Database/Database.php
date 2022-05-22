@@ -3,6 +3,7 @@
 namespace Nhivonfq\Unlock\Database;
 
 
+
 use PDO;
 use PDOException;
 
@@ -30,5 +31,6 @@ class Database
 
     public static function prepare($sql) {
         return self::$connection->prepare($sql);
+
     }
 }

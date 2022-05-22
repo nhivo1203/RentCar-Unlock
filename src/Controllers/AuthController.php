@@ -9,6 +9,7 @@ use Nhivonfq\Unlock\boostrap\Response;
 use Nhivonfq\Unlock\Validate\LoginValidate;
 use Nhivonfq\Unlock\Validate\UserValidate;
 
+
 class AuthController extends Controller
 {
     /**

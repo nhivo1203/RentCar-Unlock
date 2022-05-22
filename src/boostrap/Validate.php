@@ -66,6 +66,7 @@ abstract class Validate
                         $this->addErrorForRule($attribute, self::RULE_UNIQUE, ['field' => $attribute]);
                     }
                 }
+
             }
         }
 
