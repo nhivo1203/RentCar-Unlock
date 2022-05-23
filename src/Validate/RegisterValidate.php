@@ -1,15 +1,18 @@
 <?php
 
-namespace Nhivonfq\Unlock\Validation;
+namespace Nhivonfq\Unlock\Validate;
 
-use Nhivonfq\Unlock\boostrap\DBModel;
 use Nhivonfq\Unlock\boostrap\Validate;
+use Nhivonfq\Unlock\Models\User;
 
-class UserValidate extends DBModel
+class RegisterValidate extends Validate
 {
-    const STATUS_INACTIVE=0;
-    const STATUS_ACTIVE=1;
-    const STATUS_DELETED=2;
+    public User $user;
+
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 2;
+
 
     public string $firstname = '';
     public string $lastname = '';
@@ -20,21 +23,11 @@ class UserValidate extends DBModel
     public string $confirmPassword = '';
 
 
-    public function tableName(): string
+    public function __construct()
     {
-        return 'users';
+        $this->user = new User();
     }
 
-
-    public function primaryKey(): string
-    {
-        return 'id';
-    }
-
-    public function attributes(): array
-    {
-        return ['firstname', 'lastname', 'email', 'password', 'status', 'username'];
-    }
 
     public function labels(): array
     {
@@ -48,10 +41,17 @@ class UserValidate extends DBModel
         ];
     }
 
-    public function register()
+    public function register(): bool
     {
-        $this->password = password_hash($this->password,PASSWORD_DEFAULT);
-        return $this->save();
+        $this->user->setFirstname($this->firstname);
+        $this->user->setLastname($this->lastname);
+        $this->user->setEmail($this->email);
+        $this->user->setStatus($this->status);
+        $this->user->setUsername($this->username);
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        $this->user->setPassword($this->password);
+
+        return true;
     }
 
     public function rules(): array
@@ -64,12 +64,12 @@ class UserValidate extends DBModel
                 self::RULE_UNIQUE, 'class' => self::class
             ]],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 6], [self::RULE_MAX, 'max' => 50]],
-            'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match'=> 'password']],
+            'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
         ];
     }
 
     public function getDisplayName(): string
     {
-        return $this->firstname. " " . $this->lastname;
+        return $this->firstname . " " . $this->lastname;
     }
 }

@@ -1,14 +1,23 @@
 <?php
 
-namespace Nhivonfq\Unlock\Validation;
+namespace Nhivonfq\Unlock\Validate;
 
-use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\boostrap\Validate;
+use Nhivonfq\Unlock\Repository\UserRepository;
+use Nhivonfq\Unlock\Services\UserServices;
 
 class LoginValidate extends Validate
 {
+    public $user;
+    public UserRepository $userRepository;
+
     public string $email = '';
     public string $password = '';
+
+
+    public function __construct() {
+        $this->userRepository = new UserRepository();
+    }
 
     public function rules(): array
     {
@@ -18,20 +27,20 @@ class LoginValidate extends Validate
         ];
     }
 
-    public function login()
+    public function handleLogin()
     {
-        $user = (new UserValidate)->findOne(['email' => $this->email]);
-        if (!$user) {
+        $this->user = $this->userRepository->findOne(['email' => $this->email]);
+        if (!$this->user) {
             $this->addError('email', 'User does not exits');
             return false;
         }
-        if (password_verify(password_hash($this->password,PASSWORD_DEFAULT), $user->password)) {
+        if (password_verify(password_hash($this->password,PASSWORD_DEFAULT), $this->user->password)) {
             $this->addError('password', 'Password is incorrect');
             return false;
         }
 
 
-        return Application::$app->login($user);
+        return true;
     }
 
 }

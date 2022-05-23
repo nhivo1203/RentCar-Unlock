@@ -1,6 +1,6 @@
 <?php
 
-use Nhivonfq\Unlock\boostrap\Application;
+use Nhivonfq\Unlock\Services\UserServices;
 
 ?>
 
@@ -32,9 +32,9 @@ use Nhivonfq\Unlock\boostrap\Application;
 
 <div class="container">
     <?php
-    if (Application::$app->session->getFlash('success')) : ?>
+    if (UserServices::$userServices->session->getFlash('success')) : ?>
         <div class="alert alert-success">
-            <?php echo Application::$app->session->getFlash('success') ?>
+            <?php echo UserServices::$userServices->session->getFlash('success') ?>
         </div>
     <?php endif; ?>
     {{content}}

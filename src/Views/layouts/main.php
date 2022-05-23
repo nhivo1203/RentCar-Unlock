@@ -1,6 +1,6 @@
 <?php
 
-use Nhivonfq\Unlock\boostrap\Application;
+use Nhivonfq\Unlock\Services\UserServices;
 
 ?>
 
@@ -43,7 +43,7 @@ use Nhivonfq\Unlock\boostrap\Application;
         </ul>
         <?php
 
-        if (Application::isGuest()): ?>
+        if (UserServices::isGuest()): ?>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="/login">Login</a>
@@ -60,9 +60,9 @@ use Nhivonfq\Unlock\boostrap\Application;
                     </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/logout">
-                        Welcome <?php echo Application::$app->user->getDisplayName() ?> (Logout)
-                    </a>
+                    <form action="logout" method="post">
+                        <button type="submit" class="btn btn-primary">Logout</button>
+                    </form>
                 </li>
             </ul>
         <?php endif; ?>
@@ -70,9 +70,9 @@ use Nhivonfq\Unlock\boostrap\Application;
 </nav>
 
 <div class="container">
-    <?php if (Application::$app->session->getFlash('success')): ?>
+    <?php if (UserServices::$userServices->session->getFlash('success')): ?>
         <div class="alert alert-success">
-            <p><?php echo Application::$app->session->getFlash('success') ?></p>
+            <p><?php echo UserServices::$userServices->session->getFlash('success') ?></p>
         </div>
     <?php endif; ?>
     {{content}}

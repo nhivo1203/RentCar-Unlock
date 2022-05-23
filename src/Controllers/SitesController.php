@@ -2,10 +2,10 @@
 
 namespace Nhivonfq\Unlock\Controllers;
 
-use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\boostrap\Request;
 use Nhivonfq\Unlock\boostrap\Response;
+use Nhivonfq\Unlock\Services\UserServices;
 
 class SitesController extends Controller
 {
@@ -33,7 +33,10 @@ class SitesController extends Controller
 
     public function logout(Request $request, Response $response)
     {
-        Application::$app->logout();
+        if($request->isPost()) {
+            UserServices::$userServices->logout();
+            $response->redirect('/');
+        }
         $response->redirect('/');
     }
 }

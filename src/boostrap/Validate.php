@@ -2,6 +2,8 @@
 
 namespace Nhivonfq\Unlock\boostrap;
 
+use Nhivonfq\Unlock\Database\Database;
+
 abstract class Validate
 {
     public const RULE_REQUIRED = 'required';
@@ -21,6 +23,7 @@ abstract class Validate
     }
 
     abstract public function rules(): array;
+
     public function labels(): array {
         return [];
     }
@@ -31,7 +34,9 @@ abstract class Validate
     {
         foreach ($this->rules() as $attribute => $rules) {
             $value = $this->{$attribute};
+
             foreach ($rules as $rule) {
+
                 $ruleName = $rule;
                 if (!is_string($ruleName)) {
                     $ruleName = $rule[0];
@@ -51,18 +56,16 @@ abstract class Validate
                 if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
                     $this->addErrorForRule($attribute, self::RULE_MATCH, $rule);
                 }
-//                if ($ruleName === self::RULE_UNIQUE) {
-//                    $className = $rule['class'];
-//                    $uniqueAttr = $rule['attribute'] ?? $attribute;
-//                    $tableName = $className::tableName();
-//                    $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE :$uniqueAttr = :attr");
-//                    $statement->bindValue(":attr", $value);
-//                    $statement->execute();
-//                    $record = $statement->fetchObject();
-//                    if($record) {
-//                        $this->addError($attribute, self::RULE_UNIQUE, ['field' => $attribute]);
-//                    }
-//                }
+                if ($ruleName === self::RULE_UNIQUE) {
+                    $uniqueAttr = $rule['attribute'] ?? $attribute;
+                    $tableName = 'users';
+                    $statement = Database::prepare("SELECT * FROM $tableName WHERE $uniqueAttr = '$value';");
+                    $statement->execute();
+                    $record = $statement->fetchObject();
+                    if($record) {
+                        $this->addErrorForRule($attribute, self::RULE_UNIQUE, ['field' => $attribute]);
+                    }
+                }
             }
         }
 
@@ -77,6 +80,7 @@ abstract class Validate
         }
         $this->errors[$attribute][] = $message;
     }
+
     public function addError(string $attribute, string $message)
     {
         $this->errors[$attribute][] = $message;

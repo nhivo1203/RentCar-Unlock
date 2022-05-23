@@ -1,8 +1,8 @@
 <?php
 
-namespace Nhivonfq\Unlock\boostrap;
+namespace Nhivonfq\Unlock\Validate;
 
-class Session
+class SessionValidate
 {
     protected const FLASH_KEY = 'flash_messages';
 

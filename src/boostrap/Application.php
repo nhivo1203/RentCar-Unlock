@@ -3,8 +3,8 @@
 namespace Nhivonfq\Unlock\boostrap;
 
 use Nhivonfq\Unlock\App\View;
-use Nhivonfq\Unlock\Database\Database;
-use PDO;
+use Nhivonfq\Unlock\Repository\UserRepository;
+use Nhivonfq\Unlock\Validate\SessionValidate;
 
 /**
  * Class Application
@@ -13,21 +13,6 @@ use PDO;
 class Application
 {
     public View $view;
-
-    public ?DBModel $user;
-
-    /**
-     * @var string|mixed
-     */
-    public string $userClass;
-    /**
-     * @var PDO
-     */
-    public PDO $connection;
-    /**
-     * @var Session
-     */
-    public Session $session;
 
     /**
      * @var string
@@ -56,48 +41,15 @@ class Application
     /**
      * @param $rootPath
      */
-    public function __construct($rootPath, array $config)
+    public function __construct($rootPath)
     {
-        $this->user = null;
-        $this->userClass = $config['userClass'];
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
-        $this->connection = new Database::getConnection();
-        $this->session = new Session();
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
         $this->view = new View();
-
-        $userId = self::$app->session->get('user');
-        if ($userId) {
-            $key = (new $this->userClass())->primaryKey();
-            $this->user = (new $this->userClass())->findOne([$key => $userId]);
-        }
     }
-
-    public static function isGuest()
-    {
-        return !self::$app->user;
-    }
-
-
-    public function login(DBModel $user)
-    {
-        $this->user = $user;
-        $primaryKey = $user->primaryKey();
-        $primaryValue = $user->{$primaryKey};
-        $this->session->set('user', $primaryValue);
-
-        return true;
-    }
-
-    public function logout()
-    {
-        $this->user = null;
-        self::$app->session->remove('user');
-    }
-
 
     /**
      * @return void

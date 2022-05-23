@@ -6,21 +6,36 @@ use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\boostrap\Request;
 use Nhivonfq\Unlock\boostrap\Response;
-use Nhivonfq\Unlock\Validation\LoginValidate;
-use Nhivonfq\Unlock\Validation\UserValidate;
+use Nhivonfq\Unlock\Services\UserServices;
+use Nhivonfq\Unlock\Validate\LoginValidate;
+use Nhivonfq\Unlock\Validate\RegisterValidate;
+use Nhivonfq\Unlock\Repository\UserRepository;
+
 
 class AuthController extends Controller
 {
+    public RegisterValidate $registerValidate;
+    public LoginValidate $loginValidate;
+    public UserRepository $userRepository;
+
+    public function __construct()
+    {
+        $this->loginValidate = new LoginValidate();
+        $this->registerValidate = new RegisterValidate();
+        $this->userRepository = new UserRepository();
+    }
+
     /**
      * @return array|false|string|string[]
      */
     public function login(Request $request, Response $response)
     {
-        $loginValidate = new LoginValidate();
 
-        if($request->isPost()){
-            $loginValidate->loadData($request->getBody());
-            if ($loginValidate->validate() && $loginValidate->login()) {
+        if ($request->isPost()) {
+            $this->loginValidate->loadData($request->getBody());
+            if ($this->loginValidate->validate() &&
+                $this->loginValidate->handleLogin()
+                && UserServices::$userServices->login($this->loginValidate->user)) {
                 $response->redirect('/');
                 return true;
             }
@@ -29,7 +44,7 @@ class AuthController extends Controller
         $this->setLayout('auth');
 
         return $this->render('login', [
-            'model' => $loginValidate
+            'model' => $this->loginValidate
         ]);
     }
 
@@ -40,23 +55,23 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-
-        $registerValidate = new UserValidate();
         if ($request->isPost()) {
 
-            $registerValidate->loadData($request->getBody());
+            $this->registerValidate->loadData($request->getBody());
 
-            if ($registerValidate->validate() && $registerValidate->register()) {
+            if ($this->registerValidate->validate()
+                && $this->registerValidate->register()
+                && $this->userRepository->save($this->registerValidate->user)) {
                 Application::$app->response->redirect('/');
-                Application::$app->session->setFlash('success','Thanks for registering');
+                UserServices::$userServices->session->setFlash('success', 'Thanks for registering');
             }
 
-            return $this->render('register', ['model' => $registerValidate]);
+            return $this->render('register', ['model' => $this->registerValidate]);
         }
 
         $this->setLayout('auth');
 
-        return $this->render('register', ['model' => $registerValidate]);
+        return $this->render('register', ['model' => $this->registerValidate]);
 
     }
 }
