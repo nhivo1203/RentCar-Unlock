@@ -4,12 +4,10 @@ namespace Nhivonfq\Unlock\Validate;
 
 use Nhivonfq\Unlock\boostrap\Validate;
 use Nhivonfq\Unlock\Models\User;
-use Nhivonfq\Unlock\Repository\UserRepository;
 
-class UserValidate extends Validate
+class RegisterValidate extends Validate
 {
     public User $user;
-    public UserRepository $userRepository;
 
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -27,7 +25,6 @@ class UserValidate extends Validate
 
     public function __construct()
     {
-        $this->userRepository = new UserRepository();
         $this->user = new User();
     }
 
@@ -44,7 +41,7 @@ class UserValidate extends Validate
         ];
     }
 
-    public function register()
+    public function register(): bool
     {
         $this->user->setFirstname($this->firstname);
         $this->user->setLastname($this->lastname);
@@ -54,7 +51,7 @@ class UserValidate extends Validate
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         $this->user->setPassword($this->password);
 
-        return $this->userRepository->save($this->user);
+        return true;
     }
 
     public function rules(): array
