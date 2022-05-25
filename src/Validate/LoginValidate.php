@@ -26,21 +26,4 @@ class LoginValidate extends Validate
             'password' => [self::RULE_REQUIRED]
         ];
     }
-
-    public function handleLogin()
-    {
-        $this->user = $this->userRepository->findOne(['email' => $this->email]);
-        if (!$this->user) {
-            $this->addError('email', 'User does not exits');
-            return false;
-        }
-        if (password_verify(password_hash($this->password,PASSWORD_DEFAULT), $this->user->password)) {
-            $this->addError('password', 'Password is incorrect');
-            return false;
-        }
-
-
-        return true;
-    }
-
 }

@@ -11,20 +11,13 @@ class View
      * @param $view
      * @return array|false|string|string[]
      */
-    public function renderView($view, $param = [])
+    public function renderView($view, array $param = null)
     {
 
         $layoutContent = $this->layoutContent();
         $viewContent = $this->renderOnlyView($view, $param);
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }
-
-    public function renderContent($viewContent)
-    {
-        $layoutContent = $this->layoutContent();
-        return str_replace('{{content}}', $viewContent, $layoutContent);
-    }
-
 
     /**
      * @return false|string

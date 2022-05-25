@@ -3,8 +3,8 @@
 namespace Nhivonfq\Unlock\boostrap;
 
 use Nhivonfq\Unlock\App\View;
-use Nhivonfq\Unlock\Repository\UserRepository;
-use Nhivonfq\Unlock\Validate\SessionValidate;
+use Nhivonfq\Unlock\Http\Request;
+use Nhivonfq\Unlock\Http\Response;
 
 /**
  * Class Application
@@ -36,19 +36,21 @@ class Application
      */
     public static Application $app;
 
-    public ?Controller $controller = null;
+    public Controller $controller;
 
     /**
      * @param $rootPath
      */
     public function __construct($rootPath)
     {
+        $container = new Container();
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
-        $this->request = new Request();
-        $this->response = new Response();
-        $this->router = new Router($this->request, $this->response);
-        $this->view = new View();
+        $this->controller = $container->make(Controller::class);
+        $this->request = $container->make(Request::class);
+        $this->response = $container->make(Response::class);
+        $this->router = $container->make(Router::class);
+        $this->view = $container->make(View::class);
     }
 
     /**
@@ -56,7 +58,22 @@ class Application
      */
     public function run()
     {
-        echo $this->router->resolve();
-    }
 
+        $path = $this->request->getPath();
+        $method = $this->request->getMethod();
+        $container = new Container();
+
+        $callback = $this->router->routes[$method][$path] ?? false;
+        if ($callback === false) {
+            $this->response->setStatusCode(404);
+            echo $this->view->renderView("_404");
+        }
+        if (is_string($callback)) {
+            echo $this->view->renderView($callback);
+        }
+        $action = $callback[1];
+        $controller = $container->make($callback[0]);
+        $response = $controller->$action();
+        echo $this->view->renderView($response->template);
+    }
 }

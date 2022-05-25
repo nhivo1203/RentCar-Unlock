@@ -3,7 +3,7 @@
 namespace Nhivonfq\Unlock\Services;
 
 use Nhivonfq\Unlock\Repository\UserRepository;
-use Nhivonfq\Unlock\Validate\SessionValidate;
+use Nhivonfq\Unlock\Services\SessionServices;
 
 class UserServices
 {
@@ -12,9 +12,9 @@ class UserServices
      */
     public string $userClass;
     /**
-     * @var SessionValidate
+     * @var SessionServices
      */
-    public SessionValidate $session;
+    public SessionServices $session;
     private ?UserRepository $user;
 
     public static UserServices $userServices;
@@ -22,7 +22,7 @@ class UserServices
     public function __construct(array $config)
     {
         self::$userServices = $this;
-        $this->session = new SessionValidate();
+        $this->session = new SessionServices();
         $this->user = null;
         $this->userClass = $config['userClass'];
 

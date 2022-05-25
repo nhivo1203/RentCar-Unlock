@@ -3,20 +3,20 @@
 namespace Nhivonfq\Unlock\Controllers;
 
 use Nhivonfq\Unlock\boostrap\Controller;
-use Nhivonfq\Unlock\boostrap\Request;
-use Nhivonfq\Unlock\boostrap\Response;
+use Nhivonfq\Unlock\Http\Request;
+use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Services\UserServices;
 
 class SitesController extends Controller
 {
-    public function home(): string
-    {
-        $params = [
-            'name' => 'Nhi Vo'
-        ];
+    private Request $request;
+    private Response $response;
 
-        return $this->render('home',$params);
+    public function __construct(Request $request, Response $response) {
+        $this->request = $request;
+        $this->response = $response;
     }
+
 
 
     public function handleRentCar(Request $request): string
@@ -31,12 +31,12 @@ class SitesController extends Controller
         return $this->render('contact', []);
     }
 
-    public function logout(Request $request, Response $response)
+    public function logout()
     {
-        if($request->isPost()) {
+        if($this->request->isPost()) {
             UserServices::$userServices->logout();
-            $response->redirect('/');
+            $this->response->redirect('/');
         }
-        $response->redirect('/');
+        $this->response->redirect('/');
     }
 }

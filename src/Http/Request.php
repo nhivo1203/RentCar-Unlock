@@ -1,6 +1,6 @@
 <?php
 
-namespace Nhivonfq\Unlock\boostrap;
+namespace Nhivonfq\Unlock\Http;
 
 class Request
 {
@@ -16,25 +16,20 @@ class Request
         return substr($path, 0, $position);
     }
 
-    public function method(): string
+    public function getMethod(): string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
-    public function isGet() {
-        return $this->method() === 'get';
-    }
-
     public function isPost() {
-        return $this->method() === 'post';
+        return $this->getMethod() === 'post';
     }
-
 
     public function getBody(): array
     {
         $body = [];
 
-        if($this->method() === 'post'){
+        if($this->getMethod() === 'post'){
             foreach($_POST as $key => $value) {
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
