@@ -8,23 +8,25 @@ use Nhivonfq\Unlock\Models\UserModel;
 class UserRepository
 {
 
+    private array $attributes = ['firstname', 'lastname', 'email', 'password', 'status', 'username'];
+    private UserModel $user;
 
-    public static array $attributes = ['firstname', 'lastname', 'email', 'password', 'status', 'username'];
-
-    public static string $primaryKey = 'id';
-
-    public function save(UserModel $user): bool
+    public function __construct(UserModel $user)
     {
-        $attributes = self::$attributes;
+        $this->user = $user;
+    }
 
-        $statement = $this->prepare("INSERT INTO users(" . implode(',', $attributes) . ")
+    public function save(): bool
+    {
+
+        $statement = $this->prepare("INSERT INTO users(" . implode(',', $this->attributes) . ")
             VALUES(
-            '$user->firstname',
-            '$user->lastname',
-            '$user->email',
-            '$user->password',
-            '$user->status',
-            '$user->username'
+            '$this->user->getFirstname()',
+            '$this->user->getLastname()',
+            '$this->user->getEmail()',
+            '$this->user->getPassword()',
+            '$this->user->getStatus()',
+            '$this->user->getUsername()'
             )");
         $statement->execute();
         return true;
@@ -49,6 +51,7 @@ class UserRepository
                 $user->setLastname($row['lastname']);
                 $user->setStatus($row['status']);
                 $user->setEmail($row['email']);
+                $user->setCreateAt($row['createdAt']);
                 return $user;
             } else {
                 return null;

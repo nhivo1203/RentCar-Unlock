@@ -9,7 +9,7 @@ use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Request\LoginRequest;
-use Nhivonfq\Unlock\Services\UserServices;
+use Nhivonfq\Unlock\Services\LoginServices;
 use Nhivonfq\Unlock\Validate\LoginValidate;
 use Nhivonfq\Unlock\Validate\RegisterValidate;
 
@@ -21,6 +21,7 @@ class AuthController extends Controller
     private UserRepository $userRepository;
     private Request $request;
     private Response $response;
+    private LoginServices $userServices;
 
     public function __construct(
         RegisterValidate $registerValidate,
@@ -28,11 +29,13 @@ class AuthController extends Controller
         Request          $request,
         Response         $response,
         UserRepository   $userRepository,
+        LoginServices $userServices
     )
     {
         $this->loginValidate = $loginValidate;
         $this->registerValidate = $registerValidate;
         $this->userRepository = $userRepository;
+        $this->userServices = $userServices;
         $this->request = $request;
         $this->response = $response;
     }
@@ -48,7 +51,7 @@ class AuthController extends Controller
             $loginRequest = $loginRequest->fromArray($this->request->getBody());
             $this->loginValidate->loadData($this->request->getBody());
             if ($this->loginValidate->validate() &&
-                UserServices::$userServices->login($loginRequest)
+                $this->userServices->login($loginRequest)
             ) {
                 View::redirect('/');
                 return true;
@@ -67,14 +70,13 @@ class AuthController extends Controller
     public function register()
     {
         if ($this->request->isPost()) {
-
-            $this->registerValidate->loadData($this->request->getBody());
-
+            $loginRequest = new LoginRequest();
+            $loginRequest = $loginRequest->fromArray($this->request->getBody());
+            $this->loginValidate->loadData($this->request->getBody());
             if ($this->registerValidate->validate()
                 && $this->registerValidate->register()
                 && $this->userRepository->save($this->registerValidate->user)) {
                 Application::$app->response->redirect('/');
-                UserServices::$userServices->session->setFlash('success', 'Thanks for registering');
             }
 
             return $this->render('register', ['model' => $this->registerValidate]);
@@ -86,12 +88,12 @@ class AuthController extends Controller
 
     }
 
-    public function logout()
+    public function logout(): Response
     {
         if ($this->request->isPost()) {
-            UserServices::$userServices->logout();
-            $this->response->redirect('/');
+            $this->userServices->logout();
+            return $this->response->redirect('/');
         }
-        $this->response->redirect('/');
+        return $this->response->redirect('/');
     }
 }

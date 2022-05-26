@@ -75,7 +75,6 @@ class Application
         $action = $callback[1];
         $controller = $container->make($callback[0]);
         $response = $controller->{$action}();
-
         $this->view::display($response);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use Nhivonfq\Unlock\Services\UserServices;
+use Nhivonfq\Unlock\Services\LoginServices;
 
 ?>
 
@@ -36,8 +36,7 @@ use Nhivonfq\Unlock\Services\UserServices;
             </li>
         </ul>
         <?php
-
-        if (UserServices::isGuest()): ?>
+        if (LoginServices::isGuest()) : ?>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="/login">Login</a>
@@ -49,7 +48,7 @@ use Nhivonfq\Unlock\Services\UserServices;
         <?php else: ?>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <form action="" method="post">
+                    <form action="logout" method="post">
                         <button type="submit" class="btn btn-primary">Logout</button>
                     </form>
                 </li>
@@ -57,14 +56,6 @@ use Nhivonfq\Unlock\Services\UserServices;
         <?php endif; ?>
     </div>
 </nav>
-
-<div class="container">
-    <?php if (UserServices::$session->getFlash('success')): ?>
-        <div class="alert alert-success">
-            <p><?php echo UserServices->session->getFlash('success') ?></p>
-        </div>
-    <?php endif; ?>
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

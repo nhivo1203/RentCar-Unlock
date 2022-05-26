@@ -5,7 +5,7 @@ namespace Nhivonfq\Unlock\Controllers;
 use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
-use Nhivonfq\Unlock\Services\UserServices;
+use Nhivonfq\Unlock\Services\LoginServices;
 
 class SitesController extends Controller
 {

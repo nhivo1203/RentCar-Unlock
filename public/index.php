@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+session_start();
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
@@ -8,8 +9,6 @@ use Nhivonfq\Unlock\Controllers\HomeController;
 use Nhivonfq\Unlock\Controllers\SitesController;
 use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\Database\Database;
-use Nhivonfq\Unlock\Repository\UserRepository;
-use Nhivonfq\Unlock\Services\UserServices;
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');

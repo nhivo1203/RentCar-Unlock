@@ -4,14 +4,14 @@ namespace Nhivonfq\Unlock\Models;
 
 class UserModel
 {
-    public int $id;
-    public string $firstname = '';
-    public string $lastname = '';
-    public string $email = '';
-    public int $status = 0;
-    public string $username = '';
-    public string $password = '';
-    public string $createAt;
+    private int $id = 0;
+    private string $firstname = '';
+    private string $lastname = '';
+    private string $email = '';
+    private int $status = 0;
+    private string $username = '';
+    private string $password = '';
+    private string $createAt;
 
     /**
      * @return string
