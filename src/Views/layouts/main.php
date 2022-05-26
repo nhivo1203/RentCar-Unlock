@@ -32,13 +32,7 @@ use Nhivonfq\Unlock\Services\UserServices;
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/contact">Contact</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
+                <a class="nav-link" href="/">Home </a>
             </li>
         </ul>
         <?php
@@ -55,12 +49,7 @@ use Nhivonfq\Unlock\Services\UserServices;
         <?php else: ?>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/profile">
-                        Profile
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <form action="logout" method="post">
+                    <form action="" method="post">
                         <button type="submit" class="btn btn-primary">Logout</button>
                     </form>
                 </li>
@@ -70,12 +59,11 @@ use Nhivonfq\Unlock\Services\UserServices;
 </nav>
 
 <div class="container">
-    <?php if (UserServices::$userServices->session->getFlash('success')): ?>
+    <?php if (UserServices::$session->getFlash('success')): ?>
         <div class="alert alert-success">
-            <p><?php echo UserServices::$userServices->session->getFlash('success') ?></p>
+            <p><?php echo UserServices->session->getFlash('success') ?></p>
         </div>
     <?php endif; ?>
-    {{content}}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

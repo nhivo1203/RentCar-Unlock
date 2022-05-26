@@ -3,11 +3,11 @@
 namespace Nhivonfq\Unlock\Validate;
 
 use Nhivonfq\Unlock\boostrap\Validate;
-use Nhivonfq\Unlock\Models\User;
+use Nhivonfq\Unlock\Models\UserModel;
 
 class RegisterValidate extends Validate
 {
-    public User $user;
+    public UserModel $user;
 
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -25,7 +25,7 @@ class RegisterValidate extends Validate
 
     public function __construct()
     {
-        $this->user = new User();
+        $this->user = new UserModel();
     }
 
 

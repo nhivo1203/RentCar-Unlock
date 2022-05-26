@@ -2,11 +2,13 @@
 
 namespace Nhivonfq\Unlock\Controllers;
 
+use Nhivonfq\Unlock\App\View;
 use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Repository\UserRepository;
+use Nhivonfq\Unlock\Request\LoginRequest;
 use Nhivonfq\Unlock\Services\UserServices;
 use Nhivonfq\Unlock\Validate\LoginValidate;
 use Nhivonfq\Unlock\Validate\RegisterValidate;
@@ -23,8 +25,8 @@ class AuthController extends Controller
     public function __construct(
         RegisterValidate $registerValidate,
         LoginValidate    $loginValidate,
-        Request $request,
-        Response $response,
+        Request          $request,
+        Response         $response,
         UserRepository   $userRepository,
     )
     {
@@ -36,25 +38,25 @@ class AuthController extends Controller
     }
 
     /**
-     * @return array|false|string|string[]
+     * @return
      */
     public function login()
     {
 
         if ($this->request->isPost()) {
+            $loginRequest = new LoginRequest();
+            $loginRequest = $loginRequest->fromArray($this->request->getBody());
             $this->loginValidate->loadData($this->request->getBody());
             if ($this->loginValidate->validate() &&
-                UserServices::$userServices->login($this->loginValidate->user)) {
-                $this->response->redirect('/');
+                UserServices::$userServices->login($loginRequest)
+            ) {
+                View::redirect('/');
                 return true;
             }
         }
 
-        $this->setLayout('auth');
 
-        return $this->render('login', [
-            'model' => $this->loginValidate
-        ]);
+        return $this->response->renderView('login');
     }
 
 
@@ -82,5 +84,14 @@ class AuthController extends Controller
 
         return $this->render('register', ['model' => $this->registerValidate]);
 
+    }
+
+    public function logout()
+    {
+        if ($this->request->isPost()) {
+            UserServices::$userServices->logout();
+            $this->response->redirect('/');
+        }
+        $this->response->redirect('/');
     }
 }

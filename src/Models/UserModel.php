@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Models;
 
-class User
+class UserModel
 {
     public int $id;
     public string $firstname = '';

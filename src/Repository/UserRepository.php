@@ -3,7 +3,7 @@
 namespace Nhivonfq\Unlock\Repository;
 
 use Nhivonfq\Unlock\Database\Database;
-use Nhivonfq\Unlock\Models\User;
+use Nhivonfq\Unlock\Models\UserModel;
 
 class UserRepository
 {
@@ -13,7 +13,7 @@ class UserRepository
 
     public static string $primaryKey = 'id';
 
-    public function save(User $user): bool
+    public function save(UserModel $user): bool
     {
         $attributes = self::$attributes;
 
@@ -30,7 +30,7 @@ class UserRepository
         return true;
     }
 
-    public function findOne($where)
+    public function findOne($where): ?UserModel
     {
         $attributes = array_keys($where);
         $sql = implode("AND", array_map(static fn($attr) => "$attr = :$attr", $attributes));
@@ -39,7 +39,23 @@ class UserRepository
             $statement->bindValue(":$key", $item);
         }
         $statement->execute();
-        return $statement->fetchObject(static::class);
+        try {
+            $user = new UserModel();
+            if ($row = $statement->fetch()) {
+                $user->setId($row['id']);
+                $user->setUsername($row['username']);
+                $user->setPassword($row['password']);
+                $user->setFirstName($row['firstname']);
+                $user->setLastname($row['lastname']);
+                $user->setStatus($row['status']);
+                $user->setEmail($row['email']);
+                return $user;
+            } else {
+                return null;
+            }
+        } finally {
+            $statement->closeCursor();
+        }
     }
 
     public function prepare($sql)

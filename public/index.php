@@ -15,7 +15,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 $config = [
-    'userClass' => UserRepository::class,
     'db' => [
         'server' => $_ENV['DB_SERVER'],
         'port' => $_ENV['DB_PORT'],
@@ -27,16 +26,13 @@ $config = [
 
 $connection = Database::getConnection($config['db']);
 
-$userService = new UserServices($config);
-
 $app = new Application(dirname(__DIR__));
 
 $app->router->get('/', [HomeController::class, 'home']);
 
 $app->router->get('/contact', [SitesController::class, 'contact']);
 
-$app->router->post('/contact', [SitesController::class, 'handleRentCar']);
-$app->router->post('/logout', [SitesController::class, 'logout']);
+$app->router->post('/logout', [AuthController::class, 'logout']);
 
 $app->router->post('/login', [AuthController::class, 'login']);
 $app->router->get('/login', [AuthController::class, 'login']);

@@ -66,14 +66,16 @@ class Application
         $callback = $this->router->routes[$method][$path] ?? false;
         if ($callback === false) {
             $this->response->setStatusCode(404);
-            echo $this->view->renderView("_404");
+            $response = $this->response->renderView("_404");
+            $this->view::display($response);
         }
         if (is_string($callback)) {
-            echo $this->view->renderView($callback);
+            $this->view::display($callback);
         }
         $action = $callback[1];
         $controller = $container->make($callback[0]);
-        $response = $controller->$action();
-        echo $this->view->renderView($response->template);
+        $response = $controller->{$action}();
+
+        $this->view::display($response);
     }
 }

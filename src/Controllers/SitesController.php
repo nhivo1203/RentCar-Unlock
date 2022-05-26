@@ -18,25 +18,9 @@ class SitesController extends Controller
     }
 
 
-
-    public function handleRentCar(Request $request): string
+    public function contact()
     {
-        $body = $request->getBody();
-
-        return "Handling Submit Rent Car";
+        return $this->response->renderView('contact');
     }
 
-    public function contact(): string
-    {
-        return $this->render('contact', []);
-    }
-
-    public function logout()
-    {
-        if($this->request->isPost()) {
-            UserServices::$userServices->logout();
-            $this->response->redirect('/');
-        }
-        $this->response->redirect('/');
-    }
 }

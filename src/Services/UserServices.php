@@ -2,51 +2,50 @@
 
 namespace Nhivonfq\Unlock\Services;
 
+use Nhivonfq\Unlock\Models\UserModel;
 use Nhivonfq\Unlock\Repository\UserRepository;
-use Nhivonfq\Unlock\Services\SessionServices;
+use Nhivonfq\Unlock\Request\LoginRequest;
 
 class UserServices
 {
     /**
-     * @var string|mixed
-     */
-    public string $userClass;
-    /**
      * @var SessionServices
      */
     public SessionServices $session;
-    private ?UserRepository $user;
+    private ?UserRepository $userRepository;
+    private static ?UserModel $exitUser = null;
 
-    public static UserServices $userServices;
+    public UserServices $userServices;
 
-    public function __construct(array $config)
+    public function __construct(UserRepository $userRepository, UserModel $user, SessionServices $session)
     {
-        self::$userServices = $this;
-        $this->session = new SessionServices();
-        $this->user = null;
-        $this->userClass = $config['userClass'];
+        $this->userRepository = $userRepository;
+        $this->$user = $user;
+        $this->$session = $session;
+    }
 
-        $userId = $this->session->get('user');
-        if ($userId) {
-            $key = (new $this->userClass())::$primaryKey;
-            $this->user = (new $this->userClass())->findOne([$key => $userId]);
+    public static function isGuest(): bool
+    {
+        return !self::$exitUser;
+    }
+
+
+    public function login(LoginRequest $loginRequest): ?UserModel
+    {
+        self::$exitUser = $this->userRepository->findOne(['email' => $loginRequest->getEmail()]);
+        if (!self::$exitUser) {
+            return null;
         }
-    }
-
-    public static function isGuest()
-    {
-        return !self::$userServices->user;
-    }
-
-
-    public function login(UserRepository $user)
-    {
-        $this->user = $user;
-        $primaryKey = $user::$primaryKey;
-        $primaryValue = $user->{$primaryKey};
-        $this->session->set('user', $primaryValue);
-
-        return true;
+        if (password_verify(password_hash($loginRequest->getPassword(), PASSWORD_DEFAULT), self::$exitUser->password)) {
+            return null;
+        }
+        return self::$exitUser;
+//        $this->user = $user;
+//        $primaryKey = $user::$primaryKey;
+//        $primaryValue = $user->{$primaryKey};
+//        $this->session->set('user', $primaryValue);
+//
+//        return true;
     }
 
     public function logout()

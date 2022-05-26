@@ -17,6 +17,10 @@ class HomeController
 
     public function home(): Response
     {
-        return $this->response->renderView('home', null);
+        $params = [
+            'name' => 'Nhi Vo'
+        ];
+
+        return $this->response->renderView('home', $params);
     }
 }
