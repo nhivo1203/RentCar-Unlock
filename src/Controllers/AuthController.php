@@ -75,7 +75,7 @@ class AuthController extends Controller
             $this->loginValidate->loadData($this->request->getBody());
             if ($this->registerValidate->validate()
                 && $this->registerValidate->register()
-                && $this->userRepository->save($this->registerValidate->user)) {
+                ) {
                 Application::$app->response->redirect('/');
             }
 
