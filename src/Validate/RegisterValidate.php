@@ -7,8 +7,6 @@ use Nhivonfq\Unlock\Models\UserModel;
 
 class RegisterValidate extends Validate
 {
-    public UserModel $user;
-
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
@@ -22,38 +20,6 @@ class RegisterValidate extends Validate
     public string $password = '';
     public string $confirmPassword = '';
 
-
-    public function __construct()
-    {
-        $this->user = new UserModel();
-    }
-
-
-    public function labels(): array
-    {
-        return [
-            'firstname' => 'First name',
-            'lastname' => 'Last name',
-            'username' => 'Username',
-            'email' => 'Email',
-            'password' => 'Password',
-            'confirmPassword' => 'Password Confirm'
-        ];
-    }
-
-    public function register(): bool
-    {
-        $this->user->setFirstname($this->firstname);
-        $this->user->setLastname($this->lastname);
-        $this->user->setEmail($this->email);
-        $this->user->setStatus($this->status);
-        $this->user->setUsername($this->username);
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-        $this->user->setPassword($this->password);
-
-        return true;
-    }
-
     public function rules(): array
     {
         return [
@@ -66,10 +32,5 @@ class RegisterValidate extends Validate
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 6], [self::RULE_MAX, 'max' => 50]],
             'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
         ];
-    }
-
-    public function getDisplayName(): string
-    {
-        return $this->firstname . " " . $this->lastname;
     }
 }

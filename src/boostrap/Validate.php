@@ -17,9 +17,6 @@ abstract class Validate
 
     abstract public function rules(): array;
 
-    public function labels(): array {
-        return [];
-    }
 
     public function loadData($data)
     {
@@ -96,15 +93,5 @@ abstract class Validate
             self::RULE_MATCH => 'This field must be the same as {match}',
             self::RULE_UNIQUE => 'Record with this {field} already exits',
         ];
-    }
-
-    public function hasError($attribute)
-    {
-        return $this->errors[$attribute] ?? false;
-    }
-
-    public function getFirstError($attribute)
-    {
-        return $this->errors[$attribute][0] ?? false;
     }
 }

@@ -3,7 +3,6 @@
 namespace Nhivonfq\Unlock\Controllers;
 
 use Nhivonfq\Unlock\App\View;
-use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
@@ -29,7 +28,7 @@ class AuthController extends Controller
         LoginValidate    $loginValidate,
         Request          $request,
         Response         $response,
-        LoginServices $loginServices,
+        LoginServices    $loginServices,
         RegisterServices $registerServices
     )
     {
@@ -42,11 +41,10 @@ class AuthController extends Controller
     }
 
     /**
-     * @return
+     * @return Response
      */
-    public function login()
+    public function login():Response
     {
-
         if ($this->request->isPost()) {
             $loginRequest = new LoginRequest();
             $loginRequest = $loginRequest->fromArray($this->request->getBody());
@@ -54,18 +52,15 @@ class AuthController extends Controller
             if ($this->loginValidate->validate() &&
                 $this->loginServices->login($loginRequest)
             ) {
-                View::redirect('/');
+                $this->response->setRedirectUrl('/');
             }
         }
-
-
         return $this->response->renderView('login');
     }
 
 
     /**
-     * @param Request $request
-     * @return array|false|string|string[]
+     * @return Response
      */
     public function register(): Response
     {
@@ -75,7 +70,7 @@ class AuthController extends Controller
             $this->registerValidate->loadData($this->request->getBody());
             if ($this->registerValidate->validate()
                 && $this->registerServices->register($registerRequest)
-                ) {
+            ) {
                 View::redirect('/');
             }
 
@@ -85,10 +80,13 @@ class AuthController extends Controller
         return $this->response->renderView('register', ['model' => $this->registerValidate]);
     }
 
+    /**
+     * @return Response
+     */
     public function logout(): Response
     {
         if ($this->request->isPost()) {
-            $this->userServices->logout();
+            $this->loginServices->logout();
             return $this->response->redirect('/');
         }
         return $this->response->redirect('/');

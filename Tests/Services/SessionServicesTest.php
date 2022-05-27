@@ -25,6 +25,14 @@ class SessionServicesTest extends TestCase
         $this->assertTrue($sessionExpected);
     }
 
+    public function testGetSession():void {
+        $session = new SessionServices();
+        $session->set('user_id',7);
+        $sessionResult= $session->get('user_id');
+        $sessionExpected = $_SESSION['user_id'];
+        $this->assertEquals($sessionExpected,$sessionResult);
+    }
+
     public function testRemoveSession():void {
         $session = new SessionServices();
         $session->set('user_id',7);

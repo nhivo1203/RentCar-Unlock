@@ -57,6 +57,16 @@ class LoginServicesTest extends TestCase
         $this->assertFalse($isLoginResult);
     }
 
+    public function testLogOut() {
+        $userRepository = new UserRepository();
+        $session = new SessionServices();
+        $loginServices = new LoginServices($userRepository, $session);
+        $session->set('user_id',7);
+        $loginServices->logout();
+        $checkHasSession = $session->hasSession('user_id');
+        $this->assertFalse($checkHasSession);
+    }
+
     private function getUser(int $id, string $email, string $password): UserModel
     {
         $user = new UserModel();

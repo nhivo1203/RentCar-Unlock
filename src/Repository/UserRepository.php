@@ -13,15 +13,21 @@ class UserRepository
 
     public function save(UserModel $user): bool
     {
+        $firstname = $user->getFirstname();
+        $lastname = $user->getLastname();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $status = $user->getStatus();
+        $username = $user->getUsername();
 
         $statement = $this->prepare("INSERT INTO users(" . implode(',', $this->attributes) . ")
             VALUES(
-            '$user->getFirstname()',
-            '$user->getLastname()',
-            '$user->getEmail()',
-            '$user->getPassword()',
-            '$user->getStatus()',
-            '$user->getUsername()'
+            '$firstname',
+            '$lastname',
+            '$email',
+            '$password',
+            '$status',
+            '$username '
             )");
         $statement->execute();
         return true;
