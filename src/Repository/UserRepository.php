@@ -9,24 +9,19 @@ class UserRepository
 {
 
     private array $attributes = ['firstname', 'lastname', 'email', 'password', 'status', 'username'];
-    private UserModel $user;
 
-    public function __construct(UserModel $user)
-    {
-        $this->user = $user;
-    }
 
-    public function save(): bool
+    public function save(UserModel $user): bool
     {
 
         $statement = $this->prepare("INSERT INTO users(" . implode(',', $this->attributes) . ")
             VALUES(
-            '$this->user->getFirstname()',
-            '$this->user->getLastname()',
-            '$this->user->getEmail()',
-            '$this->user->getPassword()',
-            '$this->user->getStatus()',
-            '$this->user->getUsername()'
+            '$user->getFirstname()',
+            '$user->getLastname()',
+            '$user->getEmail()',
+            '$user->getPassword()',
+            '$user->getStatus()',
+            '$user->getUsername()'
             )");
         $statement->execute();
         return true;

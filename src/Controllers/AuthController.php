@@ -7,9 +7,10 @@ use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
-use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Request\LoginRequest;
+use Nhivonfq\Unlock\Request\RegisterRequest;
 use Nhivonfq\Unlock\Services\LoginServices;
+use Nhivonfq\Unlock\Services\RegisterServices;
 use Nhivonfq\Unlock\Validate\LoginValidate;
 use Nhivonfq\Unlock\Validate\RegisterValidate;
 
@@ -18,24 +19,24 @@ class AuthController extends Controller
 {
     private RegisterValidate $registerValidate;
     private LoginValidate $loginValidate;
-    private UserRepository $userRepository;
     private Request $request;
     private Response $response;
-    private LoginServices $userServices;
+    private LoginServices $loginServices;
+    private RegisterServices $registerServices;
 
     public function __construct(
         RegisterValidate $registerValidate,
         LoginValidate    $loginValidate,
         Request          $request,
         Response         $response,
-        UserRepository   $userRepository,
-        LoginServices $userServices
+        LoginServices $loginServices,
+        RegisterServices $registerServices
     )
     {
         $this->loginValidate = $loginValidate;
         $this->registerValidate = $registerValidate;
-        $this->userRepository = $userRepository;
-        $this->userServices = $userServices;
+        $this->loginServices = $loginServices;
+        $this->registerServices = $registerServices;
         $this->request = $request;
         $this->response = $response;
     }
@@ -51,10 +52,9 @@ class AuthController extends Controller
             $loginRequest = $loginRequest->fromArray($this->request->getBody());
             $this->loginValidate->loadData($this->request->getBody());
             if ($this->loginValidate->validate() &&
-                $this->userServices->login($loginRequest)
+                $this->loginServices->login($loginRequest)
             ) {
                 View::redirect('/');
-                return true;
             }
         }
 
@@ -67,25 +67,22 @@ class AuthController extends Controller
      * @param Request $request
      * @return array|false|string|string[]
      */
-    public function register()
+    public function register(): Response
     {
         if ($this->request->isPost()) {
-            $loginRequest = new LoginRequest();
-            $loginRequest = $loginRequest->fromArray($this->request->getBody());
-            $this->loginValidate->loadData($this->request->getBody());
+            $registerRequest = new RegisterRequest();
+            $registerRequest = $registerRequest->fromArray($this->request->getBody());
+            $this->registerValidate->loadData($this->request->getBody());
             if ($this->registerValidate->validate()
-                && $this->registerValidate->register()
+                && $this->registerServices->register($registerRequest)
                 ) {
-                Application::$app->response->redirect('/');
+                View::redirect('/');
             }
 
-            return $this->render('register', ['model' => $this->registerValidate]);
+            return $this->response->renderView('register', ['model' => $this->registerValidate]);
         }
 
-        $this->setLayout('auth');
-
-        return $this->render('register', ['model' => $this->registerValidate]);
-
+        return $this->response->renderView('register', ['model' => $this->registerValidate]);
     }
 
     public function logout(): Response

@@ -3,35 +3,30 @@
 namespace Nhivonfq\Unlock\Services;
 
 use Nhivonfq\Unlock\Models\UserModel;
-use Nhivonfq\Unlock\Request\LoginRequest;
+use Nhivonfq\Unlock\Repository\UserRepository;
+use Nhivonfq\Unlock\Request\RegisterRequest;
 
 class RegisterServices
 {
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
-    const STATUS_DELETED = 2;
+    private ?UserRepository $userRepository;
 
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
 
-    public string $firstname = '';
-    public string $lastname = '';
-    public string $email = '';
-    public int $status = self::STATUS_INACTIVE;
-    public string $username = '';
-    public string $password = '';
-    public string $confirmPassword = '';
-
-
-    public function register(LoginRequest $loginRequest): ?UserModel
+    public function register(RegisterRequest $registerRequest): bool
     {
         $user = new UserModel();
-        $user->setFirstname($this->firstname);
-        $user->setLastname($this->lastname);
-        $user->setEmail($this->email);
-        $user->setStatus($this->status);
-        $user->setUsername($this->username);
-        $password = password_hash($this->password, PASSWORD_DEFAULT);
+        $user->setFirstname($registerRequest->getFirstname());
+        $user->setLastname($registerRequest->getLastname());
+        $user->setEmail($registerRequest->getEmail());
+        $user->setStatus($registerRequest->getStatus());
+        $user->setUsername($registerRequest->getUsername());
+        $password = password_hash($registerRequest->getPassword(), PASSWORD_DEFAULT);
         $user->setPassword($password);
 
-        return $user;
+        $this->userRepository->save($user);
+        return true;
     }
 }

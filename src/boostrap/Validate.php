@@ -13,6 +13,14 @@ abstract class Validate
     public const RULE_MATCH = 'match';
     public const RULE_UNIQUE = 'unique';
 
+    public array $errors = [];
+
+    abstract public function rules(): array;
+
+    public function labels(): array {
+        return [];
+    }
+
     public function loadData($data)
     {
         foreach ($data as $key => $value) {
@@ -21,14 +29,6 @@ abstract class Validate
             }
         }
     }
-
-    abstract public function rules(): array;
-
-    public function labels(): array {
-        return [];
-    }
-
-    public array $errors = [];
 
     public function validate()
     {
