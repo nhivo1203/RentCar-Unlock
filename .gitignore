@@ -1,8 +1,11 @@
 /vendor/
 /.idea/
+/.coverage/
+/.phpunit.cache/
 /phpcbf.phar/
 /phpcs.phar/
 /phpunit.phar/
 /composer.phar/
+.phpunit.result.cache
 .DS_Store
 .env
