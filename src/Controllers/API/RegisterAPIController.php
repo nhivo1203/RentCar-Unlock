@@ -8,6 +8,7 @@ use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\RegisterRequest;
 use Nhivonfq\Unlock\Services\RegisterServices;
 use Nhivonfq\Unlock\Services\TokenServices;
+use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Validate\RegisterValidate;
 
 class RegisterAPIController
@@ -17,14 +18,16 @@ class RegisterAPIController
     private Request $request;
     private Response $response;
     private TokenServices $tokenServices;
+    private RequestTransfer $requestTransfer;
 
 
     public function __construct(
         RegisterValidate $registerValidate,
-        Request       $request,
-        Response      $response,
+        Request          $request,
+        Response         $response,
         RegisterServices $registerServices,
-        TokenServices $tokenServices
+        TokenServices    $tokenServices,
+        RequestTransfer $requestTransfer
 
     )
     {
@@ -33,25 +36,21 @@ class RegisterAPIController
         $this->request = $request;
         $this->response = $response;
         $this->tokenServices = $tokenServices;
-    }
+        $this->requestTransfer = $requestTransfer;
 
-    private function generateToken($userTokenData): string
-    {
-        return $this->tokenServices->jwtEncodeData(
-            $this->request->getHost() . $this->request->getRequestUri(),
-            $userTokenData);
     }
 
     /**
      * @throws JsonException
      */
-    public function register() {
+    public function register(): Response
+    {
         if (!$this->request->isPost()) {
             return $this->response->renderView('register');
         }
         $registerRequest = new RegisterRequest();
-        $registerRequest = $registerRequest->fromArray($this->request->getRequestJsonBody());
-        $this->registerValidate->loadData($this->request->getRequestJsonBody());
+        $registerRequest = $registerRequest->fromArray($this->requestTransfer->getRequestJsonBody());
+        $this->registerValidate->loadData($this->requestTransfer->getRequestJsonBody());
         $user = $this->registerServices->register($registerRequest);
         if (!$this->registerValidate->validate()) {
             return $this->response->toJson($this->registerValidate->errors, Response::HTTP_BAD_REQUEST);
@@ -63,7 +62,9 @@ class RegisterAPIController
             'id' => $user->getId(),
             'email' => $user->getEmail()
         ];
-        $data = $this->generateToken($userTokenData);
+        $token = $this->tokenServices->jwtEncodeData(
+            $this->request->getHost() . $this->request->getRequestUri(),
+            $userTokenData);
         return $this->response->toJson([
             'data' => [
                 "user" => [
@@ -72,7 +73,7 @@ class RegisterAPIController
                     'email' => $user->getEmail(),
                     'username' => $user->getUsername(),
                 ],
-                "token" => $data
+                "token" => $token
             ]
         ], Response::HTTP_OK);
 

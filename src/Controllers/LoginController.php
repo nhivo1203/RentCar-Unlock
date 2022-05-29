@@ -6,6 +6,7 @@ use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\LoginRequest;
 use Nhivonfq\Unlock\Services\LoginServices;
+use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Validate\LoginValidate;
 
 class LoginController
@@ -14,6 +15,8 @@ class LoginController
     private LoginValidate $loginValidate;
     private Request $request;
     private Response $response;
+    private RequestTransfer $requestTransfer;
+
 
 
     public function __construct(
@@ -21,12 +24,16 @@ class LoginController
         Request          $request,
         Response         $response,
         LoginServices    $loginServices,
+        RequestTransfer $requestTransfer
+
     )
     {
         $this->loginValidate = $loginValidate;
         $this->loginServices = $loginServices;
         $this->request = $request;
         $this->response = $response;
+        $this->requestTransfer = $requestTransfer;
+
     }
 
     /**
@@ -36,8 +43,8 @@ class LoginController
     {
         if ($this->request->isPost()) {
             $loginRequest = new LoginRequest();
-            $loginRequest = $loginRequest->fromArray($this->request->getBody());
-            $this->loginValidate->loadData($this->request->getBody());
+            $loginRequest = $loginRequest->fromArray($this->requestTransfer->getBody());
+            $this->loginValidate->loadData($this->requestTransfer->getBody());
             if ($this->loginValidate->validate() &&
                 $this->loginServices->login($loginRequest)
             ) {

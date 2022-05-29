@@ -13,6 +13,31 @@ class RegisterRequest
     private string $password ;
 
     /**
+     * @param $data
+     * @return string
+     */
+    private function formatRequest($data): string
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        return htmlspecialchars($data);
+    }
+
+    /**
+     * @param array $requestBody
+     * @return $this
+     */
+    public function fromArray(array $requestBody): self
+    {
+        $this->setFirstname($requestBody['firstname']);
+        $this->setLastname($requestBody['lastname']);
+        $this->setEmail($requestBody['email']);
+        $this->setUsername($requestBody['username']);
+        $this->setPassword($requestBody['password']);
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -107,27 +132,6 @@ class RegisterRequest
     {
         $this->password = $password;
     }
-
-    /**
-     * @param $data
-     * @return string
-     */
-    private function formatRequest($data): string
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        return htmlspecialchars($data);
-    }
-    public function fromArray(array $requestBody): self
-    {
-        $this->setFirstname($requestBody['firstname']);
-        $this->setLastname($requestBody['lastname']);
-        $this->setEmail($requestBody['email']);
-        $this->setUsername($requestBody['username']);
-        $this->setPassword($requestBody['password']);
-        return $this;
-    }
-
     /**
      * @return int
      */

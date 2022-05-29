@@ -43,29 +43,4 @@ class Request
     {
         return $this->getMethod() === 'post';
     }
-
-    public function getBody(): array
-    {
-        $body = [];
-
-        if ($this->getMethod() === 'post') {
-            foreach ($_POST as $key => $value) {
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-            }
-        }
-
-        return $body;
-
-    }
-
-    /**
-     * @return mixed
-     * @throws JsonException
-     */
-    public function getRequestJsonBody(): mixed
-    {
-        $data = file_get_contents('php://input');
-
-        return json_decode($data, true, 512, JSON_THROW_ON_ERROR);
-    }
 }
