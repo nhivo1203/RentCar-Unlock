@@ -5,6 +5,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
 use Nhivonfq\Unlock\Controllers\API\LoginAPIController;
+use Nhivonfq\Unlock\Controllers\API\RegisterAPIController;
 use Nhivonfq\Unlock\Controllers\RegisterController;
 use Nhivonfq\Unlock\Controllers\HomeController;
 use Nhivonfq\Unlock\Controllers\LoginController;
@@ -39,11 +40,14 @@ $app->router->post('/login', [LoginController::class, 'login']);
 $app->router->get('/login', [LoginController::class, 'login']);
 
 $app->router->post('/api/login', [LoginAPIController::class, 'login']);
+$app->router->get('/api/login', [LoginAPIController::class, 'login']);
 
 
 $app->router->post('/register', [RegisterController::class, 'register']);
 $app->router->get('/register', [RegisterController::class, 'register']);
 
+$app->router->post('/api/register', [RegisterAPIController::class, 'register']);
+$app->router->get('/api/register', [RegisterAPIController::class, 'register']);
 
 $app->run();
 

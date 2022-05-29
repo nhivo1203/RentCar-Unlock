@@ -15,7 +15,7 @@ class RegisterServices
         $this->userRepository = $userRepository;
     }
 
-    public function register(RegisterRequest $registerRequest): bool
+    public function register(RegisterRequest $registerRequest): UserModel| bool
     {
         $user = new UserModel();
         $user->setFirstname($registerRequest->getFirstname());
@@ -27,6 +27,6 @@ class RegisterServices
         $user->setPassword($password);
 
         $this->userRepository->save($user);
-        return true;
+        return $user;
     }
 }

@@ -45,10 +45,10 @@ class RegisterController{
                 View::redirect('/');
             }
 
-            return $this->response->renderView('register', ['model' => $this->registerValidate]);
+            return $this->response->renderView('register');
         }
 
-        return $this->response->renderView('register', ['model' => $this->registerValidate]);
+        return $this->response->renderView('register');
     }
 
 

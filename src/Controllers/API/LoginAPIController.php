@@ -37,35 +37,51 @@ class LoginAPIController
         $this->tokenServices = $tokenServices;
     }
 
+    public function loginHasError()
+    {
+        if (!$this->loginValidate->validate()) {
+            return $this->response->toJson($this->loginValidate->errors, Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function loginHasUser($user) {
+        if (!$user) {
+            return $this->response->toJson(['message' => "Username or password is incorrect"], Response::HTTP_UNAUTHEN);
+        }
+    }
+
+    private function generateToken($userTokenData): string
+    {
+        return $this->tokenServices->jwtEncodeData(
+            $this->request->getHost() . $this->request->getRequestUri(),
+            $userTokenData);
+    }
+
     /**
      * @throws JsonException
      */
     public function login()
     {
-        if ($this->request->isPost()) {
-            $loginRequest = new LoginRequest();
-            $loginRequest = $loginRequest->fromArray($this->request->getRequestJsonBody());
-            $this->loginValidate->loadData($this->request->getRequestJsonBody());
-            $user = $this->loginServices->login($loginRequest);
-            if (!$this->loginValidate->validate()) {
-                return $this->response->toJson($this->loginValidate->errors, Response::HTTP_BAD_REQUEST);
-            }
-            if (!$user) {
-                return $this->response->toJson(['message' => "Username or password is incorrect"], Response::HTTP_UNAUTHEN);
-            }
-            $userTokenData = [
-                'id' => $user->getId(),
-                'email' => $user->getEmail()
-            ];
-            $data = $this->tokenServices->jwtEncodeData(
-                $this->request->getHost() . $this->request->getRequestUri(),
-                $userTokenData);
-            return $this->response->toJson([
-                'data' => [
-                    "email" => $user->getEmail(),
-                    "token" => $data
-                ]
-            ], Response::HTTP_OK);
+        if (!$this->request->isPost()) {
+            return $this->response->renderView('login');
         }
+        $loginRequest = new LoginRequest();
+        $loginRequest = $loginRequest->fromArray($this->request->getRequestJsonBody());
+        $this->loginValidate->loadData($this->request->getRequestJsonBody());
+        $user = $this->loginServices->login($loginRequest);
+        $this->loginHasError();
+        $this->loginHasUser($user);
+        $userTokenData = [
+            'id' => $user->getId(),
+            'email' => $user->getEmail()
+        ];
+        $data = $this->generateToken($userTokenData);
+        return $this->response->toJson([
+            'data' => [
+                "email" => $user->getEmail(),
+                "token" => $data
+            ]
+        ], Response::HTTP_OK);
     }
+
 }
