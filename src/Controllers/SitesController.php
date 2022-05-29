@@ -2,10 +2,9 @@
 
 namespace Nhivonfq\Unlock\Controllers;
 
-use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Response;
 
-class SitesController extends Controller
+class SitesController
 {
     private Response $response;
 

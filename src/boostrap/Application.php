@@ -36,7 +36,6 @@ class Application
      */
     public static Application $app;
 
-    public Controller $controller;
 
     /**
      * @param $rootPath
@@ -46,7 +45,6 @@ class Application
         $container = new Container();
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
-        $this->controller = $container->make(Controller::class);
         $this->request = $container->make(Request::class);
         $this->response = $container->make(Response::class);
         $this->router = $container->make(Router::class);
@@ -75,6 +73,7 @@ class Application
         $action = $callback[1];
         $controller = $container->make($callback[0]);
         $response = $controller->{$action}();
+
         $this->view::display($response);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Tests\Controllers;
 
-use Nhivonfq\Unlock\Controllers\AuthController;
+use Nhivonfq\Unlock\Controllers\RegisterController;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Models\UserModel;
@@ -39,7 +39,7 @@ class AuthControllerTest extends TestCase
         ]);
         $loginServiceMock->expects($this->once())->method('login')->willReturn(true);
         $loginValidateMock->expects($this->once())->method('validate')->willReturn(true);
-        $controller = new AuthController(
+        $controller = new RegisterController(
             $registerValidateMock,
             $loginValidateMock,
             $requestMock,

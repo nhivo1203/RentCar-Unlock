@@ -4,8 +4,10 @@ session_start();
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
-use Nhivonfq\Unlock\Controllers\AuthController;
+use Nhivonfq\Unlock\Controllers\API\LoginAPIController;
+use Nhivonfq\Unlock\Controllers\RegisterController;
 use Nhivonfq\Unlock\Controllers\HomeController;
+use Nhivonfq\Unlock\Controllers\LoginController;
 use Nhivonfq\Unlock\Controllers\SitesController;
 use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\Database\Database;
@@ -31,15 +33,16 @@ $app->router->get('/', [HomeController::class, 'home']);
 
 $app->router->get('/contact', [SitesController::class, 'contact']);
 
-$app->router->post('/logout', [AuthController::class, 'logout']);
+$app->router->post('/logout', [LoginController::class, 'logout']);
 
-$app->router->post('/login', [AuthController::class, 'login']);
-$app->router->get('/login', [AuthController::class, 'login']);
+$app->router->post('/login', [LoginController::class, 'login']);
+$app->router->get('/login', [LoginController::class, 'login']);
+
+$app->router->post('/api/login', [LoginAPIController::class, 'login']);
 
 
-
-$app->router->post('/register', [AuthController::class, 'register']);
-$app->router->get('/register', [AuthController::class, 'register']);
+$app->router->post('/register', [RegisterController::class, 'register']);
+$app->router->get('/register', [RegisterController::class, 'register']);
 
 
 $app->run();

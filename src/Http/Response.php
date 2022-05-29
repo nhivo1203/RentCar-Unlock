@@ -7,11 +7,30 @@ class Response
 {
     const HTTP_OK = 200;
     const HTTP_NOT_FOUND = 404;
+    const HTTP_BAD_REQUEST = 503;
     const HTTP_INTERNAL_SERVER_ERROR = 500;
-    const HTTP_UNAUTHORIZED = 401;
+    const HTTP_UNAUTHEN = 401;
 
-    public ?string $template = null;
+    private ?string $template = null;
+    private int $statusCode;
+    private ?string $redirectUrl = null;
+    private ?array $data = null;
+    private array $headers = [];
 
+
+
+    /**
+     * @param array $data
+     * @param int $statusCode
+     * @return $this
+     */
+
+    public function toJson(array $data, int $statusCode = self::HTTP_BAD_REQUEST): self
+    {
+        $this->setStatusCode($statusCode);
+        $this->setData([...$data]);
+        return $this;
+    }
 
     /**
      * @return string|null
@@ -62,9 +81,6 @@ class Response
         $this->redirectUrl = $redirectUrl;
     }
 
-    protected ?string $redirectUrl = null;
-    public ?array $data = null;
-
     /**
      * @return array|null
      */
@@ -81,13 +97,28 @@ class Response
         $this->data = $data;
     }
 
-    protected int $statusCode;
+    /**
+     * @return array
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    /**
+     * @param array $headers
+     */
+    public function setHeaders(array $headers): void
+    {
+        $this->headers = $headers;
+    }
+
 
 
     public function renderView($template, array $data = null): self
     {
         $this->setTemplate($template);
-        if ($data != null) {
+        if ($data !== null) {
             $this->setData([...$data]);
         } else {
             $this->setData(null);

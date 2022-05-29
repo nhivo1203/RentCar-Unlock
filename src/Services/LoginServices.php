@@ -2,6 +2,7 @@
 
 namespace Nhivonfq\Unlock\Services;
 
+use Nhivonfq\Unlock\Models\UserModel;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Request\LoginRequest;
 
@@ -27,18 +28,18 @@ class LoginServices
     }
 
 
-    public function login(LoginRequest $loginRequest): bool
+    public function login(LoginRequest $loginRequest): UserModel| bool
     {
         $exitUser = $this->userRepository->findOne(['email' => $loginRequest->getEmail()]);
         if ($exitUser && password_verify($loginRequest->getPassword(), $exitUser->getPassword())) {
             $this->session->set('user_id', $exitUser->getId());
-            return true;
+            return $exitUser;
         }
 
         return false;
     }
 
-    public function logout()
+    public function logout():void
     {
         $this->session->remove('user_id');
     }

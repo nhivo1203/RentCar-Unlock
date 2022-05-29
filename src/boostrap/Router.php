@@ -15,16 +15,14 @@ class Router
 
     public Request $request;
     public Response $response;
-    public View $view;
 
     public array $routes = [];
 
     /**
      * @param Request $request
      */
-    public function __construct(Request $request, Response $response , View $view)
+    public function __construct(Request $request, Response $response)
     {
-        $this->view = $view;
         $this->request = $request;
         $this->response = $response;
     }
@@ -49,5 +47,4 @@ class Router
     {
         $this->routes['post'][$path] = $callback;
     }
-
 }
