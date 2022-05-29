@@ -44,7 +44,8 @@ class LoginAPIController
         }
     }
 
-    public function loginHasUser($user) {
+    public function loginHasUser($user)
+    {
         if (!$user) {
             return $this->response->toJson(['message' => "Username or password is incorrect"], Response::HTTP_UNAUTHEN);
         }
@@ -69,8 +70,12 @@ class LoginAPIController
         $loginRequest = $loginRequest->fromArray($this->request->getRequestJsonBody());
         $this->loginValidate->loadData($this->request->getRequestJsonBody());
         $user = $this->loginServices->login($loginRequest);
-        $this->loginHasError();
-        $this->loginHasUser($user);
+        if (!$this->loginValidate->validate()) {
+            return $this->response->toJson($this->loginValidate->errors, Response::HTTP_BAD_REQUEST);
+        }
+        if (!$user) {
+            return $this->response->toJson(['message' => "Username or password is incorrect"], Response::HTTP_UNAUTHEN);
+        }
         $userTokenData = [
             'id' => $user->getId(),
             'email' => $user->getEmail()
