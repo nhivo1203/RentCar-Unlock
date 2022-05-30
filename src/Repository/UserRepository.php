@@ -11,7 +11,7 @@ class UserRepository
     private array $attributes = ['firstname', 'lastname', 'email', 'password', 'role', 'username'];
 
 
-    public function save(UserModel $user): bool
+    public function saveUser(UserModel $user): bool
     {
         $firstname = $user->getFirstname();
         $lastname = $user->getLastname();
@@ -29,8 +29,7 @@ class UserRepository
             '$role',
             '$username '
             )");
-        $statement->execute();
-        return true;
+        return $statement->execute();
     }
 
     public function findOne($where): ?UserModel

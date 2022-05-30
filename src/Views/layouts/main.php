@@ -34,6 +34,9 @@ use Nhivonfq\Unlock\Services\LoginServices;
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home </a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/createcar">Create Car </a>
+            </li>
         </ul>
         <?php
         if (LoginServices::isGuest()) : ?>

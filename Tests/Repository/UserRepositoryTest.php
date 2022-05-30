@@ -34,7 +34,7 @@ class UserRepositoryTest extends TestCase
         $user->setUsername('thienlong');
 
         Database::getConnection($config['db']);
-        $isSaveUser = $userRepository->save($user);
+        $isSaveUser = $userRepository->saveUser($user);
         $this->assertTrue($isSaveUser);
     }
 

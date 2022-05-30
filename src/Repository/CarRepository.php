@@ -4,12 +4,32 @@ namespace Nhivonfq\Unlock\Repository;
 
 use Nhivonfq\Unlock\Database\Database;
 use Nhivonfq\Unlock\Models\CarModel;
-use PDO;
-use RecursiveIteratorIterator;
+
 
 
 class CarRepository
 {
+    private array $attributes = ['name', 'brand', 'type', 'image', 'price'];
+
+    public function createCar(CarModel $car): bool
+    {
+        $car_name = $car->getCarName();
+        $car_brand = $car->getCarBrand();
+        $car_type = $car->getCarType();
+        $image = $car->getImage();
+        $price = $car->getPrice();
+
+        $statement = $this->prepare("INSERT INTO cars(" . implode(',', $this->attributes) . ")
+            VALUES(
+            '$car_name',
+            '$car_brand',
+            '$car_type',
+            '$image',
+            $price
+            )");
+        return $statement->execute();
+    }
+
     public function getAll(): array
     {
         $statement = $this->prepare("SELECT * FROM cars");

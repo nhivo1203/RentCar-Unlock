@@ -22,7 +22,7 @@ class RegisterServicesTest extends TestCase
         $user = new UserModel();
         $registerRequest->fromArray($params);
         $userRepositoryMock = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
-        $userRepositoryMock->expects($this->once())->method('save')->willReturn($params['isSave']);
+        $userRepositoryMock->expects($this->once())->method('saveUser')->willReturn($params['isSave']);
         $registerServices = new RegisterServices($userRepositoryMock);
         $isRegisterResult = $registerServices->register($registerRequest);
         $this->assertEquals($expected, $isRegisterResult);

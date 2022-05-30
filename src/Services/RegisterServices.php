@@ -26,7 +26,7 @@ class RegisterServices
         $password = password_hash($registerRequest->getPassword(), PASSWORD_DEFAULT);
         $user->setPassword($password);
 
-        $this->userRepository->save($user);
+        $this->userRepository->saveUser($user);
         return $user;
     }
 }

@@ -2,7 +2,9 @@
 <div class="container">
     <div class="container-fluid">
         <form class="form-signin" method="post">
-            <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
+            <img class="mb-4"
+                 src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFV0REE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--7a4350d76ced467ee165ce6b30eb4d83bf4c6eb9/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RkhKbGMybDZaVjkwYjE5c2FXMXBkRnNIYVFJc0FXa0NMQUU9IiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--ee4e4854f68df0a745312d63f6c2782b5da346cd/nfq-asia-8bit-rockstars-logo.png"
+                 alt="" width="72"
                  height="72">
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
             <label for="email" class="sr-only">email</label>
