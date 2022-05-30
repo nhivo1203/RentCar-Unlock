@@ -8,7 +8,7 @@ class UserModel
     private string $firstname = '';
     private string $lastname = '';
     private string $email = '';
-    private int $status = 0;
+    private int $role = 0;
     private string $username = '';
     private string $password = '';
     private string $createAt;
@@ -96,17 +96,17 @@ class UserModel
     /**
      * @return int
      */
-    public function getStatus(): int
+    public function getRole(): int
     {
-        return $this->status;
+        return $this->role;
     }
 
     /**
-     * @param int $status
+     * @param int $role
      */
-    public function setStatus(int $status): void
+    public function setRole(int $role): void
     {
-        $this->status = $status;
+        $this->role = $role;
     }
 
     /**

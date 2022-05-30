@@ -4,19 +4,33 @@ namespace Nhivonfq\Unlock\Controllers;
 
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
+use Nhivonfq\Unlock\Repository\CarRepository;
+use Nhivonfq\Unlock\Transformer\CarTransformer;
 
 class HomeController
 {
-    protected Response $response;
-    protected Request $request;
+    private Response $response;
+    private Request $request;
+    private CarTransformer $carTransformer;
 
-    public function __construct(Request $request, Response $response){
+
+    public function __construct(Request $request, Response $response, CarTransformer $carTransformer)
+    {
         $this->response = $response;
         $this->request = $request;
+        $this->carTransformer = $carTransformer;
     }
 
     public function home(): Response
     {
-        return $this->response->renderView('home');
+        $carRepository = new CarRepository();
+        $cars = $carRepository->getAll();
+        $carsData = [];
+        foreach ($cars as $car){
+            $carsData[] = $this->carTransformer->toArray($car);
+        }
+        return $this->response->renderView('home',
+            ['cars' => $carsData]
+        );
     }
 }

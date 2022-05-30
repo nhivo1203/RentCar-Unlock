@@ -7,12 +7,12 @@ use Nhivonfq\Unlock\boostrap\Validate;
 class CreateBookingValidate extends Validate
 {
 
-    private int $booking_id = 0;
-    private int $user_id = 0;
-    private int $car_id = 0;
-    private string $check_in = '';
-    private string $check_out = '';
-    private int $total = 0;
+    public int $booking_id = 0;
+    public int $user_id = 0;
+    public int $car_id = 0;
+    public string $check_in = '';
+    public string $check_out = '';
+    public int $total = 0;
 
     public function rules(): array
     {

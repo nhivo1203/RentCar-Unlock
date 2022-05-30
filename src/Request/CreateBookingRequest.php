@@ -4,11 +4,34 @@ namespace Nhivonfq\Unlock\Request;
 
 class CreateBookingRequest
 {
-    private int $user_id;
-    private int $car_id;
-    private string $check_in;
-    private string $check_out;
-    private int $total;
+    private int $user_id = 0;
+    private int $car_id = 0;
+    private string $check_in = '';
+    private string $check_out = '';
+    private int $total = 0;
+
+
+    /**
+     * @param $data
+     * @return string
+     */
+    private function formatRequest($data): string
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        return htmlspecialchars($data);
+    }
+
+    public function fromArray(array $requestBody): self
+    {
+        $this->setTotal($requestBody['total']);
+        $this->setCarId($requestBody['car_id']);
+        $this->setUserId($requestBody['user_id']);
+        $this->setCheckIn($requestBody['check_in']);
+        $this->setCheckOut($requestBody['check_out']);
+        $this->setTotal($requestBody['total']);
+        return $this;
+    }
 
     /**
      * @return int

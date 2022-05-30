@@ -4,6 +4,7 @@ namespace Nhivonfq\Unlock\Services;
 
 use Nhivonfq\Unlock\Models\BookingModel;
 use Nhivonfq\Unlock\Repository\BookingRepository;
+use Nhivonfq\Unlock\Request\CreateBookingRequest;
 
 class CreateBookingServices
 {

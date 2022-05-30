@@ -4,6 +4,7 @@ session_start();
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
+use Nhivonfq\Unlock\Controllers\API\CreateBookingAPIController;
 use Nhivonfq\Unlock\Controllers\API\GetCarController;
 use Nhivonfq\Unlock\Controllers\API\LoginAPIController;
 use Nhivonfq\Unlock\Controllers\API\RegisterAPIController;
@@ -51,6 +52,7 @@ $app->router->post('/api/register', [RegisterAPIController::class, 'register']);
 $app->router->get('/api/register', [RegisterAPIController::class, 'register']);
 
 $app->router->get('/api/cars', [GetCarController::class, 'getAllCar']);
+$app->router->post('/api/createbooking', [CreateBookingAPIController::class, 'createBooking']);
 
 $app->run();
 

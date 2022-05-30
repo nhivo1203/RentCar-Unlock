@@ -8,6 +8,7 @@ class CarModel
     private string $car_name = "";
     private string $car_type = "";
     private string $car_brand = "";
+    private string $image = "";
     private int $price = 0;
 
     /**
@@ -88,6 +89,22 @@ class CarModel
     public function setPrice(int $price): void
     {
         $this->price = $price;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
     }
 
 

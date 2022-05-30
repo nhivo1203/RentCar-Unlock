@@ -30,7 +30,7 @@ class UserRepositoryTest extends TestCase
         $user->setLastname('Thien Long');
         $user->setEmail('thienlong@gmail.com');
         $user->setPassword('123456789');
-        $user->setStatus(0);
+        $user->setRole(0);
         $user->setUsername('thienlong');
 
         Database::getConnection($config['db']);

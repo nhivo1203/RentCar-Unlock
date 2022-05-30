@@ -18,12 +18,11 @@ class LoginController
     private RequestTransfer $requestTransfer;
 
 
-
     public function __construct(
-        LoginValidate    $loginValidate,
-        Request          $request,
-        Response         $response,
-        LoginServices    $loginServices,
+        LoginValidate   $loginValidate,
+        Request         $request,
+        Response        $response,
+        LoginServices   $loginServices,
         RequestTransfer $requestTransfer
 
     )
@@ -39,7 +38,7 @@ class LoginController
     /**
      * @return Response
      */
-    public function login():Response
+    public function login(): Response
     {
         if ($this->request->isPost()) {
             $loginRequest = new LoginRequest();
@@ -51,7 +50,7 @@ class LoginController
                 $this->response->setRedirectUrl('/');
             }
         }
-        return $this->response->renderView('login');
+        return $this->response->renderView('login', ['errors' => $this->loginValidate]);
     }
 
     /**

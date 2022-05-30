@@ -8,7 +8,7 @@ use Nhivonfq\Unlock\Models\UserModel;
 class UserRepository
 {
 
-    private array $attributes = ['firstname', 'lastname', 'email', 'password', 'status', 'username'];
+    private array $attributes = ['firstname', 'lastname', 'email', 'password', 'role', 'username'];
 
 
     public function save(UserModel $user): bool
@@ -17,7 +17,7 @@ class UserRepository
         $lastname = $user->getLastname();
         $email = $user->getEmail();
         $password = $user->getPassword();
-        $status = $user->getStatus();
+        $role = $user->getRole();
         $username = $user->getUsername();
 
         $statement = $this->prepare("INSERT INTO users(" . implode(',', $this->attributes) . ")
@@ -26,7 +26,7 @@ class UserRepository
             '$lastname',
             '$email',
             '$password',
-            '$status',
+            '$role',
             '$username '
             )");
         $statement->execute();
@@ -50,7 +50,7 @@ class UserRepository
                 $user->setPassword($row['password']);
                 $user->setFirstName($row['firstname']);
                 $user->setLastname($row['lastname']);
-                $user->setStatus($row['status']);
+                $user->setRole($row['role']);
                 $user->setEmail($row['email']);
                 $user->setCreateAt($row['createdAt']);
                 return $user;

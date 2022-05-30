@@ -2,13 +2,14 @@
 
 namespace Nhivonfq\Unlock\Repository;
 
+use Nhivonfq\Unlock\Database\Database;
 use Nhivonfq\Unlock\Models\BookingModel;
 
 class BookingRepository
 {
     private array $attributes = ['user_id', 'car_id', 'check_in', 'check_out', 'total'];
 
-    public function createBooking(BookingModel $booking) {
+    public function createBooking(BookingModel $booking): bool {
         $user_id = $booking->getUserId();
         $car_id = $booking->getCarId();
         $check_in = $booking->getCheckIn();
@@ -25,5 +26,10 @@ class BookingRepository
             )");
         $statement->execute();
         return true;
+    }
+
+    public function prepare($sql)
+    {
+        return Database::prepare($sql);
     }
 }

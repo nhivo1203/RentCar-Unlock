@@ -17,8 +17,6 @@ class Response
     private ?array $data = null;
     private array $headers = [];
 
-
-
     /**
      * @param array $data
      * @param int $statusCode
@@ -123,6 +121,7 @@ class Response
         } else {
             $this->setData(null);
         }
+
         return $this;
     }
 

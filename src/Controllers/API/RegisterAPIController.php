@@ -45,38 +45,39 @@ class RegisterAPIController
      */
     public function register(): Response
     {
-        if (!$this->request->isPost()) {
-            return $this->response->renderView('register');
-        }
-        $registerRequest = new RegisterRequest();
-        $registerRequest = $registerRequest->fromArray($this->requestTransfer->getRequestJsonBody());
-        $this->registerValidate->loadData($this->requestTransfer->getRequestJsonBody());
-        $user = $this->registerServices->register($registerRequest);
-        if (!$this->registerValidate->validate()) {
-            return $this->response->toJson($this->registerValidate->errors, Response::HTTP_BAD_REQUEST);
-        }
-        if (!$user) {
-            return $this->response->toJson(['message' => "Can not create user"], Response::HTTP_BAD_REQUEST);
-        }
-        $userTokenData = [
-            'id' => $user->getId(),
-            'email' => $user->getEmail()
-        ];
-        $token = $this->tokenServices->jwtEncodeData(
-            $this->request->getHost() . $this->request->getRequestUri(),
-            $userTokenData);
-        return $this->response->toJson([
-            'data' => [
-                "user" => [
-                    'firstname' => $user->getFirstname(),
-                    'lastname' => $user->getLastname(),
-                    'email' => $user->getEmail(),
-                    'username' => $user->getUsername(),
-                ],
-                "token" => $token
-            ]
-        ], Response::HTTP_OK);
+        if ($this->request->isPost()) {
+            $registerRequest = new RegisterRequest();
+            $registerRequest = $registerRequest->fromArray($this->requestTransfer->getRequestJsonBody());
+            $this->registerValidate->loadData($this->requestTransfer->getRequestJsonBody());
+            if (!$this->registerValidate->validate()) {
+                return $this->response->toJson($this->registerValidate->errors, Response::HTTP_BAD_REQUEST);
+            }
 
+            $user = $this->registerServices->register($registerRequest);
+
+            if (!$user) {
+                return $this->response->toJson(['message' => "Can not create user"], Response::HTTP_BAD_REQUEST);
+            }
+            $userTokenData = [
+                'id' => $user->getId(),
+                'email' => $user->getEmail()
+            ];
+            $token = $this->tokenServices->jwtEncodeData(
+                $this->request->getHost() . $this->request->getRequestUri(),
+                $userTokenData);
+            return $this->response->toJson([
+                'data' => [
+                    "user" => [
+                        'firstname' => $user->getFirstname(),
+                        'lastname' => $user->getLastname(),
+                        'email' => $user->getEmail(),
+                        'username' => $user->getUsername(),
+                    ],
+                    "token" => $token
+                ]
+            ], Response::HTTP_OK);
+        }
+        return $this->response->renderView('register');
     }
 
 }

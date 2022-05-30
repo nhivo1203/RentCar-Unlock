@@ -51,7 +51,7 @@ class RegisterController
                 View::redirect('/');
             }
 
-            return $this->response->renderView('register');
+            return $this->response->renderView('register',['errors' => $this->registerValidate]);
         }
 
         return $this->response->renderView('register');

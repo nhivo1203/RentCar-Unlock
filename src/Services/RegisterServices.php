@@ -21,7 +21,7 @@ class RegisterServices
         $user->setFirstname($registerRequest->getFirstname());
         $user->setLastname($registerRequest->getLastname());
         $user->setEmail($registerRequest->getEmail());
-        $user->setStatus($registerRequest->getStatus());
+        $user->setRole($registerRequest->getRole());
         $user->setUsername($registerRequest->getUsername());
         $password = password_hash($registerRequest->getPassword(), PASSWORD_DEFAULT);
         $user->setPassword($password);

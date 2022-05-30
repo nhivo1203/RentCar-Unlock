@@ -7,15 +7,15 @@ use Nhivonfq\Unlock\Models\UserModel;
 
 class RegisterValidate extends Validate
 {
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
-    const STATUS_DELETED = 2;
+    const ROLE_GUEST = 0;
+    const ROLE_USER = 1;
+    const ROLE_ADMIN = 2;
 
 
     public string $firstname = '';
     public string $lastname = '';
     public string $email = '';
-    public int $status = self::STATUS_INACTIVE;
+    public int $role = self::ROLE_GUEST;
     public string $username = '';
     public string $password = '';
     public string $confirmPassword = '';
