@@ -54,7 +54,7 @@ class RegisterController
             return $this->response->renderView('register',['errors' => $this->registerValidate]);
         }
 
-        return $this->response->renderView('register');
+        return $this->response->renderView('register',['errors' => $this->registerValidate]);
     }
 
 
