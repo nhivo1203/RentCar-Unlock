@@ -37,10 +37,12 @@
         </div>
     </div>
     <div class="mb-3">
-        <label>Image</label>
-        <input type="text"
-               name="image"
-               class="form-control <?php echo $data['errors']->hasError('image') ? 'is-invalid' : '' ?>"
+        <label for="formFile" class="form-label">Image</label>
+        <input
+                class="form-control <?php echo $data['errors']->hasError('image') ? 'is-invalid' : '' ?>"
+                type="file"
+                name="image"
+                id="formFile"
         >
         <div class="invalid-feedback">
             <?php echo $data['errors']->getFirstError('image') ?>

@@ -9,6 +9,7 @@ use Nhivonfq\Unlock\Controllers\API\CreateCarAPIController;
 use Nhivonfq\Unlock\Controllers\API\GetCarController;
 use Nhivonfq\Unlock\Controllers\API\LoginAPIController;
 use Nhivonfq\Unlock\Controllers\API\RegisterAPIController;
+use Nhivonfq\Unlock\Controllers\CreateBookingController;
 use Nhivonfq\Unlock\Controllers\CreateCarController;
 use Nhivonfq\Unlock\Controllers\RegisterController;
 use Nhivonfq\Unlock\Controllers\HomeController;
@@ -54,7 +55,12 @@ $app->router->post('/api/register', [RegisterAPIController::class, 'register']);
 $app->router->get('/api/register', [RegisterAPIController::class, 'register']);
 
 $app->router->get('/api/cars', [GetCarController::class, 'getAllCar']);
+
 $app->router->post('/api/createbooking', [CreateBookingAPIController::class, 'createBooking']);
+$app->router->get('/api/createbooking', [CreateBookingAPIController::class, 'createBooking']);
+
+$app->router->post('/createbooking', [CreateBookingController::class, 'createBooking']);
+$app->router->get('/createbooking', [CreateBookingController::class, 'createBooking']);
 
 $app->router->post('/createcar', [CreateCarController::class, 'createCar']);
 $app->router->get('/createcar', [CreateCarController::class, 'createCar']);
