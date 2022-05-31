@@ -40,6 +40,7 @@ $app->router->get('/', [HomeController::class, 'home']);
 $app->router->get('/contact', [SitesController::class, 'contact']);
 
 $app->router->post('/logout', [LoginController::class, 'logout']);
+$app->router->get('/logout', [LoginController::class, 'logout']);
 
 $app->router->post('/login', [LoginController::class, 'login']);
 $app->router->get('/login', [LoginController::class, 'login']);
@@ -55,6 +56,7 @@ $app->router->post('/api/register', [RegisterAPIController::class, 'register']);
 $app->router->get('/api/register', [RegisterAPIController::class, 'register']);
 
 $app->router->get('/api/cars', [GetCarController::class, 'getAllCar']);
+$app->router->post('/api/cars', [GetCarController::class, 'getAllCar']);
 
 $app->router->post('/api/createbooking', [CreateBookingAPIController::class, 'createBooking']);
 $app->router->get('/api/createbooking', [CreateBookingAPIController::class, 'createBooking']);
@@ -66,6 +68,7 @@ $app->router->post('/createcar', [CreateCarController::class, 'createCar']);
 $app->router->get('/createcar', [CreateCarController::class, 'createCar']);
 
 $app->router->post('/api/createcar', [CreateCarAPIController::class, 'createCar']);
+$app->router->get('/api/createcar', [CreateCarAPIController::class, 'createCar']);
 
 $app->run();
 
