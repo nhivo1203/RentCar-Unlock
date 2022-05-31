@@ -39,7 +39,7 @@
     <div class="mb-3">
         <label for="formFile" class="form-label">Image</label>
         <input
-                class="form-control <?php echo $data['errors']->hasError('image') ? 'is-invalid' : '' ?>"
+                        class="form-control <?php echo $data['errors']->hasError('image') ? 'is-invalid' : '' ?>"
                 type="file"
                 name="image"
                 id="formFile"
