@@ -1,29 +1,72 @@
-<body class="text-center">
-<div class="container">
-    <div class="container-fluid">
-        <form class="form-signin" method="post">
-            <img class="mb-4"
-                 src="https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBMFV0REE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--7a4350d76ced467ee165ce6b30eb4d83bf4c6eb9/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RkhKbGMybDZaVjkwYjE5c2FXMXBkRnNIYVFJc0FXa0NMQUU9IiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--ee4e4854f68df0a745312d63f6c2782b5da346cd/nfq-asia-8bit-rockstars-logo.png"
-                 alt="" width="72"
-                 height="72">
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-            <label for="email" class="sr-only">email</label>
-            <input type="text" id="email" name="email"
-                   class="form-control <?php echo $data['errors']->hasError('email') ? 'is-invalid' : '' ?>"
-            >
-            <div class="invalid-feedback">
-                <?php echo $data['errors']->getFirstError('email') ?>
-            </div>
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password"
-                   class="form-control <?php echo $data['errors']->hasError('password') ? 'is-invalid' : '' ?>"
-            >
-            <div class="invalid-feedback">
-                <?php echo $data['errors']->getFirstError('password') ?>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <p class="mt-5 mb-3 text-muted">NhiVo&copy; 2022</p>
-        </form>
+<section class="page-section" id="contact">
+    <!-- Contact Section Heading-->
+    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Login</h2>
+    <!-- Icon Divider-->
+    <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+        <div class="divider-custom-line"></div>
     </div>
-</div>
-</body>
+    <!-- Contact Section Form-->
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
+            <!-- * * * * * * * * * * * * * * *-->
+            <!-- * * SB Forms Contact Form * *-->
+            <!-- * * * * * * * * * * * * * * *-->
+            <!-- This form is pre-integrated with SB Forms.-->
+            <!-- To make this form functional, sign up at-->
+            <!-- https://startbootstrap.com/solution/contact-forms-->
+            <!-- to get an API token!-->
+            <form action="login" method="post">
+                        <!-- Email address input-->
+                        <div class="form-floating mb-3">
+                            <input
+                                    class="form-control <?php echo $data['errors']->hasError('email') ? 'is-invalid' : '' ?>"
+                                    id="email" name="email"
+                                    type="email"
+                                    placeholder="name@example.com"
+                            />
+                            <label for="email">Email address</label>
+                            <div class="invalid-feedback"  >
+                                <?php echo $data['errors']->getFirstError('email') ?>
+                            </div>
+                        </div>
+                        <!-- Password input-->
+                        <div class="form-floating mb-3">
+                            <input
+                                    class="form-control <?php echo $data['errors']->hasError('password') ? 'is-invalid' : '' ?>"
+                                    id="password" name="password"
+                                    type="password"
+                                    placeholder="name"
+                            />
+                            <label for="password">Password</label>
+                            <div class="invalid-feedback">
+                                <?php echo $data['errors']->getFirstError('password') ?>
+                            </div>
+                        </div>
+
+                        <!-- Submit success message-->
+                        <!---->
+                        <!-- This is what your users will see when the form-->
+                        <!-- has successfully submitted-->
+                        <div class="d-none" id="submitSuccessMessage">
+                            <div class="text-center mb-3">
+                                <div class="fw-bolder">Form submission successful!</div>
+                                To activate this form, sign up at
+                                <br/>
+                                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                            </div>
+                        </div>
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div class="d-none" id="submitErrorMessage">
+                            <div class="text-center text-danger mb-3">Error sending message!</div>
+                        </div>
+                        <!-- Submit Button-->
+                        <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</section>
