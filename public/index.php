@@ -4,6 +4,7 @@ session_start();
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
+use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\Controllers\API\CreateBookingAPIController;
 use Nhivonfq\Unlock\Controllers\API\CreateCarAPIController;
 use Nhivonfq\Unlock\Controllers\API\GetCarController;
@@ -11,12 +12,12 @@ use Nhivonfq\Unlock\Controllers\API\LoginAPIController;
 use Nhivonfq\Unlock\Controllers\API\RegisterAPIController;
 use Nhivonfq\Unlock\Controllers\CreateBookingController;
 use Nhivonfq\Unlock\Controllers\CreateCarController;
-use Nhivonfq\Unlock\Controllers\RegisterController;
 use Nhivonfq\Unlock\Controllers\HomeController;
 use Nhivonfq\Unlock\Controllers\LoginController;
+use Nhivonfq\Unlock\Controllers\RegisterController;
 use Nhivonfq\Unlock\Controllers\SitesController;
-use Nhivonfq\Unlock\boostrap\Application;
 use Nhivonfq\Unlock\Database\Database;
+use Nhivonfq\Unlock\Models\UserModel;
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -35,7 +36,7 @@ $connection = Database::getConnection($config['db']);
 
 $app = new Application(dirname(__DIR__));
 
-$app->router->get('/', [HomeController::class, 'home']);
+$app->router->get('/', [HomeController::class, 'home'], role: UserModel::ROLE_MEMBER);
 
 $app->router->get('/contact', [SitesController::class, 'contact']);
 
@@ -64,11 +65,11 @@ $app->router->get('/api/createbooking', [CreateBookingAPIController::class, 'cre
 $app->router->post('/createbooking', [CreateBookingController::class, 'createBooking']);
 $app->router->get('/createbooking', [CreateBookingController::class, 'createBooking']);
 
-$app->router->post('/createcar', [CreateCarController::class, 'createCar']);
-$app->router->get('/createcar', [CreateCarController::class, 'createCar']);
+$app->router->post('/createcar', [CreateCarController::class, 'createCar'], role: UserModel::ROLE_ADMIN);
+$app->router->get('/createcar', [CreateCarController::class, 'createCar'], role: UserModel::ROLE_ADMIN);
 
-$app->router->post('/api/createcar', [CreateCarAPIController::class, 'createCar']);
-$app->router->get('/api/createcar', [CreateCarAPIController::class, 'createCar']);
+$app->router->post('/api/createcar', [CreateCarAPIController::class, 'createCar'], role: UserModel::ROLE_ADMIN);
+$app->router->get('/api/createcar', [CreateCarAPIController::class, 'createCar'], role: UserModel::ROLE_ADMIN);
 
 $app->run();
 

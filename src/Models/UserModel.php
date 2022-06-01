@@ -4,6 +4,10 @@ namespace Nhivonfq\Unlock\Models;
 
 class UserModel
 {
+    public const ROLE_GUEST = 0;
+    public const ROLE_MEMBER = 1;
+    public const ROLE_ADMIN = 2;
+
     private int $id = 0;
     private string $firstname = '';
     private string $lastname = '';

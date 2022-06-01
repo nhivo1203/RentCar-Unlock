@@ -4,6 +4,7 @@ namespace Nhivonfq\Unlock\Services;
 use Dotenv\Dotenv;
 use Exception;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
@@ -11,10 +12,8 @@ $dotenv->load();
 class TokenServices
 {
     private string $jwtSecret;
-    private array $token;
     private int $issuedAt;
     private int $expire;
-    private string $jwt;
 
     public function __construct()
     {
@@ -29,27 +28,38 @@ class TokenServices
      * @param $data
      * @return string
      */
-    public function jwtEncodeData($iss, $data): string
+    public function jwtEncodeData($data): string
     {
-
-        $this->token = array(
-            "iss" => $iss,
-            "aud" => $iss,
+        $payload = array(
             "iat" => $this->issuedAt,
             "exp" => $this->expire,
             "data" => $data
         );
 
-        $this->jwt = JWT::encode($this->token, $this->jwtSecret, 'HS256');
-        return $this->jwt;
+        return JWT::encode($payload, $this->jwtSecret, 'HS256');
     }
 
-    public function jwtDecodeData($jwtToken)
+    /**
+     * @param $token
+  route   * @return array
+     */
+    public function checkToken($token): array
     {
-        try {
-            return JWT::decode($jwtToken, $this->jwtSecret, array('HS256'))->data;
-        } catch (Exception $e) {
-            return $e->getMessage();
+        $decoded = JWT::decode($token, new Key($this->jwtSecret, 'HS256'));
+
+        return (array)$decoded;
+    }
+
+    public function getTokenPayload($authorizationToken): bool|array
+    {
+        if ($authorizationToken === null) {
+            return false;
         }
+        $token = str_replace('Bearer ', '', $authorizationToken);
+        $payload = $this->checkToken($token);
+        if ($payload) {
+            return $payload;
+        }
+        return false;
     }
 }

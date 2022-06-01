@@ -15,9 +15,9 @@ class SessionServices
         return isset($_SESSION[$key]) ? true : false;
     }
 
-    public function get($key):bool
+    public function get($key)
     {
-        return $_SESSION[$key] ?? false;
+        return $_SESSION[$key] ? $_SESSION[$key] : false;
     }
 
     public function remove($key)

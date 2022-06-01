@@ -58,13 +58,11 @@ class LoginAPIController
                 'id' => $user->getId(),
                 'email' => $user->getEmail()
             ];
-            $data = $this->tokenServices->jwtEncodeData(
-                $this->request->getHost() . $this->request->getRequestUri(),
-                $userTokenData);
+            $token = $this->tokenServices->jwtEncodeData($userTokenData);
             return $this->response->toJson([
                 'data' => [
                     "email" => $user->getEmail(),
-                    "token" => $data
+                    "token" => $token
                 ]
             ], Response::HTTP_OK);
         }

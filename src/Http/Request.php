@@ -2,8 +2,6 @@
 
 namespace Nhivonfq\Unlock\Http;
 
-use JsonException;
-
 class Request
 {
     public function getPath()
@@ -42,5 +40,13 @@ class Request
     public function isPost()
     {
         return $this->getMethod() === 'post';
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getToken(): ?string
+    {
+        return $_SERVER['HTTP_AUTHORIZATION'] ?? null;
     }
 }

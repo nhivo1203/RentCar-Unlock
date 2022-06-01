@@ -16,7 +16,7 @@ class LoginServicesTest extends TestCase
         $userRepositoryMock = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $session = new SessionServices();
         $loginServices = new LoginServices($userRepositoryMock, $session);
-        $isGuest = $loginServices::isGuest();
+        $isGuest = $loginServices::isLogin();
 
         $this->assertTrue($isGuest);
     }

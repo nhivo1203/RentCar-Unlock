@@ -33,7 +33,7 @@
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white">
                                 <h3 class="lead"><?= $car['name'] ?></h3>
-                                <p class="lead"> Price: <?= $car['price'] ?>$/Day</p>
+                                <p class="lead"> Price:<?= $car['price'] ?></p>
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
@@ -79,5 +79,5 @@
 </footer>
 <!-- Copyright Section-->
 <div class="copyright py-4 text-center text-white">
-    <div class="container"><small>Copyright &copy; NhiVo Unlock 2022</small></div>
+    <div class="container"><small>Copyright &copy; NhiVo Website 2022</small></div>
 </div>

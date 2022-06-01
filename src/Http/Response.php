@@ -10,6 +10,7 @@ class Response
     const HTTP_BAD_REQUEST = 503;
     const HTTP_INTERNAL_SERVER_ERROR = 500;
     const HTTP_UNAUTHEN = 401;
+    const HTTP_UNAUTHORIZED = 403;
 
     private ?string $template = null;
     private int $statusCode;

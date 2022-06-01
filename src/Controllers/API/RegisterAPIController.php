@@ -62,9 +62,7 @@ class RegisterAPIController
                 'id' => $user->getId(),
                 'email' => $user->getEmail()
             ];
-            $token = $this->tokenServices->jwtEncodeData(
-                $this->request->getHost() . $this->request->getRequestUri(),
-                $userTokenData);
+            $token = $this->tokenServices->jwtEncodeData($userTokenData);
             return $this->response->toJson([
                 'data' => [
                     "user" => [

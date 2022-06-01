@@ -21,7 +21,7 @@ class LoginServices
     }
 
 
-    public static function isGuest(): bool
+    public static function isLogin(): bool
     {
         $session = new SessionServices();
         return !$session->hasSession('user_id');
