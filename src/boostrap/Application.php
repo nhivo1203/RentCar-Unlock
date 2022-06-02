@@ -16,7 +16,7 @@ use Nhivonfq\Unlock\Services\SessionServices;
 class Application
 {
 
-    const ROLE_INDEX = 0;
+    const ROLE_INDEX = 1;
 
 
     /**
@@ -118,9 +118,6 @@ class Application
             return true;
         }
         $role = $route[static::ROLE_INDEX];
-
-        var_dump($route[static::ROLE_INDEX]);
-        die();
 
         if ($role === 0) {
             return true;

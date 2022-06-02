@@ -15,7 +15,7 @@ class CreateBookingServices
         $this->bookingRepository = $bookingRepository;
     }
 
-    public function createBooking(CreateBookingRequest $createBookingRequest): BookingModel| bool {
+    public function createBooking(CreateBookingRequest $createBookingRequest): BookingModel {
         $booking = new BookingModel();
 
         $booking->setUserId($createBookingRequest->getUserId());

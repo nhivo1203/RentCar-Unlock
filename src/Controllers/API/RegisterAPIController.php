@@ -9,6 +9,7 @@ use Nhivonfq\Unlock\Request\RegisterRequest;
 use Nhivonfq\Unlock\Services\RegisterServices;
 use Nhivonfq\Unlock\Services\TokenServices;
 use Nhivonfq\Unlock\Transfer\RequestTransfer;
+use Nhivonfq\Unlock\Transformer\UserTransformer;
 use Nhivonfq\Unlock\Validate\RegisterValidate;
 
 class RegisterAPIController
@@ -19,6 +20,7 @@ class RegisterAPIController
     private Response $response;
     private TokenServices $tokenServices;
     private RequestTransfer $requestTransfer;
+    private UserTransformer $userTransformer;
 
 
     public function __construct(
@@ -27,7 +29,8 @@ class RegisterAPIController
         Response         $response,
         RegisterServices $registerServices,
         TokenServices    $tokenServices,
-        RequestTransfer $requestTransfer
+        RequestTransfer $requestTransfer,
+        UserTransformer $userTransformer
 
     )
     {
@@ -37,6 +40,7 @@ class RegisterAPIController
         $this->response = $response;
         $this->tokenServices = $tokenServices;
         $this->requestTransfer = $requestTransfer;
+        $this->userTransformer = $userTransformer;
 
     }
 
@@ -65,12 +69,7 @@ class RegisterAPIController
             $token = $this->tokenServices->jwtEncodeData($userTokenData);
             return $this->response->toJson([
                 'data' => [
-                    "user" => [
-                        'firstname' => $user->getFirstname(),
-                        'lastname' => $user->getLastname(),
-                        'email' => $user->getEmail(),
-                        'username' => $user->getUsername(),
-                    ],
+                    "user" => $this->userTransformer->toArray($user),
                     "token" => $token
                 ]
             ], Response::HTTP_OK);

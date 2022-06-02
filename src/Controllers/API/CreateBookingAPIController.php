@@ -8,6 +8,7 @@ use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\CreateBookingRequest;
 use Nhivonfq\Unlock\Services\CreateBookingServices;
 use Nhivonfq\Unlock\Transfer\RequestTransfer;
+use Nhivonfq\Unlock\Transformer\BookingTransformer;
 use Nhivonfq\Unlock\Validate\CreateBookingValidate;
 
 class CreateBookingAPIController
@@ -17,12 +18,14 @@ class CreateBookingAPIController
     private CreateBookingValidate $createBookingValidate;
     private CreateBookingServices $createBookingServices;
     private RequestTransfer $requestTransfer;
+    private BookingTransformer $bookingTransformer;
 
     public function __construct(Request $request,
                                 Response $response,
                                 CreateBookingValidate $createBookingValidate,
                                 CreateBookingServices $createBookingServices,
-                                RequestTransfer $requestTransfer
+                                RequestTransfer $requestTransfer,
+                                BookingTransformer $bookingTransformer
     )
     {
         $this->request = $request;
@@ -30,6 +33,7 @@ class CreateBookingAPIController
         $this->createBookingValidate = $createBookingValidate;
         $this->createBookingServices = $createBookingServices;
         $this->requestTransfer = $requestTransfer;
+        $this->bookingTransformer = $bookingTransformer;
     }
 
     /**
@@ -45,6 +49,7 @@ class CreateBookingAPIController
                     'errors' => $this->createBookingValidate->errors
                 ], Response::HTTP_BAD_REQUEST);
             }
+
             $booking = $this->createBookingServices->createBooking($createBookingRequest);
 
             if (!$booking) {
@@ -53,11 +58,7 @@ class CreateBookingAPIController
 
             return $this->response->toJson([
                 'data' => [
-                    "booking" => [
-                        'check_in' => $booking->getCheckIn(),
-                        'check_out' => $booking->getCheckOut(),
-                        'total' => $booking->getTotal(),
-                    ]
+                    "booking" => $this->bookingTransformer->toArray($booking)
                 ]
             ], Response::HTTP_OK);
         }

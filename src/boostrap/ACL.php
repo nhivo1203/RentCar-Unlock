@@ -2,6 +2,8 @@
 
 namespace Nhivonfq\Unlock\boostrap;
 
+use Nhivonfq\Unlock\Exception\UnauthenticatedException;
+use Nhivonfq\Unlock\Exception\UnauthorizedException;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Services\SessionServices;
@@ -26,27 +28,32 @@ class ACL
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * @throws UnauthorizedException
+     * @throws UnauthenticatedException
+     */
     public function checkCanAccess(int $role): bool
     {
-        $authortoken = $this->request->getToken();
-        $session = $this->sessionServices->hasSession('user_id');
-        if ($authortoken == null && !$session) {
-            return false;
+        $authorizationToken = $this->request->getToken();
+        $sessionToken = $this->sessionServices->hasSession('user_id');
+        if ($authorizationToken === null && !$sessionToken) {
+            throw new UnauthenticatedException();
         }
-        if($session) {
+        if ($sessionToken) {
             $userId = $this->sessionServices->get('user_id');
         } else {
-            $tokenPayload = $this->tokenServices->getTokenPayload($authortoken);
+            $tokenPayload = $this->tokenServices->getTokenPayload($authorizationToken);
             if (!$tokenPayload) {
-                return false;
+                throw new UnauthenticatedException();
             }
             $userId = $tokenPayload['data']->id;
         }
+
         $user = $this->userRepository->findOne(['id' => $userId]);
         if ($user->getRole() === $role) {
             return true;
         }
-        return false;
+        throw new UnauthorizedException();
 
     }
 }

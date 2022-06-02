@@ -9,6 +9,7 @@ use Nhivonfq\Unlock\Request\LoginRequest;
 use Nhivonfq\Unlock\Services\LoginServices;
 use Nhivonfq\Unlock\Services\TokenServices;
 use Nhivonfq\Unlock\Transfer\RequestTransfer;
+use Nhivonfq\Unlock\Transformer\UserTransformer;
 use Nhivonfq\Unlock\Validate\LoginValidate;
 
 
@@ -20,6 +21,7 @@ class LoginAPIController
     private Response $response;
     private TokenServices $tokenServices;
     private RequestTransfer $requestTransfer;
+    private UserTransformer $userTransformer;
 
 
     public function __construct(LoginValidate   $loginValidate,
@@ -27,7 +29,8 @@ class LoginAPIController
                                 Response        $response,
                                 LoginServices   $loginServices,
                                 TokenServices   $tokenServices,
-                                RequestTransfer $requestTransfer
+                                RequestTransfer $requestTransfer,
+                                UserTransformer $userTransformer
     )
     {
         $this->loginValidate = $loginValidate;
@@ -36,6 +39,7 @@ class LoginAPIController
         $this->response = $response;
         $this->tokenServices = $tokenServices;
         $this->requestTransfer = $requestTransfer;
+        $this->userTransformer = $userTransformer;
     }
 
     /**
@@ -61,7 +65,7 @@ class LoginAPIController
             $token = $this->tokenServices->jwtEncodeData($userTokenData);
             return $this->response->toJson([
                 'data' => [
-                    "email" => $user->getEmail(),
+                    "user" => $this->userTransformer->toArray($user),
                     "token" => $token
                 ]
             ], Response::HTTP_OK);

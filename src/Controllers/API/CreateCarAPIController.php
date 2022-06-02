@@ -8,6 +8,7 @@ use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\CreateCarRequest;
 use Nhivonfq\Unlock\Services\CreateCarServices;
 use Nhivonfq\Unlock\Transfer\RequestTransfer;
+use Nhivonfq\Unlock\Transformer\CarTransformer;
 use Nhivonfq\Unlock\Validate\CreateCarValidate;
 
 class CreateCarAPIController
@@ -17,18 +18,22 @@ class CreateCarAPIController
     private RequestTransfer $requestTransfer;
     private CreateCarValidate $createCarValidate;
     private CreateCarServices $createCarServices;
+    private CarTransformer $carTransformer;
 
     public function __construct(Request $request,
                                 Response $response,
                                 RequestTransfer $requestTransfer,
                                 CreateCarValidate $createCarValidate,
-                                CreateCarServices $createCarServices)
+                                CreateCarServices $createCarServices,
+                                CarTransformer $carTransformer
+    )
     {
         $this->request = $request;
         $this->response = $response;
         $this->requestTransfer = $requestTransfer;
         $this->createCarValidate = $createCarValidate;
         $this->createCarServices = $createCarServices;
+        $this->carTransformer = $carTransformer;
     }
 
     /**
@@ -50,13 +55,7 @@ class CreateCarAPIController
             }
             return $this->response->toJson([
                 'data' => [
-                    "car" => [
-                        'name' => $car->getCarName(),
-                        'type' => $car->getCarType(),
-                        'brand' => $car->getCarBrand(),
-                        'price' => $car->getPrice(),
-                        'image' => $car->getImage(),
-                    ]
+                    "car" => $this->carTransformer->toArray($car)
                 ]
             ], Response::HTTP_OK);
         }

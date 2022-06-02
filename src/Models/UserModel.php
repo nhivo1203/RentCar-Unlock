@@ -8,13 +8,13 @@ class UserModel
     public const ROLE_MEMBER = 1;
     public const ROLE_ADMIN = 2;
 
-    private int $id = 0;
-    private string $firstname = '';
-    private string $lastname = '';
-    private string $email = '';
-    private int $role = 0;
-    private string $username = '';
-    private string $password = '';
+    private int $id;
+    private string $firstname;
+    private string $lastname;
+    private string $email;
+    private int $role;
+    private string $username;
+    private string $password;
     private string $createAt;
 
     /**
