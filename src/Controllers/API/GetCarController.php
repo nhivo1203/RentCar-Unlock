@@ -2,26 +2,25 @@
 
 namespace Nhivonfq\Unlock\Controllers\API;
 
+use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Repository\CarRepository;
+use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Transformer\CarTransformer;
 
-class GetCarController
+class GetCarController extends Controller
 {
-
-    private Request $request;
-    private Response $response;
     private CarTransformer $carTransformer;
 
     public function __construct(
         Request        $request,
         Response       $response,
+        RequestTransfer $requestTransfer,
         CarTransformer $carTransformer
     )
     {
-        $this->request = $request;
-        $this->response = $response;
+        parent::__construct($request, $response, $requestTransfer);
         $this->carTransformer = $carTransformer;
     }
 

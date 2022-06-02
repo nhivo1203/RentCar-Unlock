@@ -2,22 +2,20 @@
 
 namespace Nhivonfq\Unlock\Controllers;
 
+use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Repository\CarRepository;
+use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Transformer\CarTransformer;
 
-class HomeController
+class HomeController extends Controller
 {
-    private Response $response;
-    private Request $request;
     private CarTransformer $carTransformer;
 
-
-    public function __construct(Request $request, Response $response, CarTransformer $carTransformer)
+    public function __construct(Request $request, Response $response, RequestTransfer $requestTransfer, CarTransformer $carTransformer)
     {
-        $this->response = $response;
-        $this->request = $request;
+        parent::__construct($request, $response, $requestTransfer);
         $this->carTransformer = $carTransformer;
     }
 
@@ -26,7 +24,7 @@ class HomeController
         $carRepository = new CarRepository();
         $cars = $carRepository->getAll();
         $carsData = [];
-        foreach ($cars as $car){
+        foreach ($cars as $car) {
             $carsData[] = $this->carTransformer->toArray($car);
         }
         return $this->response->renderView('home',

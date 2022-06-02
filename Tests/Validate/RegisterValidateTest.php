@@ -18,7 +18,8 @@ class RegisterValidateTest extends TestCase
      * @param array $params
      * @return void
      */
-    public function testRegisterRules(array $params):void {
+    public function testRegisterSuccessRules(array $params): void
+    {
         $config = [
             'db' => [
                 'server' => $_ENV['DB_SERVER'],
@@ -36,6 +37,32 @@ class RegisterValidateTest extends TestCase
         $registerValidate->loadData($params);
         $isValid = $registerValidate->validate();
         $this->assertTrue($isValid);
+    }
+
+    /**
+     * @dataProvider registerFailedProvider
+     * @param array $params
+     * @return void
+     */
+    public function testRegisterFailedRules(array $params): void
+    {
+        $config = [
+            'db' => [
+                'server' => $_ENV['DB_SERVER'],
+                'port' => $_ENV['DB_PORT'],
+                'name' => $_ENV['DB_NAME'],
+                'user' => $_ENV['DB_USER'],
+                'password' => $_ENV['DB_PASSWORD'],
+            ]
+        ];
+
+        Database::getConnection($config['db']);
+
+
+        $registerValidate = new RegisterValidate();
+        $registerValidate->loadData($params);
+        $isValid = $registerValidate->validate();
+        $this->assertFalse($isValid);
     }
 
     public function registerSuccessProvider()
@@ -61,6 +88,12 @@ class RegisterValidateTest extends TestCase
                     'confirmPassword' => '123456789'
                 ],
             ],
+        ];
+    }
+
+    public function registerFailedProvider()
+    {
+        return [
             'worse-case-1' => [
                 'params' => [
                     'firstname' => 'Vo',
@@ -81,7 +114,6 @@ class RegisterValidateTest extends TestCase
                     'confirmPassword' => '123456789'
                 ],
             ],
-
         ];
     }
 }

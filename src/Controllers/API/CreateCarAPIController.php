@@ -3,6 +3,7 @@
 namespace Nhivonfq\Unlock\Controllers\API;
 
 use JsonException;
+use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\CreateCarRequest;
@@ -11,11 +12,8 @@ use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Transformer\CarTransformer;
 use Nhivonfq\Unlock\Validate\CreateCarValidate;
 
-class CreateCarAPIController
+class CreateCarAPIController extends Controller
 {
-    private Request $request;
-    private Response $response;
-    private RequestTransfer $requestTransfer;
     private CreateCarValidate $createCarValidate;
     private CreateCarServices $createCarServices;
     private CarTransformer $carTransformer;
@@ -28,9 +26,7 @@ class CreateCarAPIController
                                 CarTransformer $carTransformer
     )
     {
-        $this->request = $request;
-        $this->response = $response;
-        $this->requestTransfer = $requestTransfer;
+        parent::__construct($request, $response, $requestTransfer);
         $this->createCarValidate = $createCarValidate;
         $this->createCarServices = $createCarServices;
         $this->carTransformer = $carTransformer;

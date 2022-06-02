@@ -3,6 +3,7 @@
 namespace Nhivonfq\Unlock\Controllers\API;
 
 use JsonException;
+use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\CreateBookingRequest;
@@ -11,13 +12,11 @@ use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Transformer\BookingTransformer;
 use Nhivonfq\Unlock\Validate\CreateBookingValidate;
 
-class CreateBookingAPIController
+class CreateBookingAPIController extends Controller
 {
-    private Request $request;
-    private Response $response;
+
     private CreateBookingValidate $createBookingValidate;
     private CreateBookingServices $createBookingServices;
-    private RequestTransfer $requestTransfer;
     private BookingTransformer $bookingTransformer;
 
     public function __construct(Request $request,
@@ -28,11 +27,9 @@ class CreateBookingAPIController
                                 BookingTransformer $bookingTransformer
     )
     {
-        $this->request = $request;
-        $this->response = $response;
+        parent::__construct($request, $response, $requestTransfer);
         $this->createBookingValidate = $createBookingValidate;
         $this->createBookingServices = $createBookingServices;
-        $this->requestTransfer = $requestTransfer;
         $this->bookingTransformer = $bookingTransformer;
     }
 

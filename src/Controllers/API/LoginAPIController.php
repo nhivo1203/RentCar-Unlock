@@ -70,7 +70,7 @@ class LoginAPIController
                 ]
             ], Response::HTTP_OK);
         }
-        return $this->response->renderView('login');
+        return $this->response->renderView('login', ['errors' => $this->loginValidate]);
     }
 
 }

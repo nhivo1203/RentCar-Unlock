@@ -3,6 +3,7 @@
 namespace Nhivonfq\Unlock\Controllers;
 
 use Nhivonfq\Unlock\App\View;
+use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\RegisterRequest;
@@ -11,13 +12,11 @@ use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Validate\RegisterValidate;
 
 
-class RegisterController
+class RegisterController extends Controller
 {
     private RegisterValidate $registerValidate;
     private RegisterServices $registerServices;
-    private Request $request;
-    private Response $response;
-    private RequestTransfer $requestTransfer;
+
 
     public function __construct(
         RegisterValidate $registerValidate,
@@ -28,11 +27,9 @@ class RegisterController
 
     )
     {
+        parent::__construct($request, $response, $requestTransfer);
         $this->registerValidate = $registerValidate;
         $this->registerServices = $registerServices;
-        $this->request = $request;
-        $this->response = $response;
-        $this->requestTransfer = $requestTransfer;
     }
 
 

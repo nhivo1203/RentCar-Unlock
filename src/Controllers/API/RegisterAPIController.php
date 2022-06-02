@@ -3,6 +3,7 @@
 namespace Nhivonfq\Unlock\Controllers\API;
 
 use JsonException;
+use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\RegisterRequest;
@@ -12,14 +13,11 @@ use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Transformer\UserTransformer;
 use Nhivonfq\Unlock\Validate\RegisterValidate;
 
-class RegisterAPIController
+class RegisterAPIController extends Controller
 {
     private RegisterServices $registerServices;
     private RegisterValidate $registerValidate;
-    private Request $request;
-    private Response $response;
     private TokenServices $tokenServices;
-    private RequestTransfer $requestTransfer;
     private UserTransformer $userTransformer;
 
 
@@ -34,12 +32,10 @@ class RegisterAPIController
 
     )
     {
+        parent::__construct($request, $response, $requestTransfer);
         $this->registerValidate = $registerValidate;
         $this->registerServices = $registerServices;
-        $this->request = $request;
-        $this->response = $response;
         $this->tokenServices = $tokenServices;
-        $this->requestTransfer = $requestTransfer;
         $this->userTransformer = $userTransformer;
 
     }

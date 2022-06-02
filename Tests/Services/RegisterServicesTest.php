@@ -25,6 +25,7 @@ class RegisterServicesTest extends TestCase
         $userRepositoryMock->expects($this->once())->method('saveUser')->willReturn($params['isSave']);
         $registerServices = new RegisterServices($userRepositoryMock);
         $isRegisterResult = $registerServices->register($registerRequest);
+        var_dump($isRegisterResult);die();
         $this->assertEquals($expected, $isRegisterResult);
     }
 
