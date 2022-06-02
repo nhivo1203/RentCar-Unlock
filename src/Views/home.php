@@ -16,7 +16,6 @@
 </header>
 
 <section class="page-section portfolio" id="portfolio">
-    <div class="container">
         <!-- Portfolio Section Heading-->
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Cars</h2>
         <!-- Icon Divider-->
@@ -30,9 +29,9 @@
             <?php foreach ($data['cars'] as $car) { ?>
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="d-flex justify-content-center container mt-5">
-                        <div class="card p-3 bg-white">
+                        <div class="card p-5 bg-white">
                             <div class="about-product text-center mt-2">
-                                <img src="<?= $car['image'] ?>" width="250" height="200">
+                                <img src="<?= $car['image'] ?>" width="300" height="200">
                                 <div>
                                     <h4><?= $car['name'] ?></h4>
                                     <h6 class="mt-0 text-black-50"><?= $car['type'] ?></h6>
@@ -45,13 +44,14 @@
 
                             </div>
                             <div class="d-flex justify-content-between total font-weight-bold mt-4">
-                                <span>Price</span><span><strong>$<?= $car['price'] ?>/Day</strong></span></div>
+                                <span>Price</span><span><strong>$<?= $car['price'] ?>/Day</strong></span>
+                            </div>
+                            <button class="btn btn-primary mt-4">Rent</button>
                         </div>
                     </div>
                 </div>
             <?php } ?>
         </div>
-    </div>
 </section>
 
 <!-- Footer-->

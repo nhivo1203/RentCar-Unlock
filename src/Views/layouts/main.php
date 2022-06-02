@@ -48,14 +48,14 @@ use Nhivonfq\Unlock\Services\LoginServices;
                 </ul>
             <?php else: ?>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/createcar">Create
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 mt-1 rounded" href="/createcar">Create
                             Car</a>
                     </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 mt-1 rounded"
                                                          href="/createbooking">Create Booking</a></li>
                     <li class="nav-item mx-0 mx-lg-1">
                         <form action="logout" method="post">
-                            <button type="submit" class="btn btn-primary">Logout</button>
+                            <button type="submit" class="btn btn-primary mt-2">Logout</button>
                         </form>
                     </li>
                 </ul>
