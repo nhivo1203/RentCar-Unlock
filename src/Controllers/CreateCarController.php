@@ -46,6 +46,9 @@ class CreateCarController
             if(!is_string($data['image'])){
                 $data['image'] = '';
             }
+            if(!is_int($data['price'])){
+                $data['price'] = 0;
+            }
             $createCarRequest = $createCarRequest->fromArray($data);
             $this->createCarValidate->loadData($data);
             if($this->createCarValidate->validate() && $this->createCarServices->createCar($createCarRequest)){

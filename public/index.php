@@ -59,11 +59,11 @@ $app->router->get('/api/register', [RegisterAPIController::class, 'register']);
 $app->router->get('/api/cars', [GetCarController::class, 'getAllCar']);
 $app->router->post('/api/cars', [GetCarController::class, 'getAllCar']);
 
-$app->router->post('/api/createbooking', [CreateBookingAPIController::class, 'createBooking']);
-$app->router->get('/api/createbooking', [CreateBookingAPIController::class, 'createBooking']);
+$app->router->post('/api/createbooking', [CreateBookingAPIController::class, 'createBooking'], role:UserModel::ROLE_MEMBER);
+$app->router->get('/api/createbooking', [CreateBookingAPIController::class, 'createBooking'], role:UserModel::ROLE_MEMBER);
 
-$app->router->post('/createbooking', [CreateBookingController::class, 'createBooking']);
-$app->router->get('/createbooking', [CreateBookingController::class, 'createBooking']);
+$app->router->post('/createbooking', [CreateBookingController::class, 'createBooking'], role:UserModel::ROLE_MEMBER);
+$app->router->get('/createbooking', [CreateBookingController::class, 'createBooking'], role:UserModel::ROLE_MEMBER);
 
 $app->router->post('/createcar', [CreateCarController::class, 'createCar'], role: UserModel::ROLE_ADMIN);
 $app->router->get('/createcar', [CreateCarController::class, 'createCar'], role: UserModel::ROLE_ADMIN);

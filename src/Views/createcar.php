@@ -24,7 +24,6 @@
                     <input
                             class="form-control <?php echo $data['errors']->hasError('name') ? 'is-invalid' : '' ?>"
                             name="name"
-                            value="<?=$data['name'] ?>"
                             type="text"
                             placeholder="Enter your car name..."
                             data-sb-validations="required"
