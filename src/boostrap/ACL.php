@@ -48,9 +48,8 @@ class ACL
             }
             $userId = $tokenPayload['data']->id;
         }
-
         $user = $this->userRepository->findOne(['id' => $userId]);
-        if ($user->getRole() === $role) {
+        if ($user->getRole() == $role) {
             return true;
         }
         throw new UnauthorizedException();

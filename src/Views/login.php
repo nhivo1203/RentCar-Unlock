@@ -1,6 +1,6 @@
 <section class="page-section" id="contact">
     <!-- Contact Section Heading-->
-    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0 pt-2">Login</h2>
+    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0 pt-5">Login</h2>
     <!-- Icon Divider-->
     <div class="divider-custom">
         <div class="divider-custom-line"></div>

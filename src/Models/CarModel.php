@@ -4,12 +4,12 @@ namespace Nhivonfq\Unlock\Models;
 
 class CarModel
 {
-    private int $car_id;
-    private string $car_name;
-    private string $car_type;
-    private string $car_brand;
-    private string $image;
-    private int $price;
+    private int $car_id = 0;
+    private string $car_name = '';
+    private string $car_type = '';
+    private string $car_brand = '';
+    private string $image = '';
+    private int $price = 0;
 
     /**
      * @return int

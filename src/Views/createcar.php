@@ -1,3 +1,4 @@
+
 <section class="page-section" id="contact">
     <!-- Contact Section Heading-->
     <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Create Car</h2>
@@ -23,6 +24,7 @@
                     <input
                             class="form-control <?php echo $data['errors']->hasError('name') ? 'is-invalid' : '' ?>"
                             name="name"
+                            value="<?=$data['name'] ?>"
                             type="text"
                             placeholder="Enter your car name..."
                             data-sb-validations="required"
