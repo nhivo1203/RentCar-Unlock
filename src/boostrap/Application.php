@@ -4,6 +4,7 @@ namespace Nhivonfq\Unlock\boostrap;
 
 use Exception;
 use Nhivonfq\Unlock\App\View;
+use Nhivonfq\Unlock\Controllers\NotFoundController;
 use Nhivonfq\Unlock\Exception\UnauthenticatedException;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
@@ -90,17 +91,14 @@ class Application
         if (!$aclAccept) {
             return;
         }
-        $callback = $route[0];
-        if (!$callback) {
-            $this->response->setStatusCode(404);
-            $response = $this->response->renderView("_404");
-            $this->view::display($response);
+        if (!$route) {
+            $controller = $container->make(NotFoundController::class);
+            $action = 'notfound';
+        } else {
+            $callback = $route[0];
+            $action = $callback[1];
+            $controller = $container->make($callback[0]);
         }
-        if (is_string($callback)) {
-            $this->view::display($route);
-        }
-        $action = $callback[1];
-        $controller = $container->make($callback[0]);
         $response = $controller->{$action}();
 
         $this->view::display($response);
@@ -130,7 +128,7 @@ class Application
             $message = $e->getMessage();
             if ($e instanceof UnauthenticatedException) {
                 if ($this->isAPI()) {
-                    $response = $this->response->toJson(['message' => $message], Response::HTTP_BAD_REQUEST);
+                    $response = $this->response->toJson(['message' => $message], Response::HTTP_UNAUTHEN);
                 } else {
                     $response = $this->response->redirect('/login');
                 }

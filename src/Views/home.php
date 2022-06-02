@@ -1,7 +1,7 @@
 <header class="masthead bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
         <!-- Masthead Avatar Image-->
-        <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." />
+        <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..."/>
         <!-- Masthead Heading-->
         <h1 class="masthead-heading text-uppercase mb-0">Rent car website by Nhi Vo</h1>
         <!-- Icon Divider-->
@@ -29,18 +29,27 @@
         <div class="row justify-content-center">
             <?php foreach ($data['cars'] as $car) { ?>
                 <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white">
-                                <h3 class="lead"><?= $car['name'] ?></h3>
-                                <p class="lead"> Price:<?= $car['price'] ?></p>
-                                <i class="fas fa-plus fa-3x"></i>
+                    <div class="d-flex justify-content-center container mt-5">
+                        <div class="card p-3 bg-white">
+                            <div class="about-product text-center mt-2">
+                                <img src="<?= $car['image'] ?>" width="300">
+                                <div>
+                                    <h4><?= $car['name'] ?></h4>
+                                    <h6 class="mt-0 text-black-50"><?= $car['type'] ?></h6>
+                                </div>
                             </div>
+                            <div class="stats mt-2">
+                                <div class="d-flex justify-content-between p-price">
+                                    <span>Car Brand</span><span><?= $car['brand'] ?></span>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                                <span>Price</span><span><strong>$<?= $car['price'] ?>/Day</strong></span></div>
                         </div>
-                        <img class="img-fluid" src="<?= $car['image'] ?>" alt="..." />
                     </div>
                 </div>
-        <?php } ?>
+            <?php } ?>
         </div>
     </div>
 </section>
@@ -54,7 +63,7 @@
                 <h4 class="text-uppercase mb-4">Location</h4>
                 <p class="lead mb-0">
                     Can Tho
-                    <br />
+                    <br/>
                     Victoria Resort
                 </p>
             </div>

@@ -36,7 +36,7 @@ $connection = Database::getConnection($config['db']);
 
 $app = new Application(dirname(__DIR__));
 
-$app->router->get('/', [HomeController::class, 'home'], role: UserModel::ROLE_MEMBER);
+$app->router->get('/', [HomeController::class, 'home']);
 
 $app->router->get('/contact', [SitesController::class, 'contact']);
 
