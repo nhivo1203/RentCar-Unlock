@@ -43,6 +43,9 @@ class CreateCarController
             $imgURL = $this->uploadImageServices->handleUpload($this->request->getFiles()['image']);
             $data = $this->requestTransfer->getBody();
             $data = array_merge($data,['image'=> $imgURL]);
+            if(!is_string($data['image'])){
+                $data['image'] = '';
+            }
             $createCarRequest = $createCarRequest->fromArray($data);
             $this->createCarValidate->loadData($data);
             if($this->createCarValidate->validate() && $this->createCarServices->createCar($createCarRequest)){
