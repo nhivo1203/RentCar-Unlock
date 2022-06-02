@@ -3,7 +3,6 @@
 namespace Nhivonfq\Unlock\Validate;
 
 use Nhivonfq\Unlock\boostrap\Validate;
-use Nhivonfq\Unlock\Models\UserModel;
 
 class RegisterValidate extends Validate
 {
