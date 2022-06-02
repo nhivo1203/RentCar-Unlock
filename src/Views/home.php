@@ -32,7 +32,7 @@
                     <div class="d-flex justify-content-center container mt-5">
                         <div class="card p-3 bg-white">
                             <div class="about-product text-center mt-2">
-                                <img src="<?= $car['image'] ?>" width="300">
+                                <img src="<?= $car['image'] ?>" width="250" height="200">
                                 <div>
                                     <h4><?= $car['name'] ?></h4>
                                     <h6 class="mt-0 text-black-50"><?= $car['type'] ?></h6>
