@@ -15,8 +15,8 @@ class CreateCarRequest
         $this->name = $requestBody['name'];
         $this->type = $requestBody['type'];
         $this->brand = $requestBody['brand'];
-        $this->image = $requestBody['image'];
         $this->price = $requestBody['price'];
+        $this->image = $requestBody['image'];
         return $this;
     }
 

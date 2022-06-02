@@ -49,4 +49,8 @@ class Request
     {
         return $_SERVER['HTTP_AUTHORIZATION'] ?? null;
     }
+
+    public function getFiles():array {
+        return $_FILES;
+    }
 }

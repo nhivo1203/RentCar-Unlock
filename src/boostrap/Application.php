@@ -80,7 +80,6 @@ class Application
      */
     public function run()
     {
-
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
         $container = new Container();
