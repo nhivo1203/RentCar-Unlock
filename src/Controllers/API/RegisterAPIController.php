@@ -52,9 +52,7 @@ class RegisterAPIController extends Controller
             if (!$this->registerValidate->validate()) {
                 return $this->response->toJson($this->registerValidate->errors, Response::HTTP_BAD_REQUEST);
             }
-
             $user = $this->registerServices->register($registerRequest);
-
             if (!$user) {
                 return $this->response->toJson(['message' => "Can not create user"], Response::HTTP_BAD_REQUEST);
             }
