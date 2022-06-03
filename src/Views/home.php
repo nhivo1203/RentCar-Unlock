@@ -17,7 +17,7 @@
 
 <section class="page-section portfolio" id="portfolio">
         <!-- Portfolio Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Cars</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Vehicles</h2>
         <!-- Icon Divider-->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
