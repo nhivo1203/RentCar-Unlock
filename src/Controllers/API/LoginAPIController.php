@@ -52,7 +52,7 @@ class LoginAPIController
         }
         $this->loginValidate->loadData($this->requestTransfer->getRequestJsonBody());
         if (!$this->loginValidate->validate()) {
-            return $this->response->toJson($this->loginValidate->errors, Response::HTTP_BAD_REQUEST);
+            return $this->response->toJson($this->loginValidate->getErrors(), Response::HTTP_BAD_REQUEST);
         }
         $loginRequest = new LoginRequest();
         $loginRequest = $loginRequest->fromArray($this->requestTransfer->getRequestJsonBody());

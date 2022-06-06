@@ -37,7 +37,7 @@ class LoginController extends Controller
     public function login(): Response
     {
         if ($this->request->isGet()) {
-            return $this->response->renderView('login', ['errors' => $this->loginValidate->errors]);
+            return $this->response->renderView('login');
         }
         $this->loginValidate->loadData($this->requestTransfer->getBody());
         if ($this->loginValidate->validate()) {
@@ -47,7 +47,7 @@ class LoginController extends Controller
                 $this->response->setRedirectUrl('/');
             }
         }
-        return $this->response->renderView('login', ['errors' => $this->loginValidate->errors]);
+        return $this->response->renderView('login', ['errors' => $this->loginValidate->getErrors()]);
     }
 
     /**

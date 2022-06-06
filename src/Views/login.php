@@ -18,52 +18,64 @@
             <!-- https://startbootstrap.com/solution/contact-forms-->
             <!-- to get an API token!-->
             <form action="login" method="post">
-                        <!-- Email address input-->
-                        <div class="form-floating mb-3">
-                            <input
-                                    class="form-control"
-                                    id="email" name="email"
-                                    type="email"
-                                    placeholder="name@example.com"
-                            />
-                            <label for="email">Email address</label>
-                            <div class="invalid-feedback"  >
-                            </div>
-                        </div>
-                        <!-- Password input-->
-                        <div class="form-floating mb-3">
-                            <input
-                                    class="form-control"
-                                    id="password" name="password"
-                                    type="password"
-                                    placeholder="name"
-                            />
-                            <label for="password">Password</label>
-                            <div class="invalid-feedback">
-                            </div>
-                        </div>
+                <!-- Email address input-->
+                <div class="form-floating mb-3">
+                    <input
+                            class="form-control <?php if (isset($data['errors']['email'])) {
+                                echo $data['errors']['email'] ? 'is-invalid' : '';
+                            }
+                            ?>"
+                            id="email" name="email"
+                            type="email"
+                            placeholder="name@example.com"
+                    />
+                    <label for="email">Email address</label>
+                    <div class="invalid-feedback">
+                        <?php if (isset($data['errors'])) {
+                            echo $data['errors']['email'][0];
+                        } ?>
+                    </div>
+                </div>
+                <!-- Password input-->
+                <div class="form-floating mb-3">
+                    <input
+                            class="form-control <?php if (isset($data['errors']['password'])) {
+                                echo $data['errors']['password'] ? 'is-invalid' : '';
+                            }
+                            ?>"
+                            id="password" name="password"
+                            type="password"
+                            placeholder="name"
+                    />
+                    <label for="password">Password</label>
+                    <div class="invalid-feedback">
+                        <?php if (isset($data['errors'])) {
+                            echo $data['errors']['password'][0];
+                        } ?>
+                    </div>
+                </div>
 
-                        <!-- Submit success message-->
-                        <!---->
-                        <!-- This is what your users will see when the form-->
-                        <!-- has successfully submitted-->
-                        <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3">
-                                <div class="fw-bolder">Form submission successful!</div>
-                                To activate this form, sign up at
-                                <br/>
-                                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                            </div>
-                        </div>
-                        <!-- Submit error message-->
-                        <!---->
-                        <!-- This is what your users will see when there is-->
-                        <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage">
-                            <div class="text-center text-danger mb-3">Error sending message!</div>
-                        </div>
-                        <!-- Submit Button-->
-                        <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Send</button>
+                <!-- Submit success message-->
+                <!---->
+                <!-- This is what your users will see when the form-->
+                <!-- has successfully submitted-->
+                <div class="d-none" id="submitSuccessMessage">
+                    <div class="text-center mb-3">
+                        <div class="fw-bolder">Form submission successful!</div>
+                        To activate this form, sign up at
+                        <br/>
+                        <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                    </div>
+                </div>
+                <!-- Submit error message-->
+                <!---->
+                <!-- This is what your users will see when there is-->
+                <!-- an error submitting the form-->
+                <div class="d-none" id="submitErrorMessage">
+                    <div class="text-center text-danger mb-3">Error sending message!</div>
+                </div>
+                <!-- Submit Button-->
+                <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Send</button>
             </form>
         </div>
     </div>

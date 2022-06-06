@@ -45,7 +45,7 @@ class CarAPIController extends Controller
         $this->createCarValidate->loadData($this->requestTransfer->getRequestJsonBody());
         if (!$this->createCarValidate->validate()) {
             return $this->response->toJson([
-                'errors' => $this->createCarValidate->errors
+                'errors' => $this->createCarValidate->getErrors()
             ], Response::HTTP_BAD_REQUEST);
         }
         $createCarRequest = new CreateCarRequest();

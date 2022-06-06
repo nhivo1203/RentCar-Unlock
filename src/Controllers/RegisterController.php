@@ -39,7 +39,7 @@ class RegisterController extends Controller
     public function register(): Response
     {
         if ($this->request->isGet()) {
-            return $this->response->renderView('register', ['errors' => $this->registerValidate]);
+            return $this->response->renderView('register');
         }
         $this->registerValidate->loadData($this->requestTransfer->getBody());
         if ($this->registerValidate->validate()) {
@@ -49,6 +49,6 @@ class RegisterController extends Controller
                 View::redirect('/');
             }
         }
-        return $this->response->renderView('register', ['errors' => $this->registerValidate]);
+        return $this->response->renderView('register', ['errors' => $this->registerValidate->getErrors()]);
     }
 }

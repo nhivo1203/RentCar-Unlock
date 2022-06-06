@@ -51,7 +51,7 @@ class RegisterAPIController extends Controller
         }
         $this->registerValidate->loadData($this->requestTransfer->getRequestJsonBody());
         if (!$this->registerValidate->validate()) {
-            return $this->response->toJson($this->registerValidate->errors, Response::HTTP_BAD_REQUEST);
+            return $this->response->toJson($this->registerValidate->getErrors(), Response::HTTP_BAD_REQUEST);
         }
         $registerRequest = new RegisterRequest();
         $userRequest = $registerRequest->fromArrayToModel($this->requestTransfer->getRequestJsonBody());

@@ -46,7 +46,7 @@ class CreateBookingAPIController extends Controller
         $this->createBookingValidate->loadData($this->requestTransfer->getRequestJsonBody());
         if (!$this->createBookingValidate->validate()) {
             return $this->response->toJson([
-                'errors' => $this->createBookingValidate->errors
+                'errors' => $this->createBookingValidate->getErrors()
             ], Response::HTTP_BAD_REQUEST);
         }
 

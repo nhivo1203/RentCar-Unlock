@@ -24,59 +24,86 @@
                 <!-- Name input-->
                 <div class="form-floating mb-3">
                     <input
-                            class="form-control"
+                            class="form-control <?php if (isset($data['errors']['car_id'])) {
+                                echo $data['errors']['car_id'] ? 'is-invalid' : '';
+                            }
+                            ?>"
                             name="car_id"
-                            type="text"
+                            value=1
+                            type="number"
                             placeholder="Enter your car name..."
                             data-sb-validations="required"
                     />
                     <label for="name">Car ID</label>
                     <div class="invalid-feedback">
-                        <?= $data['errors']['car_id'][0] ?>
+                        <?php if (isset($data['errors'])) {
+                            echo $data['errors']['car_id'][0];
+                        } ?>
                     </div>
                     <div class="form-floating mb-3">
                         <input
-                                class="form-control"
+                                class="form-control <?php if (isset($data['errors']['user_id'])) {
+                                    echo $data['errors']['user_id'] ? 'is-invalid' : '';
+                                }
+                                ?>"
                                 id="user_id"
                                 name="user_id"
-                                type="text"
+                                value=1
+                                type="number"
                                 placeholder="Enter your car id..."
                                 data-sb-validations="required"
                         />
                         <label for="lastname">User ID</label>
                         <div class="invalid-feedback">
-                            <?= $data['errors']['user_id'][0] ?>
+                            <?php if (isset($data['errors'])) {
+                                echo $data['errors']['user_id'][0];
+                            } ?>
+
                         </div>
                         <!-- Email address input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control"
+                                    class="form-control <?php if (isset($data['errors']['check_in'])) {
+                                        echo $data['errors']['check_in'] ? 'is-invalid' : '';
+                                    }
+                                    ?>"
                                     id="check_in" name="check_in"
                                     type="date"
                                     placeholder="name@example.com"
                             />
                             <label for="email">Check In</label>
                             <div class="invalid-feedback">
-                                <?php echo $data['errors']['check_in'][0] ?? '' ?>
+                                <?php if (isset($data['errors'])) {
+                                    echo $data['errors']['check_in'][0];
+                                } ?>
                             </div>
                         </div>
                         <!-- Email address input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control"
+                                    class="form-control <?php if (isset($data['errors']['check_out'])) {
+                                        echo $data['errors']['check_out'] ? 'is-invalid' : '';
+                                    }
+                                    ?>"
                                     id="check_out" name="check_out"
                                     type="date"
                                     placeholder="name@example.com"
                             />
                             <label for="email">Check Out</label>
                             <div class="invalid-feedback">
-                                <?php echo $data['errors']['check_out'][0] ?>
+                                <?php if (isset($data['errors'])) {
+                                    echo $data['errors']['check_out'][0];
+                                } ?>
+
                             </div>
                         </div>
                         <!-- Message input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control"
+                                    class="form-control <?php if (isset($data['errors']['total'])) {
+                                        echo $data['errors']['total'] ? 'is-invalid' : '';
+                                    }
+                                    ?>"
                                     id="total" name="total"
                                     value=100
                                     type="number"
@@ -84,7 +111,9 @@
                             />
                             <label for="password">Total</label>
                             <div class="invalid-feedback">
-                                <?php echo $data['errors']['total'][0] ?>
+                                <?php if (isset($data['errors'])) {
+                                    echo $data['errors']['total'][0];
+                                } ?>
                             </div>
                         </div>
                         <!-- Submit success message-->
