@@ -2,6 +2,8 @@
 
 namespace Nhivonfq\Unlock\Request;
 
+use Nhivonfq\Unlock\Models\UserModel;
+
 class RegisterRequest
 {
     private int $id;
@@ -12,29 +14,22 @@ class RegisterRequest
     private string $username ;
     private string $password ;
 
-    /**
-     * @param $data
-     * @return string
-     */
-    private function formatRequest($data): string
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        return htmlspecialchars($data);
-    }
 
     /**
      * @param array $requestBody
      * @return $this
      */
-    public function fromArray(array $requestBody): self
+    public function fromArrayToModel(array $requestBody): UserModel
     {
-        $this->setFirstname($requestBody['firstname']);
-        $this->setLastname($requestBody['lastname']);
-        $this->setEmail($requestBody['email']);
-        $this->setUsername($requestBody['username']);
-        $this->setPassword($requestBody['password']);
-        return $this;
+        $user = new UserModel();
+
+        $user->setFirstname($requestBody['firstname']);
+        $user->setLastname($requestBody['lastname']);
+        $user->setEmail($requestBody['email']);
+        $user->setUsername($requestBody['username']);
+        $user->setPassword($requestBody['password']);
+
+        return $user;
     }
 
     /**
@@ -90,7 +85,7 @@ class RegisterRequest
      */
     public function getEmail(): string
     {
-        return $this->formatRequest($this->email);
+        return $this->email;
     }
 
     /**
@@ -98,7 +93,7 @@ class RegisterRequest
      */
     public function setEmail(mixed $email): void
     {
-        $this->email = $this->formatRequest($email);
+        $this->email = $email;
     }
 
     /**

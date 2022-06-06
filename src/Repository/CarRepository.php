@@ -2,37 +2,34 @@
 
 namespace Nhivonfq\Unlock\Repository;
 
-use Nhivonfq\Unlock\Database\Database;
 use Nhivonfq\Unlock\Models\CarModel;
+use PDO;
 
 
-
-class CarRepository
+class CarRepository extends BaseRepository
 {
     private array $attributes = ['name', 'brand', 'type', 'image', 'price'];
 
-    public function createCar(CarModel $car): bool
+    public function createCar(CarModel $car): ?CarModel
     {
-        $car_name = $car->getCarName();
-        $car_brand = $car->getCarBrand();
-        $car_type = $car->getCarType();
-        $image = $car->getImage();
-        $price = $car->getPrice();
-
-        $statement = $this->prepare("INSERT INTO cars(" . implode(',', $this->attributes) . ")
-            VALUES(
-            '$car_name',
-            '$car_brand',
-            '$car_type',
-            '$image',
-            $price
-            )");
-        return $statement->execute();
+        $statement = $this->getConnection()->prepare("INSERT INTO cars(" . implode(',', $this->getAttributes()) . ")
+            VALUES(?, ?, ?, ?, ?)");
+        $isCreated = $statement->execute([
+            $car->getCarName(), $car->getCarBrand(), $car->getCarType(),
+            $car->getImage(), $car->getPrice()
+        ]);
+        if ($isCreated) {
+            return $car;
+        }
+        return null;
     }
 
-    public function getAll(): array
+    public function getAll(int $offset = 0, int $limit = 9): array
     {
-        $statement = $this->prepare("SELECT * FROM cars");
+        $sql = "SELECT * FROM cars LIMIT :off, :lim";
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->bindValue(':off', $offset, PDO::PARAM_INT);
+        $statement->bindValue(':lim', $limit, PDO::PARAM_INT);
         $statement->execute();
         $rows = $statement->fetchAll();
         $cars = [];
@@ -49,8 +46,19 @@ class CarRepository
         return $cars;
     }
 
-    public function prepare($sql)
+    /**
+     * @return array|string[]
+     */
+    public function getAttributes(): array
     {
-        return Database::prepare($sql);
+        return $this->attributes;
+    }
+
+    /**
+     * @param array|string[] $attributes
+     */
+    public function setAttributes(array $attributes): void
+    {
+        $this->attributes = $attributes;
     }
 }

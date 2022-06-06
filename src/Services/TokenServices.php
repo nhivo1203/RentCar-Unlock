@@ -6,8 +6,6 @@ use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-$dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
-$dotenv->load();
 
 class TokenServices
 {

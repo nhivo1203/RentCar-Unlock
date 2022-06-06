@@ -12,7 +12,7 @@ abstract class Validate
     const RULE_MAX_PRICE = 'max_price';
     const RULE_MATCH = 'match';
 
-    public array $errors = [];
+    private array $errors = [];
 
     abstract public function rules(): array;
 
@@ -91,13 +91,19 @@ abstract class Validate
         ];
     }
 
-    public function hasError($attribute)
+    /**
+     * @return array
+     */
+    public function getErrors(): array
     {
-        return $this->errors[$attribute] ?? false;
+        return $this->errors;
     }
 
-    public function getFirstError($attribute)
+    /**
+     * @param array $errors
+     */
+    public function setErrors(array $errors): void
     {
-        return $this->errors[$attribute][0] ?? false;
+        $this->errors = $errors;
     }
 }

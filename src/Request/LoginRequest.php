@@ -2,19 +2,25 @@
 
 namespace Nhivonfq\Unlock\Request;
 
-use Exception;
-
 class LoginRequest
 {
-    private string $email;
-    private string $password;
+    private string $email = '';
+    private string $password = '';
+    
 
+    public function fromArray(array $requestBody): self
+    {
+        $this->setEmail($requestBody['email']);
+        $this->setPassword($requestBody['password']);
+        return $this;
+    }
+    
     /**
      * @return string
      */
     public function getEmail(): string
     {
-        return $this->formatRequest($this->email);
+        return $this->email;
     }
 
     /**
@@ -22,7 +28,7 @@ class LoginRequest
      */
     public function setEmail(mixed $email): void
     {
-        $this->email = $this->formatRequest($email);
+        $this->email = $email;
     }
 
     /**
@@ -39,24 +45,6 @@ class LoginRequest
     public function setPassword(mixed $password): void
     {
         $this->password = $password;
-    }
-
-    /**
-     * @param $data
-     * @return string
-     */
-    private function formatRequest($data): string
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        return htmlspecialchars($data);
-    }
-
-    public function fromArray(array $requestBody): self
-    {
-        $this->setEmail($requestBody['email']);
-        $this->setPassword($requestBody['password']);
-        return $this;
     }
 }
 

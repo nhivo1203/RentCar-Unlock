@@ -6,7 +6,7 @@ use Nhivonfq\Unlock\Controllers\RegisterController;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Models\UserModel;
-use Nhivonfq\Unlock\Services\LoginServices;
+use Nhivonfq\Unlock\Services\UserServices;
 use Nhivonfq\Unlock\Services\RegisterServices;
 use Nhivonfq\Unlock\Services\SessionServices;
 use Nhivonfq\Unlock\Validate\LoginValidate;
@@ -29,7 +29,7 @@ class AuthControllerTest extends TestCase
     public function testLoginSuccess() {
         $response = new Response();
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
-        $loginServiceMock = $this->getMockBuilder(LoginServices::class)->disableOriginalConstructor()->getMock();
+        $loginServiceMock = $this->getMockBuilder(UserServices::class)->disableOriginalConstructor()->getMock();
         $loginValidateMock = $this->getMockBuilder(LoginValidate::class)->disableOriginalConstructor()->getMock();
         $registerServiceMock = $this->getMockBuilder(RegisterServices::class)->disableOriginalConstructor()->getMock();
         $registerValidateMock = $this->getMockBuilder(RegisterValidate::class)->disableOriginalConstructor()->getMock();

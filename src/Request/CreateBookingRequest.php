@@ -2,35 +2,26 @@
 
 namespace Nhivonfq\Unlock\Request;
 
+use Nhivonfq\Unlock\Models\BookingModel;
+
 class CreateBookingRequest
 {
-    private int $user_id = 0;
-    private int $car_id = 0;
+    private int $userId = 0;
+    private int $carId = 0;
     private string $check_in = '';
     private string $check_out = '';
     private int $total = 0;
 
 
-    /**
-     * @param $data
-     * @return string
-     */
-    private function formatRequest($data): string
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        return htmlspecialchars($data);
-    }
-
-    public function fromArray(array $requestBody): self
-    {
-        $this->setTotal($requestBody['total']);
-        $this->setCarId($requestBody['car_id']);
-        $this->setUserId($requestBody['user_id']);
-        $this->setCheckIn($requestBody['check_in']);
-        $this->setCheckOut($requestBody['check_out']);
-        $this->setTotal($requestBody['total']);
-        return $this;
+    public function fromArrayToModel(array $requestBody):BookingModel{
+        $booking = new BookingModel();
+        $booking->setCarId($requestBody['car_id']);
+        $booking->setUserId($requestBody['user_id']);
+        $booking->setCheckIn($requestBody['check_in']);
+        $booking->setCheckOut($requestBody['check_out']);
+        $booking->setTotal($requestBody['total']);
+        
+        return $booking;
     }
 
     /**
@@ -38,15 +29,15 @@ class CreateBookingRequest
      */
     public function getUserId(): int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
     /**
-     * @param int $user_id
+     * @param int $userId
      */
-    public function setUserId(int $user_id): void
+    public function setUserId(int $userId): void
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
     }
 
     /**
@@ -54,15 +45,15 @@ class CreateBookingRequest
      */
     public function getCarId(): int
     {
-        return $this->car_id;
+        return $this->carId;
     }
 
     /**
-     * @param int $car_id
+     * @param int $carId
      */
-    public function setCarId(int $car_id): void
+    public function setCarId(int $carId): void
     {
-        $this->car_id = $car_id;
+        $this->carId = $carId;
     }
 
     /**

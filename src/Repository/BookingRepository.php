@@ -2,34 +2,40 @@
 
 namespace Nhivonfq\Unlock\Repository;
 
-use Nhivonfq\Unlock\Database\Database;
 use Nhivonfq\Unlock\Models\BookingModel;
 
-class BookingRepository
+class BookingRepository extends BaseRepository
 {
     private array $attributes = ['user_id', 'car_id', 'check_in', 'check_out', 'total'];
 
-    public function createBooking(BookingModel $booking): bool {
-        $user_id = $booking->getUserId();
-        $car_id = $booking->getCarId();
-        $check_in = $booking->getCheckIn();
-        $check_out = $booking->getCheckOut();
-        $total = $booking->getTotal();
-
-        $statement = $this->prepare("INSERT INTO bookings(" . implode(',', $this->attributes) . ")
-            VALUES(
-            $user_id,
-            $car_id,
-            '$check_in',
-            '$check_out',
-            $total
-            )");
-        $statement->execute();
-        return true;
+    public function createBooking(BookingModel $booking): ?BookingModel
+    {
+        $statement = $this->getConnection()->prepare(
+            "INSERT INTO bookings(" . implode(',', $this->getAttributes()) . ")
+            VALUES(?, ?, ?, ?, ?)");
+        $isCreated = $statement->execute([
+            $booking->getUserId(), $booking->getCarId(), $booking->getCheckIn(),
+            $booking->getCheckOut(), $booking->getTotal()
+        ]);
+        if ($isCreated) {
+            return $booking;
+        }
+        return null;
     }
 
-    public function prepare($sql)
+    /**
+     * @return array|string[]
+     */
+    public function getAttributes(): array
     {
-        return Database::prepare($sql);
+        return $this->attributes;
+    }
+
+    /**
+     * @param array|string[] $attributes
+     */
+    public function setAttributes(array $attributes): void
+    {
+        $this->attributes = $attributes;
     }
 }

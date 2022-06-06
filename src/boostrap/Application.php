@@ -2,13 +2,16 @@
 
 namespace Nhivonfq\Unlock\boostrap;
 
+use Dotenv\Dotenv;
 use Exception;
 use Nhivonfq\Unlock\App\View;
 use Nhivonfq\Unlock\Controllers\NotFoundController;
+use Nhivonfq\Unlock\Database\Database;
 use Nhivonfq\Unlock\Exception\UnauthenticatedException;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Services\SessionServices;
+
 
 /**
  * Class Application
@@ -17,7 +20,7 @@ use Nhivonfq\Unlock\Services\SessionServices;
 class Application
 {
 
-    const ROLE_INDEX = 1;
+    public const ROLE_INDEX = 1;
 
 
     /**
@@ -54,7 +57,7 @@ class Application
     /**
      * @param $rootPath
      */
-    public function __construct($rootPath)
+    public function __construct(string $rootPath)
     {
         $container = new Container();
         self::$ROOT_DIR = $rootPath;
@@ -75,17 +78,19 @@ class Application
         return str_starts_with($path, '/api');
     }
 
+
     /**
      * @return void
      */
-    public function run()
+    public function run():void
     {
+        Database::getConnection();
+
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
         $container = new Container();
 
-        $route = $this->router->routes[$method][$path] ?? false;
-
+        $route = Router::$routes[$method][$path] ?? false;
         $aclAccept = $this->runAcl($route);
         if (!$aclAccept) {
             return;
@@ -107,7 +112,6 @@ class Application
     /**
      * @param bool|array $route
      * @return bool
-     * @throws ReflectionException
      */
     private function runAcl(bool|array $route): bool
     {
@@ -123,7 +127,6 @@ class Application
         try {
             $aclAccept = $this->acl->checkCanAccess($route[static::ROLE_INDEX]);
         } catch (Exception $e) {
-            $statusCode = $e->getCode();
             $message = $e->getMessage();
             if ($e instanceof UnauthenticatedException) {
                 if ($this->isAPI()) {
