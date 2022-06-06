@@ -4,11 +4,11 @@ namespace Nhivonfq\Unlock\Models;
 
 class BookingModel
 {
-    private int $booking_id;
-    private int $user_id;
-    private int $car_id;
-    private string $check_in;
-    private string $check_out;
+    private int $bookingId;
+    private int $userId;
+    private int $carId;
+    private string $checkIn;
+    private string $checkOut;
     private int $total;
 
     /**
@@ -16,15 +16,15 @@ class BookingModel
      */
     public function getBookingId(): int
     {
-        return $this->booking_id;
+        return $this->bookingId;
     }
 
     /**
-     * @param int $booking_id
+     * @param int $bookingId
      */
-    public function setBookingId(int $booking_id): void
+    public function setBookingId(int $bookingId): void
     {
-        $this->booking_id = $booking_id;
+        $this->bookingId = $bookingId;
     }
 
     /**
@@ -32,15 +32,15 @@ class BookingModel
      */
     public function getUserId(): int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
     /**
-     * @param int $user_id
+     * @param int $userId
      */
-    public function setUserId(int $user_id): void
+    public function setUserId(int $userId): void
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
     }
 
     /**
@@ -48,15 +48,15 @@ class BookingModel
      */
     public function getCarId(): int
     {
-        return $this->car_id;
+        return $this->carId;
     }
 
     /**
-     * @param int $car_id
+     * @param int $carId
      */
-    public function setCarId(int $car_id): void
+    public function setCarId(int $carId): void
     {
-        $this->car_id = $car_id;
+        $this->carId = $carId;
     }
 
     /**
@@ -64,15 +64,15 @@ class BookingModel
      */
     public function getCheckIn(): string
     {
-        return $this->check_in;
+        return $this->checkIn;
     }
 
     /**
-     * @param string $check_in
+     * @param string $checkIn
      */
-    public function setCheckIn(string $check_in): void
+    public function setCheckIn(string $checkIn): void
     {
-        $this->check_in = $check_in;
+        $this->checkIn = $checkIn;
     }
 
     /**
@@ -80,15 +80,15 @@ class BookingModel
      */
     public function getCheckOut(): string
     {
-        return $this->check_out;
+        return $this->checkOut;
     }
 
     /**
-     * @param string $check_out
+     * @param string $checkOut
      */
-    public function setCheckOut(string $check_out): void
+    public function setCheckOut(string $checkOut): void
     {
-        $this->check_out = $check_out;
+        $this->checkOut = $checkOut;
     }
 
     /**

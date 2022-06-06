@@ -21,7 +21,7 @@
                 <!-- Name input-->
                 <div class="form-floating mb-3">
                     <input
-                            class="form-control <?php echo $data['errors']->hasError('firstname') ? 'is-invalid' : '' ?>"
+                            class="form-control"
                             name="firstname"
                             type="text"
                             placeholder="Enter your first name..."
@@ -29,11 +29,10 @@
                     />
                     <label for="firstname">First name</label>
                     <div class="invalid-feedback">
-                        <?php echo $data['errors']->getFirstError('firstname') ?>
                 </div>
                 <div class="form-floating mb-3">
                     <input
-                            class="form-control <?php echo $data['errors']->hasError('lastname') ? 'is-invalid' : '' ?>"
+                            class="form-control"
                             id="lastname"
                             name="lastname"
                             type="text"
@@ -42,25 +41,23 @@
                     />
                     <label for="lastname">Last name</label>
                     <div class="invalid-feedback">
-                        <?php echo $data['errors']->getFirstError('lastname') ?>
                     </div>
                     <!-- Email address input-->
                     <div class="form-floating mb-3">
                         <input
-                                class="form-control <?php echo $data['errors']->hasError('email') ? 'is-invalid' : '' ?>"
+                                class="form-control"
                                 id="email" name="email"
                                 type="email"
                                 placeholder="name@example.com"
                         />
                         <label for="email">Email address</label>
                         <div class="invalid-feedback"  >
-                            <?php echo $data['errors']->getFirstError('email') ?>
                         </div>
                     </div>
                     <!-- Username number input-->
                     <div class="form-floating mb-3">
                         <input
-                                class="form-control <?php echo $data['errors']->hasError('username') ? 'is-invalid' : '' ?>"
+                                class="form-control"
                                 id="username"
                                 name="username"
                                 type="text"
@@ -68,31 +65,28 @@
                         />
                         <label for="username">Username</label>
                         <div class="invalid-feedback" >
-                            <?php echo $data['errors']->getFirstError('username') ?>
                         </div>
                     </div>
                     <!-- Message input-->
                     <div class="form-floating mb-3">
                         <input
-                                class="form-control <?php echo $data['errors']->hasError('password') ? 'is-invalid' : '' ?>"
+                                class="form-control"
                                 id="password" name="password"
                                 type="password"
                                 placeholder="name"
                         />
                         <label for="password">Password</label>
                         <div class="invalid-feedback">
-                            <?php echo $data['errors']->getFirstError('password') ?>
                         </div>
                     </div>
                     <div class="form-floating mb-3">
                         <input
-                                class="form-control <?php echo $data['errors']->hasError('confirmPassword') ? 'is-invalid' : '' ?>"
+                                class="form-control"
                                 id="confirmPassword" name="confirmPassword"
                                 type="password"
                                 placeholder="name"/>
                         <label for="confirmPassword">Confirm Password</label>
                         <div class="invalid-feedback">
-                            <?php echo $data['errors']->getFirstError('confirmPassword') ?>
                         </div>
                     </div>
                     <!-- Submit success message-->

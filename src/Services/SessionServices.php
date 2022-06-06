@@ -5,22 +5,22 @@ namespace Nhivonfq\Unlock\Services;
 class SessionServices
 {
 
-    public function set($key, $value):void
+    public function set(string $key, int $value):void
     {
         $_SESSION[$key] = $value;
     }
 
-    public function hasSession($key):bool
+    public function hasSession(string $key):bool
     {
-        return isset($_SESSION[$key]) ? true : false;
+        return isset($_SESSION[$key]);
     }
 
-    public function get($key)
+    public function get($key): mixed
     {
-        return $_SESSION[$key] ? $_SESSION[$key] : false;
+        return $_SESSION[$key] ?: false;
     }
 
-    public function remove($key)
+    public function remove($key):void
     {
         unset($_SESSION[$key]);
     }

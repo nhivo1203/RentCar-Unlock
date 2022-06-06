@@ -4,7 +4,7 @@ namespace Nhivonfq\Unlock\Http;
 
 class Request
 {
-    public function getPath()
+    public function getPath(): string
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
         $position = strpos($path, '?');
@@ -37,9 +37,20 @@ class Request
         return $_SERVER['REQUEST_URI'];
     }
 
-    public function isPost()
+    /**
+     * @return bool
+     */
+    public function isPost(): bool
     {
         return $this->getMethod() === 'post';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGet(): bool
+    {
+        return $this->getMethod() === 'get';
     }
 
     /**

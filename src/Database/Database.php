@@ -10,8 +10,17 @@ class Database
 {
     private static $connection;
 
-    public static function getConnection(array $config): PDO
+
+    public static function getConnection(): PDO
     {
+        $config = [
+            'server' => $_ENV['DB_SERVER'],
+            'port' => $_ENV['DB_PORT'],
+            'name' => $_ENV['DB_NAME'],
+            'user' => $_ENV['DB_USER'],
+            'password' => $_ENV['DB_PASSWORD'],
+        ];
+
         if (!self::$connection) {
             $server = $config['server'];
             $dbname = $config['name'];
@@ -26,9 +35,5 @@ class Database
             }
         }
         return self::$connection;
-    }
-
-    public static function prepare($sql) {
-        return self::$connection->prepare($sql);
     }
 }

@@ -1,3 +1,6 @@
+<?php
+?>
+
 <section class="page-section" id="contact">
     <!-- Contact Section Heading-->
     <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0 pt-5">Create Booking</h2>
@@ -21,7 +24,7 @@
                 <!-- Name input-->
                 <div class="form-floating mb-3">
                     <input
-                            class="form-control <?php echo $data['errors']->hasError('car_id') ? 'is-invalid' : '' ?>"
+                            class="form-control"
                             name="car_id"
                             type="text"
                             placeholder="Enter your car name..."
@@ -29,51 +32,51 @@
                     />
                     <label for="name">Car ID</label>
                     <div class="invalid-feedback">
-                        <?php echo $data['errors']->getFirstError('car_id') ?>
+                        <?= $data['errors']['car_id'][0] ?>
                     </div>
                     <div class="form-floating mb-3">
                         <input
-                                class="form-control <?php echo $data['errors']->hasError('user_id') ? 'is-invalid' : '' ?>"
+                                class="form-control"
                                 id="user_id"
                                 name="user_id"
                                 type="text"
-                                placeholder="Enter your last name..."
+                                placeholder="Enter your car id..."
                                 data-sb-validations="required"
                         />
                         <label for="lastname">User ID</label>
                         <div class="invalid-feedback">
-                            <?php echo $data['errors']->getFirstError('user_id') ?>
+                            <?= $data['errors']['user_id'][0] ?>
                         </div>
                         <!-- Email address input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control <?php echo $data['errors']->hasError('check_in') ? 'is-invalid' : '' ?>"
+                                    class="form-control"
                                     id="check_in" name="check_in"
                                     type="date"
                                     placeholder="name@example.com"
                             />
                             <label for="email">Check In</label>
-                            <div class="invalid-feedback"  >
-                                <?php echo $data['errors']->getFirstError('check_in') ?>
+                            <div class="invalid-feedback">
+                                <?php echo $data['errors']['check_in'][0] ?? '' ?>
                             </div>
                         </div>
                         <!-- Email address input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control <?php echo $data['errors']->hasError('check_out') ? 'is-invalid' : '' ?>"
+                                    class="form-control"
                                     id="check_out" name="check_out"
                                     type="date"
                                     placeholder="name@example.com"
                             />
                             <label for="email">Check Out</label>
-                            <div class="invalid-feedback"  >
-                                <?php echo $data['errors']->getFirstError('check_out') ?>
+                            <div class="invalid-feedback">
+                                <?php echo $data['errors']['check_out'][0] ?>
                             </div>
                         </div>
                         <!-- Message input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control <?php echo $data['errors']->hasError('total') ? 'is-invalid' : '' ?>"
+                                    class="form-control"
                                     id="total" name="total"
                                     value=100
                                     type="number"
@@ -81,7 +84,7 @@
                             />
                             <label for="password">Total</label>
                             <div class="invalid-feedback">
-                                <?php echo $data['errors']->getFirstError('total') ?>
+                                <?php echo $data['errors']['total'][0] ?>
                             </div>
                         </div>
                         <!-- Submit success message-->

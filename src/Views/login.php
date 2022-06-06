@@ -21,27 +21,25 @@
                         <!-- Email address input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control <?php echo $data['errors']->hasError('email') ? 'is-invalid' : '' ?>"
+                                    class="form-control"
                                     id="email" name="email"
                                     type="email"
                                     placeholder="name@example.com"
                             />
                             <label for="email">Email address</label>
                             <div class="invalid-feedback"  >
-                                <?php echo $data['errors']->getFirstError('email') ?>
                             </div>
                         </div>
                         <!-- Password input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control <?php echo $data['errors']->hasError('password') ? 'is-invalid' : '' ?>"
+                                    class="form-control"
                                     id="password" name="password"
                                     type="password"
                                     placeholder="name"
                             />
                             <label for="password">Password</label>
                             <div class="invalid-feedback">
-                                <?php echo $data['errors']->getFirstError('password') ?>
                             </div>
                         </div>
 

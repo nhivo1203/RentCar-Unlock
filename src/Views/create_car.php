@@ -1,3 +1,6 @@
+<?php
+
+?>
 
 <section class="page-section" id="contact">
     <!-- Contact Section Heading-->
@@ -22,7 +25,10 @@
                 <!-- Name input-->
                 <div class="form-floating mb-3">
                     <input
-                            class="form-control <?php echo $data['errors']->hasError('name') ? 'is-invalid' : '' ?>"
+                            class="form-control <?php if (isset($data['errors']['name'])) {
+                                echo $data['errors']['name'] ? 'is-invalid' : '';
+                            }
+                            ?>"
                             name="name"
                             type="text"
                             placeholder="Enter your car name..."
@@ -30,11 +36,16 @@
                     />
                     <label for="name">Car name</label>
                     <div class="invalid-feedback">
-                        <?php echo $data['errors']->getFirstError('name') ?>
+                        <?php if (isset($data['errors'])) {
+                            echo $data['errors']['name'][0];
+                        } ?>
                     </div>
                     <div class="form-floating mb-3">
                         <input
-                                class="form-control <?php echo $data['errors']->hasError('type') ? 'is-invalid' : '' ?>"
+                                class="form-control <?php if (isset($data['errors']['type'])) {
+                                    echo $data['errors']['type'] ? 'is-invalid' : '';
+                                }
+                                ?>"
                                 id="type"
                                 name="type"
                                 type="text"
@@ -43,39 +54,48 @@
                         />
                         <label for="lastname">Car Type</label>
                         <div class="invalid-feedback">
-                            <?php echo $data['errors']->getFirstError('type') ?>
+                            <?= $data['errors']['type'][0] ?>
                         </div>
                         <!-- Email address input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control <?php echo $data['errors']->hasError('brand') ? 'is-invalid' : '' ?>"
+                                    class="form-control <?php if (isset($data['errors']['brand'])) {
+                                        echo $data['errors']['brand'] ? 'is-invalid' : '';
+                                    }
+                                    ?>"
                                     id="brand" name="brand"
                                     type="text"
                                     placeholder="name@example.com"
                             />
                             <label for="email">Car Brand</label>
-                            <div class="invalid-feedback"  >
-                                <?php echo $data['errors']->getFirstError('brand') ?>
+                            <div class="invalid-feedback">
+                                <?= $data['errors']['brand'][0] ?>
                             </div>
                         </div>
                         <!-- Username number input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control <?php echo $data['errors']->hasError('image') ? 'is-invalid' : '' ?>"
+                                    class="form-control <?php if (isset($data['errors']['image'])) {
+                                        echo $data['errors']['image'] ? 'is-invalid' : '';
+                                    }
+                                    ?>"
                                     id="image"
                                     name="image"
                                     type="file"
                                     placeholder="name"
                             />
                             <label for="image">Image</label>
-                            <div class="invalid-feedback" >
-                                <?php echo $data['errors']->getFirstError('image') ?>
+                            <div class="invalid-feedback">
+                                <?= $data['errors']['image'][0] ?>
                             </div>
                         </div>
                         <!-- Message input-->
                         <div class="form-floating mb-3">
                             <input
-                                    class="form-control <?php echo $data['errors']->hasError('price') ? 'is-invalid' : '' ?>"
+                                    class="form-control <?php if (isset($data['errors']['price'])) {
+                                        echo $data['errors']['price'] ? 'is-invalid' : '';
+                                    }
+                                    ?>"
                                     id="price" name="price"
                                     value=100
                                     type="number"
@@ -83,7 +103,7 @@
                             />
                             <label for="password">Price</label>
                             <div class="invalid-feedback">
-                                <?php echo $data['errors']->getFirstError('price') ?>
+                                <?= $data['errors']['price'][0] ?>
                             </div>
                         </div>
                         <!-- Submit Button-->

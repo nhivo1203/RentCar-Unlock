@@ -5,7 +5,7 @@ namespace Nhivonfq\Tests\Services;
 use Nhivonfq\Unlock\Models\UserModel;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Request\LoginRequest;
-use Nhivonfq\Unlock\Services\LoginServices;
+use Nhivonfq\Unlock\Services\UserServices;
 use Nhivonfq\Unlock\Services\SessionServices;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,7 @@ class LoginServicesTest extends TestCase
         unset($_SESSION['user_id']);
         $userRepositoryMock = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $session = new SessionServices();
-        $loginServices = new LoginServices($userRepositoryMock, $session);
+        $loginServices = new UserServices($userRepositoryMock, $session);
         $isGuest = $loginServices::isLogin();
 
         $this->assertTrue($isGuest);
@@ -34,7 +34,7 @@ class LoginServicesTest extends TestCase
         $userRepositoryMock = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $userRepositoryMock->expects($this->once())->method('findOne')->willReturn($params['userReturn']);
         $sessionServicesMock = $this->getMockBuilder(SessionServices::class)->disableOriginalConstructor()->getMock();
-        $loginServices = new LoginServices($userRepositoryMock, $sessionServicesMock);
+        $loginServices = new UserServices($userRepositoryMock, $sessionServicesMock);
         $isLoginResult = $loginServices->login($loginRequest);
         $this->assertTrue($isLoginResult);
     }
@@ -52,7 +52,7 @@ class LoginServicesTest extends TestCase
         $userRepositoryMock = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $userRepositoryMock->expects($this->once())->method('findOne')->willReturn($params['userReturn']);
         $sessionServicesMock = $this->getMockBuilder(SessionServices::class)->disableOriginalConstructor()->getMock();
-        $loginServices = new LoginServices($userRepositoryMock, $sessionServicesMock);
+        $loginServices = new UserServices($userRepositoryMock, $sessionServicesMock);
         $isLoginResult = $loginServices->login($loginRequest);
         $this->assertFalse($isLoginResult);
     }
@@ -60,7 +60,7 @@ class LoginServicesTest extends TestCase
     public function testLogOut() {
         $userRepository = new UserRepository();
         $session = new SessionServices();
-        $loginServices = new LoginServices($userRepository, $session);
+        $loginServices = new UserServices($userRepository, $session);
         $session->set('user_id',7);
         $loginServices->logout();
         $checkHasSession = $session->hasSession('user_id');

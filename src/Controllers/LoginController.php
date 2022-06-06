@@ -6,13 +6,13 @@ use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\LoginRequest;
-use Nhivonfq\Unlock\Services\LoginServices;
+use Nhivonfq\Unlock\Services\UserServices;
 use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Validate\LoginValidate;
 
 class LoginController extends Controller
 {
-    private LoginServices $loginServices;
+    private UserServices $loginServices;
     private LoginValidate $loginValidate;
 
 
@@ -20,7 +20,7 @@ class LoginController extends Controller
         LoginValidate   $loginValidate,
         Request         $request,
         Response        $response,
-        LoginServices   $loginServices,
+        UserServices    $loginServices,
         RequestTransfer $requestTransfer
 
     )
@@ -36,15 +36,18 @@ class LoginController extends Controller
      */
     public function login(): Response
     {
-        if ($this->request->isPost()) {
+        if ($this->request->isGet()) {
+            return $this->response->renderView('login', ['errors' => $this->loginValidate->errors]);
+        }
+        $this->loginValidate->loadData($this->requestTransfer->getBody());
+        if ($this->loginValidate->validate()) {
             $loginRequest = new LoginRequest();
             $loginRequest = $loginRequest->fromArray($this->requestTransfer->getBody());
-            $this->loginValidate->loadData($this->requestTransfer->getBody());
-            if ($this->loginValidate->validate() && $this->loginServices->login($loginRequest)) {
+            if ($this->loginServices->login($loginRequest)) {
                 $this->response->setRedirectUrl('/');
             }
         }
-        return $this->response->renderView('login', ['errors' => $this->loginValidate]);
+        return $this->response->renderView('login', ['errors' => $this->loginValidate->errors]);
     }
 
     /**

@@ -6,7 +6,7 @@ use Nhivonfq\Unlock\Models\UserModel;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Request\LoginRequest;
 
-class LoginServices
+class UserServices
 {
     /**
      * @var SessionServices

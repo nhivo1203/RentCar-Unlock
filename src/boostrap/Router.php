@@ -17,7 +17,7 @@ class Router
     public Request $request;
     public Response $response;
 
-    public array $routes = [];
+    public static array $routes = [];
 
     /**
      * @param Request $request
@@ -30,22 +30,24 @@ class Router
 
 
     /**
-     * @param $path
-     * @param $callback
+     * @param string $path
+     * @param array $callback
+     * @param int $role
      * @return void
      */
-    public function get($path, $callback, int $role = UserModel::ROLE_GUEST): void
+    public static function get(string $path, array $callback, int $role = UserModel::ROLE_GUEST): void
     {
-        $this->routes['get'][$path] = [$callback, $role];
+        self::$routes['get'][$path] = [$callback, $role];
     }
 
     /**
-     * @param $path
-     * @param $callback
+     * @param string $path
+     * @param array $callback
+     * @param int $role
      * @return void
      */
-    public function post($path, $callback, int $role = UserModel::ROLE_GUEST): void
+    public static function post(string $path, array $callback, int $role = UserModel::ROLE_GUEST): void
     {
-        $this->routes['post'][$path] = [$callback, $role];
+        self::$routes['post'][$path] = [$callback, $role];
     }
 }

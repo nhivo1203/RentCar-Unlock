@@ -12,7 +12,7 @@ class UserModel
     private string $firstname;
     private string $lastname;
     private string $email;
-    private int $role;
+    private int $role = self::ROLE_GUEST;
     private string $username;
     private string $password;
     private string $createAt;

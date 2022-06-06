@@ -4,10 +4,10 @@ namespace Nhivonfq\Unlock\Models;
 
 class CarModel
 {
-    private int $car_id = 0;
-    private string $car_name = '';
-    private string $car_type = '';
-    private string $car_brand = '';
+    private int $carId = 0;
+    private string $carName = '';
+    private string $carType = '';
+    private string $carBrand = '';
     private string $image = '';
     private int $price = 0;
 
@@ -16,15 +16,15 @@ class CarModel
      */
     public function getCarId(): int
     {
-        return $this->car_id;
+        return $this->carId;
     }
 
     /**
-     * @param int $car_id
+     * @param int $carId
      */
-    public function setCarId(int $car_id): void
+    public function setCarId(int $carId): void
     {
-        $this->car_id = $car_id;
+        $this->carId = $carId;
     }
 
     /**
@@ -32,15 +32,15 @@ class CarModel
      */
     public function getCarName(): string
     {
-        return $this->car_name;
+        return $this->carName;
     }
 
     /**
-     * @param string $car_name
+     * @param string $carName
      */
-    public function setCarName(string $car_name): void
+    public function setCarName(string $carName): void
     {
-        $this->car_name = $car_name;
+        $this->carName = $carName;
     }
 
     /**
@@ -48,15 +48,15 @@ class CarModel
      */
     public function getCarType(): string
     {
-        return $this->car_type;
+        return $this->carType;
     }
 
     /**
-     * @param string $car_type
+     * @param string $carType
      */
-    public function setCarType(string $car_type): void
+    public function setCarType(string $carType): void
     {
-        $this->car_type = $car_type;
+        $this->carType = $carType;
     }
 
     /**
@@ -64,15 +64,15 @@ class CarModel
      */
     public function getCarBrand(): string
     {
-        return $this->car_brand;
+        return $this->carBrand;
     }
 
     /**
-     * @param string $car_brand
+     * @param string $carBrand
      */
-    public function setCarBrand(string $car_brand): void
+    public function setCarBrand(string $carBrand): void
     {
-        $this->car_brand = $car_brand;
+        $this->carBrand = $carBrand;
     }
 
     /**
