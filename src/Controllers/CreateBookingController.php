@@ -35,10 +35,10 @@ class CreateBookingController extends Controller
             return $this->response->renderView('create_booking',
                 ['errors' => $this->createBookingValidate->getErrors()]);
         }
-        $this->createBookingValidate->loadData($this->requestTransfer->getBody());
+        $this->createBookingValidate->loadData($this->requestTransfer->getRequestArrayBody());
         if ($this->createBookingValidate->validate()) {
             $createBookingRequest = new CreateBookingRequest();
-            $booking = $createBookingRequest->fromArraytoModel($this->requestTransfer->getBody());
+            $booking = $createBookingRequest->fromArraytoModel($this->requestTransfer->getRequestArrayBody());
             if ($this->bookingRepository->createBooking($booking)) {
                 View::redirect('/');
             }

@@ -30,12 +30,4 @@ class BookingRepository extends BaseRepository
     {
         return $this->attributes;
     }
-
-    /**
-     * @param array|string[] $attributes
-     */
-    public function setAttributes(array $attributes): void
-    {
-        $this->attributes = $attributes;
-    }
 }

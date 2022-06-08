@@ -39,10 +39,10 @@ class LoginController extends Controller
         if ($this->request->isGet()) {
             return $this->response->renderView('login');
         }
-        $this->loginValidate->loadData($this->requestTransfer->getBody());
+        $this->loginValidate->loadData($this->requestTransfer->getRequestArrayBody());
         if ($this->loginValidate->validate()) {
             $loginRequest = new LoginRequest();
-            $loginRequest = $loginRequest->fromArray($this->requestTransfer->getBody());
+            $loginRequest = $loginRequest->fromArray($this->requestTransfer->getRequestArrayBody());
             if ($this->loginServices->login($loginRequest)) {
                 $this->response->setRedirectUrl('/');
             }

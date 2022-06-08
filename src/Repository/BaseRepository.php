@@ -14,12 +14,6 @@ abstract class BaseRepository
         $this->connection = Database::getConnection();
     }
 
-    public function setConnection(PDO $connection): self
-    {
-        $this->connection = $connection;
-        return $this;
-    }
-
     public function getConnection(): PDO
     {
         return $this->connection;

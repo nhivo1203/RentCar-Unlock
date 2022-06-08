@@ -14,7 +14,7 @@ class RequestTransfer
         $this->request = $request;
     }
 
-    public function getBody(): array
+    public function getRequestArrayBody(): array
     {
         $body = [];
 

@@ -12,7 +12,8 @@ class CarRepository extends BaseRepository
 
     public function createCar(CarModel $car): ?CarModel
     {
-        $statement = $this->getConnection()->prepare("INSERT INTO cars(" . implode(',', $this->getAttributes()) . ")
+        $statement = $this->getConnection()->prepare(
+            "INSERT INTO cars(" . implode(',', $this->getAttributes()) . ")
             VALUES(?, ?, ?, ?, ?)");
         $isCreated = $statement->execute([
             $car->getCarName(), $car->getCarBrand(), $car->getCarType(),
@@ -24,16 +25,9 @@ class CarRepository extends BaseRepository
         return null;
     }
 
-    public function getAll(int $offset = 0, int $limit = 9): array
-    {
-        $sql = "SELECT * FROM cars LIMIT :off, :lim";
-        $statement = $this->getConnection()->prepare($sql);
-        $statement->bindValue(':off', $offset, PDO::PARAM_INT);
-        $statement->bindValue(':lim', $limit, PDO::PARAM_INT);
-        $statement->execute();
-        $rows = $statement->fetchAll();
+    public function toArray($data): array {
         $cars = [];
-        foreach ($rows as $row) {
+        foreach ($data as $row) {
             $car = new CarModel();
             $car->setCarId($row['id']);
             $car->setCarName($row['name']);
@@ -46,19 +40,22 @@ class CarRepository extends BaseRepository
         return $cars;
     }
 
+    public function getAll(int $offset = 0, int $limit = 9): array
+    {
+        $sql = "SELECT * FROM cars LIMIT :offset, :limit";
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $statement->execute();
+        $rows = $statement->fetchAll();
+        return $this->toArray($rows);
+    }
+
     /**
      * @return array|string[]
      */
     public function getAttributes(): array
     {
         return $this->attributes;
-    }
-
-    /**
-     * @param array|string[] $attributes
-     */
-    public function setAttributes(array $attributes): void
-    {
-        $this->attributes = $attributes;
     }
 }

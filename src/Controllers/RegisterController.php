@@ -41,10 +41,10 @@ class RegisterController extends Controller
         if ($this->request->isGet()) {
             return $this->response->renderView('register');
         }
-        $this->registerValidate->loadData($this->requestTransfer->getBody());
+        $this->registerValidate->loadData($this->requestTransfer->getRequestArrayBody());
         if ($this->registerValidate->validate()) {
             $registerRequest = new RegisterRequest();
-            $userRequest = $registerRequest->fromArrayToModel($this->requestTransfer->getBody());
+            $userRequest = $registerRequest->fromArrayToModel($this->requestTransfer->getRequestArrayBody());
             if ($this->userRepository->saveUser($userRequest)) {
                 View::redirect('/');
             }

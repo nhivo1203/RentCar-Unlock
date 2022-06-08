@@ -60,7 +60,7 @@ class CarController extends Controller
     public function formValidate(): array| false
     {
         $errors = [];
-        $this->createCarValidate->loadData($this->requestTransfer->getBody());
+        $this->createCarValidate->loadData($this->requestTransfer->getRequestArrayBody());
 
         if (!$this->createCarValidate->validate()) {
             $errors = $this->createCarValidate->getErrors();
@@ -87,7 +87,7 @@ class CarController extends Controller
                 ['errors' => $this->formValidate()]
             );
         }
-        $data = $this->requestTransfer->getBody();
+        $data = $this->requestTransfer->getRequestArrayBody();
         $imgURL = $this->uploadImageServices->handleUpload($this->request->getFiles()['image']);
         $data = array_merge($data, ['image' => $imgURL]);
         $createCarRequest = new CreateCarRequest();
