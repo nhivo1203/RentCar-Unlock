@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Tests\Services;
 
-use Nhivonfq\Unlock\Models\UserModel;
+use Nhivonfq\Unlock\Models\User;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Request\LoginRequest;
 use Nhivonfq\Unlock\Services\UserServices;
@@ -67,9 +67,9 @@ class LoginServicesTest extends TestCase
         $this->assertFalse($checkHasSession);
     }
 
-    private function getUser(int $id, string $email, string $password): UserModel
+    private function getUser(int $id, string $email, string $password): User
     {
-        $user = new UserModel();
+        $user = new User();
         $user->setId($id);
         $user->setEmail($email);
         $user->setPassword($password);

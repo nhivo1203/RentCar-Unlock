@@ -5,7 +5,7 @@ namespace Nhivonfq\Tests\Controllers;
 use Nhivonfq\Unlock\Controllers\LoginController;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
-use Nhivonfq\Unlock\Models\UserModel;
+use Nhivonfq\Unlock\Models\User;
 use Nhivonfq\Unlock\Services\UserServices;
 use Nhivonfq\Unlock\Transfer\RequestTransfer;
 use Nhivonfq\Unlock\Validate\LoginValidate;
@@ -20,8 +20,8 @@ class LoginControllerTest extends TestCase
      */
     public function testLoginSuccess(array $params): void
     {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
-        $requestMock->method('getMethod')->willReturn('post');
         $response = new Response();
         $loginValidateMock = $this->getMockBuilder(LoginValidate::class)->disableOriginalConstructor()->getMock();
         $loginValidateMock->expects($this->once())->method('validate')->willReturn(true);
@@ -46,8 +46,8 @@ class LoginControllerTest extends TestCase
      */
     public function testLoginFailedWithValidate(array $params): void
     {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
-        $requestMock->method('getMethod')->willReturn('post');
         $response = new Response();
         $loginValidateMock = $this->getMockBuilder(LoginValidate::class)->disableOriginalConstructor()->getMock();
         $loginValidateMock->expects($this->once())->method('validate')->willReturn(false);
@@ -72,8 +72,9 @@ class LoginControllerTest extends TestCase
      */
     public function testLoginFailedWithServices(array $params): void
     {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
-        $requestMock->method('getMethod')->willReturn('post');
         $response = new Response();
         $loginValidateMock = $this->getMockBuilder(LoginValidate::class)->disableOriginalConstructor()->getMock();
         $loginValidateMock->expects($this->once())->method('validate')->willReturn(true);
@@ -99,8 +100,8 @@ class LoginControllerTest extends TestCase
      */
     public function testLoginWithGetMethod(array $params): void
     {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
-        $requestMock->method('getMethod')->willReturn('get');
         $response = new Response();
         $loginValidateMock = $this->getMockBuilder(LoginValidate::class)->disableOriginalConstructor()->getMock();
         $loginValidateMock->expects($this->once())->method('validate')->willReturn(true);
@@ -118,9 +119,11 @@ class LoginControllerTest extends TestCase
 
     }
 
-    public function testLogOutSuccess():void {
+    public function testLogOutSuccess(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
-        $requestMock->method('getMethod')->willReturn('post');
         $response = new Response();
         $loginValidateMock = $this->getMockBuilder(LoginValidate::class)->disableOriginalConstructor()->getMock();
         $requestTransferMock = $this->getMockBuilder(RequestTransfer::class)->disableOriginalConstructor()->getMock();
@@ -134,7 +137,8 @@ class LoginControllerTest extends TestCase
         $this->assertEquals($expectedResponse->getRedirectUrl(), $logoutResult->getRedirectUrl());
     }
 
-    public function testLogOutWithGetMethod():void {
+    public function testLogOutWithGetMethod(): void
+    {
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
         $requestMock->method('getMethod')->willReturn('get');
         $response = new Response();
@@ -149,9 +153,9 @@ class LoginControllerTest extends TestCase
         $this->assertEquals($expectedResponse->getRedirectUrl(), $logoutResult->getRedirectUrl());
     }
 
-    private function getUser(int $id, string $email, string $password): UserModel
+    private function getUser(int $id, string $email, string $password): User
     {
-        $user = new UserModel();
+        $user = new User();
         $user->setId($id);
         $user->setEmail($email);
         $user->setPassword($password);

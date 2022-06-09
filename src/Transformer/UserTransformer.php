@@ -2,11 +2,11 @@
 
 namespace Nhivonfq\Unlock\Transformer;
 
-use Nhivonfq\Unlock\Models\UserModel;
+use Nhivonfq\Unlock\Models\User;
 
 class UserTransformer
 {
-    public function toArray(UserModel $user): array
+    public function toArray(User $user): array
     {
         return [
             'firstname' => $user->getFirstname(),

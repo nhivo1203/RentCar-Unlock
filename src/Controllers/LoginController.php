@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Controllers;
 
-use Nhivonfq\Unlock\boostrap\Controller;
+use Nhivonfq\Unlock\App\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Request\LoginRequest;
@@ -22,13 +22,10 @@ class LoginController extends Controller
         Response        $response,
         UserServices    $loginServices,
         RequestTransfer $requestTransfer
-
-    )
-    {
+    ) {
         parent::__construct($request, $response, $requestTransfer);
         $this->loginValidate = $loginValidate;
         $this->loginServices = $loginServices;
-
     }
 
     /**
@@ -61,5 +58,4 @@ class LoginController extends Controller
         }
         return $this->response->redirect('/');
     }
-
 }

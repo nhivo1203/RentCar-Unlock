@@ -2,13 +2,13 @@
 
 namespace Nhivonfq\Unlock\Repository;
 
-use Nhivonfq\Unlock\Models\BookingModel;
+use Nhivonfq\Unlock\Models\Booking;
 
 class BookingRepository extends BaseRepository
 {
     private array $attributes = ['user_id', 'car_id', 'check_in', 'check_out', 'total'];
 
-    public function createBooking(BookingModel $booking): ?BookingModel
+    public function createBooking(Booking $booking): ?Booking
     {
         $statement = $this->getConnection()->prepare(
             "INSERT INTO bookings(" . implode(',', $this->getAttributes()) . ")

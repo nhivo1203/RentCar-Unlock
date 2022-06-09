@@ -4,7 +4,7 @@ namespace Nhivonfq\Tests\Repository;
 
 use Dotenv\Dotenv;
 use Nhivonfq\Unlock\Database\Database;
-use Nhivonfq\Unlock\Models\UserModel;
+use Nhivonfq\Unlock\Models\User;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ class UserRepositoryTest extends TestCase
     public function testSaveUserSuccess(): void
     {
         $userRepository = new UserRepository();
-        $user = new UserModel();
+        $user = new User();
         $user->setFirstname('Vo Nguyen');
         $user->setLastname('Thien Long');
         $user->setEmail('thienlong@gmail.com');

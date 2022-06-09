@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Request;
 
-use Nhivonfq\Unlock\Models\BookingModel;
+use Nhivonfq\Unlock\Models\Booking;
 
 class CreateBookingRequest
 {
@@ -13,8 +13,8 @@ class CreateBookingRequest
     private int $total = 0;
 
 
-    public function fromArrayToModel(array $requestBody):BookingModel{
-        $booking = new BookingModel();
+    public function fromArrayToModel(array $requestBody):Booking{
+        $booking = new Booking();
         $booking->setCarId($requestBody['car_id']);
         $booking->setUserId($requestBody['user_id']);
         $booking->setCheckIn($requestBody['check_in']);

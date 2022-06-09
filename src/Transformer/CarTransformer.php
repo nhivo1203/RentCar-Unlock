@@ -2,11 +2,11 @@
 
 namespace Nhivonfq\Unlock\Transformer;
 
-use Nhivonfq\Unlock\Models\CarModel;
+use Nhivonfq\Unlock\Models\Car;
 
 class CarTransformer
 {
-    public function toArray(CarModel $car): array
+    public function toArray(Car $car): array
     {
         return [
             'id' => $car->getCarId(),

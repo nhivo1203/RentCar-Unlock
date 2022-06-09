@@ -3,9 +3,10 @@
 namespace Nhivonfq\Unlock\Controllers\API;
 
 use JsonException;
-use Nhivonfq\Unlock\boostrap\Controller;
+use Nhivonfq\Unlock\App\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
+use Nhivonfq\Unlock\Models\User;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Request\RegisterRequest;
 use Nhivonfq\Unlock\Services\TokenServices;
@@ -29,47 +30,58 @@ class RegisterAPIController extends Controller
         RequestTransfer  $requestTransfer,
         UserTransformer  $userTransformer,
         UserRepository   $userRepository
-    )
-    {
+    ) {
         parent::__construct($request, $response, $requestTransfer);
         $this->registerValidate = $registerValidate;
         $this->tokenServices = $tokenServices;
         $this->userTransformer = $userTransformer;
         $this->userRepository = $userRepository;
-
     }
+
 
     /**
      * @throws JsonException
      */
     public function register(): Response
     {
-        if (!$this->request->isPost()) {
-            return $this->response->toJson([
-                'errors' => "Not Found"
-            ], Response::HTTP_NOT_FOUND);
+        if ($this->request->isGet()) {
+            return $this->response->toJson(
+                ['errors' => "Not Found"],
+                Response::HTTP_NOT_FOUND
+            );
         }
         $this->registerValidate->loadData($this->requestTransfer->getRequestJsonBody());
         if (!$this->registerValidate->validate()) {
-            return $this->response->toJson($this->registerValidate->getErrors(), Response::HTTP_BAD_REQUEST);
+            return $this->response->toJson(
+                ['errors' => $this->registerValidate->getErrors()],
+                Response::HTTP_BAD_REQUEST
+            );
         }
+        $user = $this->isRegister();
+        if ($user=== null) {
+            return $this->response->toJson(
+                ['errors' => 'Can create user'],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+        $token = $this->tokenServices->generateToken($user);
+        return $this->response->toJson([
+            'data' => $this->userTransformer->toArray($user),
+            "token" => $token
+        ], Response::HTTP_OK);
+    }
+
+    /**
+     * @throws JsonException
+     */
+    private function isRegister(): ?User
+    {
         $registerRequest = new RegisterRequest();
         $userRequest = $registerRequest->fromArrayToModel($this->requestTransfer->getRequestJsonBody());
         $user = $this->userRepository->saveUser($userRequest);
         if (!$user) {
-            return $this->response->toJson(['message' => "Can not create user"], Response::HTTP_BAD_REQUEST);
+            return null;
         }
-        $userTokenData = [
-            'id' => $user->getId(),
-            'email' => $user->getEmail()
-        ];
-        $token = $this->tokenServices->jwtEncodeData($userTokenData);
-        return $this->response->toJson([
-            'data' => [
-                "user" => $this->userTransformer->toArray($user),
-                "token" => $token
-            ]
-        ], Response::HTTP_OK);
-
+        return $user;
     }
 }

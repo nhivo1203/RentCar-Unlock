@@ -4,7 +4,7 @@ namespace Nhivonfq\Tests\Repository;
 
 use Dotenv\Dotenv;
 use Nhivonfq\Unlock\Database\Database;
-use Nhivonfq\Unlock\Models\CarModel;
+use Nhivonfq\Unlock\Models\Car;
 use Nhivonfq\Unlock\Repository\CarRepository;
 use Nhivonfq\Unlock\Services\ConfigServices;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +17,7 @@ class CarRepositoryTest extends TestCase
     {
 
         $carRepository = new CarRepository();
-        $car = new CarModel();
+        $car = new Car();
         $car->setCarId(0);
         $car->setCarName('Car Test');
         $car->setCarType('Premium');
@@ -58,7 +58,7 @@ class CarRepositoryTest extends TestCase
     private function getCar(int $id, string $name, string $type, string $brand, string $image, int $price,): array
     {
         $cars = [];
-        $car = new CarModel();
+        $car = new Car();
         $car->setCarId($id);
         $car->setCarName($name);
         $car->setCarType($type);

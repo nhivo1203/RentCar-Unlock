@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Request;
 
-use Nhivonfq\Unlock\Models\UserModel;
+use Nhivonfq\Unlock\Models\User;
 
 class RegisterRequest
 {
@@ -19,9 +19,9 @@ class RegisterRequest
      * @param array $requestBody
      * @return $this
      */
-    public function fromArrayToModel(array $requestBody): UserModel
+    public function fromArrayToModel(array $requestBody): User
     {
-        $user = new UserModel();
+        $user = new User();
 
         $user->setFirstname($requestBody['firstname']);
         $user->setLastname($requestBody['lastname']);

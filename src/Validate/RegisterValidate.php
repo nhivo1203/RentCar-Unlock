@@ -2,13 +2,13 @@
 
 namespace Nhivonfq\Unlock\Validate;
 
-use Nhivonfq\Unlock\boostrap\Validate;
+use Nhivonfq\Unlock\App\Validate;
 
 class RegisterValidate extends Validate
 {
-    const ROLE_GUEST = 0;
-    const ROLE_USER = 1;
-    const ROLE_ADMIN = 2;
+    public const ROLE_GUEST = 0;
+    public const ROLE_USER = 1;
+    public const ROLE_ADMIN = 2;
 
 
     public string $firstname = '';

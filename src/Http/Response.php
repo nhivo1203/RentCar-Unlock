@@ -5,12 +5,12 @@ namespace Nhivonfq\Unlock\Http;
 
 class Response
 {
-    const HTTP_OK = 200;
-    const HTTP_NOT_FOUND = 404;
-    const HTTP_BAD_REQUEST = 503;
-    const HTTP_INTERNAL_SERVER_ERROR = 500;
-    const HTTP_UNAUTHEN = 401;
-    const HTTP_UNAUTHORIZED = 403;
+    public const HTTP_OK = 200;
+    public const HTTP_NOT_FOUND = 404;
+    public const HTTP_BAD_REQUEST = 503;
+    public const HTTP_INTERNAL_SERVER_ERROR = 500;
+    public const HTTP_UNAUTHENTIC = 401;
+    public const HTTP_UNAUTHORIZED = 403;
 
     private ?string $template = null;
     private int $statusCode;
@@ -114,7 +114,7 @@ class Response
 
 
 
-    public function renderView($template, array $data = null): self
+    public function renderView(string $template, array $data = null): self
     {
         $this->setTemplate($template);
         if ($data !== null) {

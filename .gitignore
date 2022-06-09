@@ -1,7 +1,7 @@
 /vendor/
 /.idea/
 /coverage/
-/phpunit.cache/
+/.phpunit.cache/
 /phpcbf.phar/
 /phpcs.phar/
 /phpunit.phar/

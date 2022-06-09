@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Models;
 
-class BookingModel
+class Booking
 {
     private int $bookingId;
     private int $userId;

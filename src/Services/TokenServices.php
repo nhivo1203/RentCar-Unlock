@@ -1,10 +1,10 @@
 <?php
 
 namespace Nhivonfq\Unlock\Services;
-use Dotenv\Dotenv;
-use Exception;
+
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Nhivonfq\Unlock\Models\User;
 
 
 class TokenServices
@@ -22,16 +22,15 @@ class TokenServices
     }
 
     /**
-     * @param $iss
-     * @param $data
+     * @param User $data
      * @return string
      */
-    public function jwtEncodeData($data): string
+    public function generateToken(User $data): string
     {
         $payload = array(
             "iat" => $this->issuedAt,
             "exp" => $this->expire,
-            "data" => $data
+            "data" => $data->getId(),
         );
 
         return JWT::encode($payload, $this->jwtSecret, 'HS256');
@@ -41,14 +40,14 @@ class TokenServices
      * @param $token
   route   * @return array
      */
-    public function checkToken($token): array
+    public function checkToken(string $token): array
     {
         $decoded = JWT::decode($token, new Key($this->jwtSecret, 'HS256'));
 
         return (array)$decoded;
     }
 
-    public function getTokenPayload($authorizationToken): bool|array
+    public function getTokenPayload(?string $authorizationToken): bool|array
     {
         if ($authorizationToken === null) {
             return false;

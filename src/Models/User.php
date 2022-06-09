@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Models;
 
-class UserModel
+class User
 {
     public const ROLE_GUEST = 0;
     public const ROLE_MEMBER = 1;

@@ -2,8 +2,8 @@
 
 namespace Nhivonfq\Unlock\Controllers;
 
+use Nhivonfq\Unlock\App\Controller;
 use Nhivonfq\Unlock\App\View;
-use Nhivonfq\Unlock\boostrap\Controller;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Repository\UserRepository;

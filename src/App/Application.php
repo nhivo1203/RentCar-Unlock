@@ -1,17 +1,14 @@
 <?php
 
-namespace Nhivonfq\Unlock\boostrap;
+namespace Nhivonfq\Unlock\App;
 
-use Dotenv\Dotenv;
 use Exception;
-use Nhivonfq\Unlock\App\View;
 use Nhivonfq\Unlock\Controllers\NotFoundController;
 use Nhivonfq\Unlock\Database\Database;
 use Nhivonfq\Unlock\Exception\UnauthenticatedException;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
 use Nhivonfq\Unlock\Services\SessionServices;
-
 
 /**
  * Class Application
@@ -82,7 +79,7 @@ class Application
     /**
      * @return void
      */
-    public function run():void
+    public function run(): void
     {
         Database::getConnection();
 
@@ -108,6 +105,11 @@ class Application
         $this->view::display($response);
     }
 
+    public static function isLogin(): bool
+    {
+        $container = new Container();
+        return $container->make(SessionServices::class)->hasSession('user_id');
+    }
 
     /**
      * @param bool|array $route
@@ -129,25 +131,20 @@ class Application
         } catch (Exception $e) {
             $message = $e->getMessage();
             if ($e instanceof UnauthenticatedException) {
-                if ($this->isAPI()) {
-                    $response = $this->response->toJson(['message' => $message], Response::HTTP_UNAUTHEN);
-                } else {
+                $this->isAPI() ?
+                    $response = $this->response->toJson(['errors' => $message], Response::HTTP_UNAUTHENTIC)
+                    :
                     $response = $this->response->redirect('/login');
-                }
             } else {
-                $response = $this->response->renderView('_403', ['message' => $message]);
+                $this->isAPI() ?
+                    $response = $this->response->toJson(['errors' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED)
+                    :
+                    $response = $this->response->renderView('_403', ['errors' => $message]);
             }
-            View::display($response, $this->isLogin());
+            View::display($response, self::isLogin());
             return false;
         }
 
         return true;
-    }
-
-    private function isLogin(): bool
-    {
-        $container = new Container();
-        $sessionServices = $container->make(SessionServices::class);;
-        return $sessionServices->hasSession('user_id');
     }
 }

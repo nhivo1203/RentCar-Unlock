@@ -1,9 +1,9 @@
 <?php
 
-namespace Nhivonfq\Unlock\boostrap;
+namespace Nhivonfq\Unlock\App;
 
-use Nhivonfq\Unlock\Controllers\API\CreateBookingAPIController;
 use Nhivonfq\Unlock\Controllers\API\CarAPIController;
+use Nhivonfq\Unlock\Controllers\API\CreateBookingAPIController;
 use Nhivonfq\Unlock\Controllers\API\LoginAPIController;
 use Nhivonfq\Unlock\Controllers\API\RegisterAPIController;
 use Nhivonfq\Unlock\Controllers\CarController;
@@ -12,7 +12,7 @@ use Nhivonfq\Unlock\Controllers\HomeController;
 use Nhivonfq\Unlock\Controllers\LoginController;
 use Nhivonfq\Unlock\Controllers\RegisterController;
 use Nhivonfq\Unlock\Controllers\SitesController;
-use Nhivonfq\Unlock\Models\UserModel;
+use Nhivonfq\Unlock\Models\User;
 
 class RoutesManage
 {
@@ -34,10 +34,10 @@ class RoutesManage
         Router::get('/login', [LoginController::class, 'login']);
         Router::post('/register', [RegisterController::class, 'register']);
         Router::get('/register', [RegisterController::class, 'register']);
-        Router::post('/createbooking', [CreateBookingController::class, 'createBooking'], role: UserModel::ROLE_MEMBER);
-        Router::get('/createbooking', [CreateBookingController::class, 'createBooking'], role: UserModel::ROLE_MEMBER);
-        Router::post('/createcar', [CarController::class, 'createCar'], role: UserModel::ROLE_ADMIN);
-        Router::get('/createcar', [CarController::class, 'createCar'], role: UserModel::ROLE_ADMIN);
+        Router::post('/createbooking', [CreateBookingController::class, 'createBooking'], role: User::ROLE_MEMBER);
+        Router::get('/createbooking', [CreateBookingController::class, 'createBooking'], role: User::ROLE_MEMBER);
+        Router::post('/createcar', [CarController::class, 'createCar'], role: User::ROLE_ADMIN);
+        Router::get('/createcar', [CarController::class, 'createCar'], role: User::ROLE_ADMIN);
 
     }
 
@@ -49,9 +49,9 @@ class RoutesManage
         Router::get('/api/register', [RegisterAPIController::class, 'register']);
         Router::get('/api/cars', [CarAPIController::class, 'getAllCar']);
         Router::post('/api/cars', [CarAPIController::class, 'getAllCar']);
-        Router::post('/api/createbooking', [CreateBookingAPIController::class, 'createBooking'], role: UserModel::ROLE_MEMBER);
-        Router::get('/api/createbooking', [CreateBookingAPIController::class, 'createBooking'], role: UserModel::ROLE_MEMBER);
-        Router::post('/api/createcar', [CarAPIController::class, 'createCar'], role: UserModel::ROLE_ADMIN);
-        Router::get('/api/createcar', [CarAPIController::class, 'createCar'], role: UserModel::ROLE_ADMIN);
+        Router::post('/api/createbooking', [CreateBookingAPIController::class, 'createBooking'], role: User::ROLE_MEMBER);
+        Router::get('/api/createbooking', [CreateBookingAPIController::class, 'createBooking'], role: User::ROLE_MEMBER);
+        Router::post('/api/createcar', [CarAPIController::class, 'createCar'], role: User::ROLE_ADMIN);
+        Router::get('/api/createcar', [CarAPIController::class, 'createCar'], role: User::ROLE_ADMIN);
     }
 }

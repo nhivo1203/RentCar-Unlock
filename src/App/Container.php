@@ -1,6 +1,6 @@
 <?php
 
-namespace Nhivonfq\Unlock\boostrap;
+namespace Nhivonfq\Unlock\App;
 
 
 use Closure;

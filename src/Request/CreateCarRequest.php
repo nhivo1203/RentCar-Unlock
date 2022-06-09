@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Request;
 
-use Nhivonfq\Unlock\Models\CarModel;
+use Nhivonfq\Unlock\Models\Car;
 
 class CreateCarRequest
 {
@@ -12,9 +12,9 @@ class CreateCarRequest
     private string $image = "";
     private int $price = 0;
 
-    public function fromArrayToModel(array $requestBody): CarModel
+    public function fromArrayToModel(array $requestBody): Car
     {
-        $car = new CarModel();
+        $car = new Car();
 
         $car->setCarName($requestBody['name']);
         $car->setCarType($requestBody['type']);

@@ -1,6 +1,6 @@
 <?php
 
-use Nhivonfq\Unlock\Services\UserServices;
+use Nhivonfq\Unlock\App\Application;
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ use Nhivonfq\Unlock\Services\UserServices;
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
           type="text/css"/>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="/styles.css" rel="stylesheet"/>
+    <link href="/assets/styles.css" rel="stylesheet"/>
 </head>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
@@ -38,8 +38,7 @@ use Nhivonfq\Unlock\Services\UserServices;
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <?php
 
-            if (UserServices::isLogin()) : ?>
-
+            if (!Application::isLogin()) : ?>
                 <ul class="navbar-nav ms-auto pt-4">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/">Home</a>
                     </li>
@@ -50,11 +49,12 @@ use Nhivonfq\Unlock\Services\UserServices;
                                                          href="/register">Register</a>
                     </li>
                 </ul>
-            <?php else: ?>
+            <?php else : ?>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 mt-1 rounded"
-                                                         href="/createcar">Create
-                            Car</a>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 mt-1 rounded" href="/createcar">
+                            Create Car
+                        </a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 mt-1 rounded"
                                                          href="/createbooking">Create Booking</a></li>

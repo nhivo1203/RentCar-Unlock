@@ -2,8 +2,7 @@
 
 namespace Nhivonfq\Tests\Services;
 
-use Couchbase\User;
-use Nhivonfq\Unlock\Models\UserModel;
+use Nhivonfq\Unlock\Models\User;
 use Nhivonfq\Unlock\Repository\UserRepository;
 use Nhivonfq\Unlock\Request\RegisterRequest;
 use Nhivonfq\Unlock\Services\RegisterServices;
@@ -18,7 +17,7 @@ class RegisterServicesTest extends TestCase
      */
     public function testRegisterSuccess(array $params, $expected) {
         $registerRequest = new RegisterRequest();
-        $user = new UserModel();
+        $user = new User();
         $registerRequest->fromArray($params);
         $userRepositoryMock = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $userRepositoryMock->expects($this->once())->method('saveUser')->willReturn($params['isSave']);
@@ -29,9 +28,9 @@ class RegisterServicesTest extends TestCase
 
 
 
-    private function getUser(int $id,string $firstname, string $lastname,string $email,int $role, string $username, string $password, string $createAt): UserModel
+    private function getUser(int $id,string $firstname, string $lastname,string $email,int $role, string $username, string $password, string $createAt): User
     {
-        $user = new UserModel();
+        $user = new User();
         $user->setId($id);
         $user->setFirstname($firstname);
         $user->setLastname($lastname);

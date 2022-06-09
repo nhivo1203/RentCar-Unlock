@@ -32,7 +32,7 @@ class ResponseTest extends TestCase
             [Response::HTTP_OK],
             [Response::HTTP_NOT_FOUND],
             [Response::HTTP_INTERNAL_SERVER_ERROR],
-            [Response::HTTP_UNAUTHEN],
+            [Response::HTTP_UNAUTHENTIC],
         ];
     }
 

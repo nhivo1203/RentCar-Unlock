@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Repository;
 
-use Nhivonfq\Unlock\Models\UserModel;
+use Nhivonfq\Unlock\Models\User;
 
 class UserRepository extends BaseRepository
 {
@@ -10,7 +10,7 @@ class UserRepository extends BaseRepository
     private array $attributes = ['firstname', 'lastname', 'email', 'password', 'role', 'username'];
 
 
-    public function saveUser(UserModel $user): ?UserModel
+    public function saveUser(User $user): ?User
     {
         $sql = "INSERT INTO users(" . implode(',', $this->getAttributes()) . ")
             VALUES(?, ?, ?, ?, ?, ?)";
@@ -25,7 +25,7 @@ class UserRepository extends BaseRepository
         return null;
     }
 
-    public function findOne(array $where): ?UserModel
+    public function findOne(array $where): ?User
     {
         $attributes = array_keys($where);
         $sql = implode("AND", array_map(static fn($attr) => "$attr = :$attr", $attributes));
@@ -35,7 +35,7 @@ class UserRepository extends BaseRepository
         }
         $statement->execute();
         try {
-            $user = new UserModel();
+            $user = new User();
             if ($row = $statement->fetch()) {
                 $user->setId($row['id']);
                 $user->setUsername($row['username']);

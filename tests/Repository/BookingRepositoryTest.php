@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Tests\Repository;
 
-use Nhivonfq\Unlock\Models\BookingModel;
+use Nhivonfq\Unlock\Models\Booking;
 use Nhivonfq\Unlock\Repository\BookingRepository;
 use Nhivonfq\Unlock\Services\ConfigServices;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +15,7 @@ class BookingRepositoryTest extends TestCase
     public function testCreateBooking(): void
     {
         $bookingRepository = new BookingRepository();
-        $booking = new BookingModel();
+        $booking = new Booking();
 
         $booking->setBookingId(0);
         $booking->setCarId(1);

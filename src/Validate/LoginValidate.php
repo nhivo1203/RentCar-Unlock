@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Validate;
 
-use Nhivonfq\Unlock\boostrap\Validate;
+use Nhivonfq\Unlock\App\Validate;
 
 
 class LoginValidate extends Validate

@@ -2,15 +2,18 @@
 
 namespace Nhivonfq\Unlock\Repository;
 
-use Nhivonfq\Unlock\Models\CarModel;
+use Nhivonfq\Unlock\Models\Car;
 use PDO;
 
 
 class CarRepository extends BaseRepository
 {
+    public const OFFSET_INDEX = 0;
+    public const LIMIT_CAR = 9;
+
     private array $attributes = ['name', 'brand', 'type', 'image', 'price'];
 
-    public function createCar(CarModel $car): ?CarModel
+    public function createCar(Car $car): ?Car
     {
         $statement = $this->getConnection()->prepare(
             "INSERT INTO cars(" . implode(',', $this->getAttributes()) . ")
@@ -25,10 +28,10 @@ class CarRepository extends BaseRepository
         return null;
     }
 
-    public function toArray($data): array {
+    public function toArray(array $data): array {
         $cars = [];
         foreach ($data as $row) {
-            $car = new CarModel();
+            $car = new Car();
             $car->setCarId($row['id']);
             $car->setCarName($row['name']);
             $car->setCarBrand($row['brand']);
@@ -40,7 +43,7 @@ class CarRepository extends BaseRepository
         return $cars;
     }
 
-    public function getAll(int $offset = 0, int $limit = 9): array
+    public function getAll(int $offset = self::OFFSET_INDEX, int $limit = self::LIMIT_CAR): array
     {
         $sql = "SELECT * FROM cars LIMIT :offset, :limit";
         $statement = $this->getConnection()->prepare($sql);

@@ -2,11 +2,11 @@
 
 namespace Nhivonfq\Unlock\Transformer;
 
-use Nhivonfq\Unlock\Models\BookingModel;
+use Nhivonfq\Unlock\Models\Booking;
 
 class BookingTransformer
 {
-    public function toArray(BookingModel $booking): array
+    public function toArray(Booking $booking): array
     {
         return [
             'car_id' => $booking->getCarId(),

@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Models;
 
-class CarModel
+class Car
 {
     private int $carId = 0;
     private string $carName = '';

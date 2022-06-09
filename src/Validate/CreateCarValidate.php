@@ -2,7 +2,7 @@
 
 namespace Nhivonfq\Unlock\Validate;
 
-use Nhivonfq\Unlock\boostrap\Validate;
+use Nhivonfq\Unlock\App\Validate;
 
 class CreateCarValidate extends Validate
 {
@@ -17,7 +17,8 @@ class CreateCarValidate extends Validate
             'name' => [self::RULE_REQUIRED],
             'type' => [self::RULE_REQUIRED],
             'brand' => [self::RULE_REQUIRED],
-            'price' => [self::RULE_REQUIRED,[self::RULE_MIN_PRICE, 'min_price' => 100], [self::RULE_MAX_PRICE, 'max_price' => 9999999]],
+            'price' => [self::RULE_REQUIRED,[self::RULE_MIN_PRICE, 'min_price' => 100],
+                [self::RULE_MAX_PRICE, 'max_price' => 9999999]],
         ];
     }
 }

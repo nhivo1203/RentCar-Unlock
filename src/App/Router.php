@@ -1,12 +1,10 @@
 <?php
 
-namespace Nhivonfq\Unlock\boostrap;
+namespace Nhivonfq\Unlock\App;
 
-use Nhivonfq\Unlock\App\View;
 use Nhivonfq\Unlock\Http\Request;
 use Nhivonfq\Unlock\Http\Response;
-use Nhivonfq\Unlock\Models\UserModel;
-use function is_string;
+use Nhivonfq\Unlock\Models\User;
 
 class Router
 {
@@ -35,7 +33,7 @@ class Router
      * @param int $role
      * @return void
      */
-    public static function get(string $path, array $callback, int $role = UserModel::ROLE_GUEST): void
+    public static function get(string $path, array $callback, int $role = User::ROLE_GUEST): void
     {
         self::$routes['get'][$path] = [$callback, $role];
     }
@@ -46,7 +44,7 @@ class Router
      * @param int $role
      * @return void
      */
-    public static function post(string $path, array $callback, int $role = UserModel::ROLE_GUEST): void
+    public static function post(string $path, array $callback, int $role = User::ROLE_GUEST): void
     {
         self::$routes['post'][$path] = [$callback, $role];
     }
