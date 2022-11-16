@@ -65,10 +65,10 @@ class CarController extends Controller
                 ['errors' => $this->createCarValidate->getErrors()]
             );
         }
-        if ($this->imageValidate->validate($this->getImage(), 21000000)) {
+        if ($this->imageValidate->check($this->getImage())) {
             return $this->response->renderView(
                 'create_car',
-                ['errors' => $this->imageValidate->getErrors()]
+                ['errors' => $this->imageValidate->check($this->getImage())]
             );
         }
         if ($this->getCarData()) {
@@ -88,17 +88,6 @@ class CarController extends Controller
         $createCarRequest = new CreateCarRequest();
         $carRequest = $createCarRequest->fromArrayToModel($data);
         return $this->carRepository->createCar($carRequest);
-    }
-
-    private function validateFormData(array $params): array
-    {
-        $errors = [];
-        $this->createCarValidate->loadData($params);
-        if (!$this->createCarValidate->validate()) {
-            $errors = $this->createCarValidate->getErrors();
-        }
-        $imgErrors = $this->imageValidate->check($this->getImage());
-        return array_merge($errors, $imgErrors);
     }
 
     public function getImage(): array

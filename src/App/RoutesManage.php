@@ -8,10 +8,8 @@ use Nhivonfq\Unlock\Controllers\API\LoginAPIController;
 use Nhivonfq\Unlock\Controllers\API\RegisterAPIController;
 use Nhivonfq\Unlock\Controllers\CarController;
 use Nhivonfq\Unlock\Controllers\CreateBookingController;
-use Nhivonfq\Unlock\Controllers\HomeController;
 use Nhivonfq\Unlock\Controllers\LoginController;
 use Nhivonfq\Unlock\Controllers\RegisterController;
-use Nhivonfq\Unlock\Controllers\SitesController;
 use Nhivonfq\Unlock\Models\User;
 
 class RoutesManage

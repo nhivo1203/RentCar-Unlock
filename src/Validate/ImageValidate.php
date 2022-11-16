@@ -65,7 +65,7 @@ class ImageValidate
      */
     private function checkSize($file): array
     {
-        $maxsize = 1024*1024;
+        $maxsize = 1024*1024*100;
         if ($file['size'] > $maxsize) {
             return ['image' => ['File size is larger than the allowed limit']];
         }

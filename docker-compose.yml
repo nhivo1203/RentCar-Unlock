@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./docker/nginx/
+    command: nginx -g "daemon off;"
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    links:
+      - php
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+
+  #Database
+  mysql:
+    container_name: mysql
+    build:
+      context: ./
+      dockerfile: ./docker/mysql/Dockerfile
+    restart: always
+    environment:
+      - MYSQL_DATABASE=rentcar
+      - MYSQL_ROOT_PASSWORD=NhiTrang12032110
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+
+  #Project Application
+  php:
+    container_name: php
+    build:
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
+    working_dir: /var/www/html
+    volumes:
+      - ./src:/var/www/html/src
